@@ -8,7 +8,8 @@ import { useAdmin } from '@/hooks/useAdmin';
 import { ScenarioManager } from '@/components/admin/ScenarioManager';
 import { QuizManager } from '@/components/admin/QuizManager';
 import { ContentManager } from '@/components/admin/ContentManager';
-import { LayoutDashboard, MessageSquare, HelpCircle, FileText, ArrowLeft, Shield } from 'lucide-react';
+import { ReportsManager } from '@/components/admin/ReportsManager';
+import { LayoutDashboard, MessageSquare, HelpCircle, FileText, ArrowLeft, Shield, Flag } from 'lucide-react';
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -79,18 +80,22 @@ const Admin = () => {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="scenarios" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-grid">
+          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
             <TabsTrigger value="scenarios" className="flex items-center gap-2">
               <MessageSquare className="w-4 h-4" />
               <span className="hidden sm:inline">Scenarios</span>
             </TabsTrigger>
             <TabsTrigger value="quizzes" className="flex items-center gap-2">
               <HelpCircle className="w-4 h-4" />
-              <span className="hidden sm:inline">Quiz Questions</span>
+              <span className="hidden sm:inline">Quizzes</span>
             </TabsTrigger>
             <TabsTrigger value="content" className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
-              <span className="hidden sm:inline">Lesson Content</span>
+              <span className="hidden sm:inline">Content</span>
+            </TabsTrigger>
+            <TabsTrigger value="reports" className="flex items-center gap-2">
+              <Flag className="w-4 h-4" />
+              <span className="hidden sm:inline">Reports</span>
             </TabsTrigger>
           </TabsList>
 
@@ -104,6 +109,10 @@ const Admin = () => {
 
           <TabsContent value="content">
             <ContentManager />
+          </TabsContent>
+
+          <TabsContent value="reports">
+            <ReportsManager />
           </TabsContent>
         </Tabs>
       </main>
