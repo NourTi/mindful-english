@@ -44,12 +44,8 @@ const Dashboard = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
-    if (!userName) {
-      navigate('/');
-      return;
-    }
     setProfile(calculateProfile());
-  }, [calculateProfile, userName, navigate]);
+  }, [calculateProfile]);
 
   const getGreeting = () => {
     const hour = currentTime.getHours();
@@ -138,6 +134,27 @@ const Dashboard = () => {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
+        {/* Assessment Prompt Banner - show if user hasn't completed assessment */}
+        {!userName && (
+          <motion.div
+            className="mb-6 p-4 rounded-xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <h3 className="font-semibold text-foreground mb-1">Personalize your experience</h3>
+                <p className="text-sm text-muted-foreground">
+                  Take a quick assessment to customize lessons for your learning style.
+                </p>
+              </div>
+              <Button onClick={() => navigate('/assessment')} className="shrink-0">
+                Take Assessment
+              </Button>
+            </div>
+          </motion.div>
+        )}
+
         {/* Welcome Section */}
         <motion.div 
           className="mb-8"
@@ -145,11 +162,17 @@ const Dashboard = () => {
           animate={{ opacity: 1, y: 0 }}
         >
           <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2">
-            {getGreeting()}, {userName}! 👋
+            {getGreeting()}{userName ? `, ${userName}` : ''}! 👋
           </h1>
           <p className="text-muted-foreground">
-            Ready to continue your learning journey? Your brain learns best with{' '}
-            <span className={`font-semibold ${style.color}`}>{profile.learningStyle}</span> content.
+            {userName ? (
+              <>
+                Ready to continue your learning journey? Your brain learns best with{' '}
+                <span className={`font-semibold ${style.color}`}>{profile.learningStyle}</span> content.
+              </>
+            ) : (
+              'Welcome to SEE! Start your personalized English learning journey.'
+            )}
           </p>
         </motion.div>
 
