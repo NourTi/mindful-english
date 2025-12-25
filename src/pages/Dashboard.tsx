@@ -4,13 +4,21 @@ import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, Play, Flame, Trophy, Brain, Heart, 
   Eye, Headphones, Hand, Clock, Sparkles, 
-  TrendingUp, Target, BarChart3, Settings
+  TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { useAssessmentStore } from '@/stores/assessmentStore';
 import { LearningStyle } from '@/types/learning';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const styleConfig: Record<LearningStyle, { icon: React.ReactNode; color: string; bgColor: string }> = {
   visual: { icon: <Eye className="w-5 h-5" />, color: 'text-cognitive-visual', bgColor: 'bg-cognitive-visual/10' },
@@ -79,9 +87,36 @@ const Dashboard = () => {
               <span className="text-sm font-semibold">{totalXP} XP</span>
             </div>
 
-            <Button variant="ghost" size="icon">
-              <Settings className="w-5 h-5" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Settings className="w-5 h-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuLabel>Settings</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => navigate('/')}>
+                  <Home className="w-4 h-4 mr-2" />
+                  Home
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => {
+                  useAssessmentStore.getState().reset();
+                  navigate('/');
+                }}>
+                  <RotateCcw className="w-4 h-4 mr-2" />
+                  Retake Assessment
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => {
+                  useAssessmentStore.getState().reset();
+                  navigate('/');
+                }}>
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Log Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </header>
