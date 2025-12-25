@@ -89,7 +89,7 @@ const VocabularyStep = () => {
       setSelectedOption(null);
       setShowFeedback(false);
     } else {
-      setStep('complete');
+      setStep('semantic-context');
     }
   };
 

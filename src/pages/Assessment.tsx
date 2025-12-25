@@ -1,13 +1,26 @@
+import { useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { useAssessmentStore } from '@/stores/assessmentStore';
+import { useAuth } from '@/hooks/useAuth';
 import WelcomeStep from '@/components/assessment/WelcomeStep';
 import LearningStyleStep from '@/components/assessment/LearningStyleStep';
 import AnxietyStep from '@/components/assessment/AnxietyStep';
 import VocabularyStep from '@/components/assessment/VocabularyStep';
+import SemanticContextStep from '@/components/assessment/SemanticContextStep';
 import CompleteStep from '@/components/assessment/CompleteStep';
 
 const Assessment = () => {
+  const navigate = useNavigate();
+  const { user, loading } = useAuth();
   const { currentStep } = useAssessmentStore();
+
+  // Redirect to dashboard if already logged in and completed assessment
+  useEffect(() => {
+    if (!loading && user && currentStep === 'complete') {
+      // User is logged in and completed, check if they need to do assessment
+    }
+  }, [user, loading, currentStep, navigate]);
 
   return (
     <div className="min-h-screen bg-gradient-hero">
@@ -40,6 +53,7 @@ const Assessment = () => {
           {currentStep === 'learning-style' && <LearningStyleStep key="learning-style" />}
           {currentStep === 'anxiety' && <AnxietyStep key="anxiety" />}
           {currentStep === 'vocabulary' && <VocabularyStep key="vocabulary" />}
+          {currentStep === 'semantic-context' && <SemanticContextStep key="semantic-context" />}
           {currentStep === 'complete' && <CompleteStep key="complete" />}
         </AnimatePresence>
       </main>

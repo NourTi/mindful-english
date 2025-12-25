@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Eye, Headphones, BookOpen, Hand, Sparkles, Rocket, Brain, Heart } from 'lucide-react';
+import { Eye, Headphones, BookOpen, Hand, Sparkles, Rocket, Brain, Heart, Briefcase, Plane, Home, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { useAssessmentStore } from '@/stores/assessmentStore';
+import { useAuth } from '@/hooks/useAuth';
+import { useProfile } from '@/hooks/useProfile';
 import { LearningStyle } from '@/types/learning';
 
 const styleInfo: Record<LearningStyle, { icon: React.ReactNode; label: string; description: string; color: string }> = {
@@ -35,29 +37,57 @@ const styleInfo: Record<LearningStyle, { icon: React.ReactNode; label: string; d
   },
 };
 
+const contextInfo = {
+  workplace: { icon: <Briefcase className="w-5 h-5" />, label: 'Workplace' },
+  travel: { icon: <Plane className="w-5 h-5" />, label: 'Travel' },
+  daily_life: { icon: <Home className="w-5 h-5" />, label: 'Daily Life' },
+  academic: { icon: <GraduationCap className="w-5 h-5" />, label: 'Academic' },
+};
+
 const CompleteStep = () => {
   const navigate = useNavigate();
-  const { calculateProfile, userName, reset } = useAssessmentStore();
+  const { user } = useAuth();
+  const { updateProfile } = useProfile();
+  const { calculateProfile, userName, reset, semanticContext } = useAssessmentStore();
   const [profile, setProfile] = useState(calculateProfile());
-  const [showConfetti, setShowConfetti] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     setProfile(calculateProfile());
-    const timer = setTimeout(() => setShowConfetti(false), 3000);
-    return () => clearTimeout(timer);
   }, [calculateProfile]);
 
   const primaryStyle = styleInfo[profile.learningStyle];
   const sortedStyles = Object.entries(profile.learningStyleScores)
     .sort((a, b) => b[1] - a[1]) as [LearningStyle, number][];
 
-  const handleStartLearning = () => {
+  const handleStartLearning = async () => {
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+
+    setIsSaving(true);
+    
+    // Save profile to database
+    await updateProfile({
+      name: userName,
+      learning_style: profile.learningStyle,
+      anxiety_level: profile.anxietyLevel,
+      confidence_level: profile.confidenceLevel,
+      vocabulary_level: profile.vocabularyLevel,
+      semantic_context: semanticContext || 'daily_life',
+      preferred_chunk_duration: profile.preferredChunkDuration,
+    });
+
+    setIsSaving(false);
     navigate('/dashboard');
   };
 
   const handleRetake = () => {
     reset();
   };
+
+  const context = semanticContext ? contextInfo[semanticContext] : null;
 
   return (
     <motion.div
@@ -154,7 +184,7 @@ const CompleteStep = () => {
 
       {/* Emotional & Vocabulary Stats */}
       <motion.div
-        className="grid md:grid-cols-2 gap-4 mb-8"
+        className="grid md:grid-cols-3 gap-4 mb-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
@@ -172,12 +202,6 @@ const CompleteStep = () => {
                 </p>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground">
-              {profile.anxietyLevel >= 4 
-                ? "We'll start with low-stakes exercises to build your confidence gradually."
-                : "You're in a good headspace for learning. Let's challenge you!"
-              }
-            </p>
           </CardContent>
         </Card>
 
@@ -192,11 +216,24 @@ const CompleteStep = () => {
                 <p className="font-semibold capitalize">{profile.vocabularyLevel.replace('-', ' ')}</p>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground">
-              We'll anchor new vocabulary to concepts you already know, making retention stronger.
-            </p>
           </CardContent>
         </Card>
+
+        {context && (
+          <Card variant="glass">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-3 rounded-xl bg-secondary">
+                  {context.icon}
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Learning Context</p>
+                  <p className="font-semibold">{context.label}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </motion.div>
 
       {/* What's Next */}
@@ -215,9 +252,20 @@ const CompleteStep = () => {
               your {primaryStyle.label.toLowerCase()} style and help manage any anxiety along the way.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button variant="hero" size="lg" onClick={handleStartLearning}>
-                <Sparkles className="w-5 h-5 mr-2" />
-                Start My Journey
+              <Button variant="hero" size="lg" onClick={handleStartLearning} disabled={isSaving}>
+                {isSaving ? (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  >
+                    <Sparkles className="w-5 h-5" />
+                  </motion.div>
+                ) : (
+                  <>
+                    <Sparkles className="w-5 h-5 mr-2" />
+                    Start My Journey
+                  </>
+                )}
               </Button>
               <Button variant="outline" size="lg" onClick={handleRetake}>
                 Retake Assessment

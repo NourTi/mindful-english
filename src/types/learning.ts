@@ -2,6 +2,8 @@ export type LearningStyle = 'visual' | 'auditory' | 'reading' | 'kinesthetic';
 export type AnxietyLevel = 1 | 2 | 3 | 4 | 5;
 export type ConfidenceLevel = 1 | 2 | 3 | 4 | 5;
 
+export type SemanticContext = 'workplace' | 'travel' | 'daily_life' | 'academic';
+
 export interface CognitiveProfile {
   learningStyle: LearningStyle;
   learningStyleScores: Record<LearningStyle, number>;
@@ -10,6 +12,7 @@ export interface CognitiveProfile {
   vocabularyLevel: 'beginner' | 'elementary' | 'intermediate' | 'upper-intermediate' | 'advanced';
   knownConcepts: string[];
   preferredChunkDuration: number; // in minutes
+  semanticContext?: SemanticContext;
 }
 
 export interface UserProfile {

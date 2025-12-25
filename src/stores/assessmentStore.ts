@@ -2,13 +2,16 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { CognitiveProfile, LearningStyle, AnxietyLevel, ConfidenceLevel } from '@/types/learning';
 
+type SemanticContext = 'workplace' | 'travel' | 'daily_life' | 'academic';
+
 interface AssessmentState {
-  currentStep: 'welcome' | 'learning-style' | 'anxiety' | 'vocabulary' | 'complete';
+  currentStep: 'welcome' | 'learning-style' | 'anxiety' | 'vocabulary' | 'semantic-context' | 'complete';
   learningStyleAnswers: number[];
   anxietyLevel: AnxietyLevel;
   confidenceLevel: ConfidenceLevel;
   vocabularyAnswers: boolean[];
   userName: string;
+  semanticContext: SemanticContext | null;
   
   // Actions
   setStep: (step: AssessmentState['currentStep']) => void;
@@ -17,6 +20,7 @@ interface AssessmentState {
   setConfidenceLevel: (level: ConfidenceLevel) => void;
   addVocabularyAnswer: (correct: boolean) => void;
   setUserName: (name: string) => void;
+  setSemanticContext: (context: SemanticContext) => void;
   calculateProfile: () => CognitiveProfile;
   reset: () => void;
 }
@@ -28,6 +32,7 @@ const initialState = {
   confidenceLevel: 3 as ConfidenceLevel,
   vocabularyAnswers: [],
   userName: '',
+  semanticContext: null as SemanticContext | null,
 };
 
 export const useAssessmentStore = create<AssessmentState>()(
@@ -52,6 +57,8 @@ export const useAssessmentStore = create<AssessmentState>()(
         })),
       
       setUserName: (name) => set({ userName: name }),
+
+      setSemanticContext: (context) => set({ semanticContext: context }),
       
       calculateProfile: () => {
         const state = get();
@@ -93,6 +100,7 @@ export const useAssessmentStore = create<AssessmentState>()(
           vocabularyLevel: vocabLevels[vocabIndex],
           knownConcepts: [],
           preferredChunkDuration: 5,
+          semanticContext: state.semanticContext || 'daily_life',
         };
       },
       
