@@ -7,6 +7,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import Auth from "./pages/Auth";
 import Assessment from "./pages/Assessment";
 import Dashboard from "./pages/Dashboard";
+import Lessons from "./pages/Lessons";
 import Lesson from "./pages/Lesson";
 import Scenario from "./pages/Scenario";
 import Admin from "./pages/Admin";
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/assessment" element={<Assessment />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/lessons" element={<Lessons />} />
             <Route path="/lesson/:lessonId" element={<Lesson />} />
             <Route path="/scenario" element={<Scenario />} />
             <Route path="/admin" element={<Admin />} />
