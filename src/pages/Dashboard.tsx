@@ -60,6 +60,12 @@ const Dashboard = () => {
   const level = 5;
   const nextLevelXP = 1500;
 
+  const navItems = [
+    { label: 'Lessons', path: '/', icon: BookOpen },
+    { label: 'Community', path: '/community', icon: Users },
+    { label: 'Messages', path: '/messages', icon: MessageCircle },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -72,6 +78,22 @@ const Dashboard = () => {
             <span className="font-display text-xl font-semibold text-foreground">SEE</span>
           </div>
           
+          {/* Navigation - Desktop */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navItems.map((item) => (
+              <Button
+                key={item.path}
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate(item.path)}
+                className="gap-2"
+              >
+                <item.icon className="w-4 h-4" />
+                {item.label}
+              </Button>
+            ))}
+          </nav>
+
           <div className="flex items-center gap-4">
             {/* Streak */}
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary">
@@ -114,7 +136,7 @@ const Dashboard = () => {
                 )}
                 <DropdownMenuItem onClick={() => {
                   useAssessmentStore.getState().reset();
-                  navigate('/');
+                  navigate('/assessment');
                 }}>
                   <RotateCcw className="w-4 h-4 mr-2" />
                   Retake Assessment
@@ -131,6 +153,30 @@ const Dashboard = () => {
             </DropdownMenu>
           </div>
         </div>
+
+        {/* Navigation - Mobile */}
+        <nav className="md:hidden flex items-center justify-around border-t border-border py-2">
+          {navItems.map((item) => (
+            <Button
+              key={item.path}
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate(item.path)}
+              className="flex-col gap-1 h-auto py-2"
+            >
+              <item.icon className="w-5 h-5" />
+              <span className="text-xs">{item.label}</span>
+            </Button>
+          ))}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex-col gap-1 h-auto py-2"
+          >
+            <Settings className="w-5 h-5" />
+            <span className="text-xs">Settings</span>
+          </Button>
+        </nav>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
