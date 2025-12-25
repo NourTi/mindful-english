@@ -90,6 +90,7 @@ const Community = () => {
   const [reportDialogOpen, setReportDialogOpen] = useState(false);
   const [reportingRequest, setReportingRequest] = useState<PartnerRequest | null>(null);
   const [reportReason, setReportReason] = useState('');
+  const [connecting, setConnecting] = useState<string | null>(null);
 
   useEffect(() => {
     fetchRequests();
@@ -188,6 +189,65 @@ const Community = () => {
   const openReportDialog = (request: PartnerRequest) => {
     setReportingRequest(request);
     setReportDialogOpen(true);
+  };
+
+  const handleConnect = async (request: PartnerRequest) => {
+    if (!user) {
+      toast.error('Please log in to connect with partners');
+      navigate('/auth');
+      return;
+    }
+
+    if (request.user_id === user.id) {
+      toast.error("You can't connect with your own request");
+      return;
+    }
+
+    setConnecting(request.id);
+    try {
+      // Check if conversation already exists
+      const { data: existingConversation } = await supabase
+        .from('conversations')
+        .select('id')
+        .or(
+          `and(participant_one.eq.${user.id},participant_two.eq.${request.user_id}),and(participant_one.eq.${request.user_id},participant_two.eq.${user.id})`
+        )
+        .single();
+
+      if (existingConversation) {
+        // Navigate to existing conversation
+        navigate(`/messages?conversation=${existingConversation.id}`);
+        return;
+      }
+
+      // Create new conversation
+      const { data: newConversation, error } = await supabase
+        .from('conversations')
+        .insert({
+          participant_one: user.id,
+          participant_two: request.user_id,
+          partner_request_id: request.id,
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // Send initial message
+      await supabase.from('messages').insert({
+        conversation_id: newConversation.id,
+        sender_id: user.id,
+        content: `Hi! I saw your post "${request.title}" and would love to practice together!`,
+      });
+
+      toast.success('Connected! Starting conversation...');
+      navigate(`/messages?conversation=${newConversation.id}`);
+    } catch (error) {
+      console.error('Error connecting:', error);
+      toast.error('Failed to connect. Please try again.');
+    } finally {
+      setConnecting(null);
+    }
   };
 
   const filteredRequests = requests.filter((request) => {
@@ -433,9 +493,18 @@ const Community = () => {
                           </div>
                         </div>
                         <div className="flex flex-col gap-2">
-                          <Button size="sm" variant="default">
-                            <MessageCircle className="w-4 h-4 mr-1" />
-                            Connect
+                          <Button 
+                            size="sm" 
+                            variant="default"
+                            onClick={() => handleConnect(request)}
+                            disabled={connecting === request.id || request.user_id === user?.id}
+                          >
+                            {connecting === request.id ? (
+                              <div className="animate-spin w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full mr-1" />
+                            ) : (
+                              <MessageCircle className="w-4 h-4 mr-1" />
+                            )}
+                            {request.user_id === user?.id ? 'Your Post' : 'Connect'}
                           </Button>
                           <Button 
                             size="sm" 

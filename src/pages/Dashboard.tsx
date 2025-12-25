@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, Play, Flame, Trophy, Brain, Heart, 
   Eye, Headphones, Hand, Clock, Sparkles, 
-  TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users
+  TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users, MessageCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -105,6 +105,10 @@ const Dashboard = () => {
                 <DropdownMenuItem onClick={() => navigate('/community')}>
                   <Users className="w-4 h-4 mr-2" />
                   Community
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/messages')}>
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  Messages
                 </DropdownMenuItem>
                 {isAdmin && (
                   <DropdownMenuItem onClick={() => navigate('/admin')}>
