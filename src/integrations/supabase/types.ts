@@ -32,6 +32,48 @@ export type Database = {
         }
         Relationships: []
       }
+      content_reports: {
+        Row: {
+          created_at: string
+          id: string
+          reason: string
+          reporter_id: string
+          request_id: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reason: string
+          reporter_id: string
+          request_id: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reason?: string
+          reporter_id?: string
+          request_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_reports_reporter_id_fkey"
+            columns: ["reporter_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_reports_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "partner_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lesson_content: {
         Row: {
           content: string
@@ -117,6 +159,53 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "lesson_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partner_requests: {
+        Row: {
+          context: string
+          created_at: string
+          description: string
+          id: string
+          is_active: boolean
+          learning_style: string
+          level: number
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          context?: string
+          created_at?: string
+          description: string
+          id?: string
+          is_active?: boolean
+          learning_style?: string
+          level?: number
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          context?: string
+          created_at?: string
+          description?: string
+          id?: string
+          is_active?: boolean
+          learning_style?: string
+          level?: number
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_requests_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
