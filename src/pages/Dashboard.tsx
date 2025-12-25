@@ -61,7 +61,7 @@ const Dashboard = () => {
   const nextLevelXP = 1500;
 
   const navItems = [
-    { label: 'Lessons', path: '/', icon: BookOpen },
+    { label: 'Lessons', path: '/lessons', icon: BookOpen },
     { label: 'Community', path: '/community', icon: Users },
     { label: 'Messages', path: '/messages', icon: MessageCircle },
   ];
