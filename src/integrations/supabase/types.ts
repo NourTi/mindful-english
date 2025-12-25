@@ -14,7 +14,154 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      lesson_progress: {
+        Row: {
+          chunk_index: number
+          completed: boolean
+          completed_at: string | null
+          correct_answers: number
+          error_streak: number
+          id: string
+          lesson_id: string
+          reset_protocol_triggered: number
+          score: number
+          started_at: string
+          total_answers: number
+          user_id: string
+        }
+        Insert: {
+          chunk_index?: number
+          completed?: boolean
+          completed_at?: string | null
+          correct_answers?: number
+          error_streak?: number
+          id?: string
+          lesson_id: string
+          reset_protocol_triggered?: number
+          score?: number
+          started_at?: string
+          total_answers?: number
+          user_id: string
+        }
+        Update: {
+          chunk_index?: number
+          completed?: boolean
+          completed_at?: string | null
+          correct_answers?: number
+          error_streak?: number
+          id?: string
+          lesson_id?: string
+          reset_protocol_triggered?: number
+          score?: number
+          started_at?: string
+          total_answers?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lesson_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          anxiety_level: number
+          confidence_level: number
+          created_at: string
+          current_level: number
+          error_streak: number
+          id: string
+          last_activity_date: string | null
+          learning_style: string
+          name: string
+          preferred_chunk_duration: number
+          semantic_context: string
+          streak_days: number
+          total_xp: number
+          updated_at: string
+          vocabulary_level: string
+        }
+        Insert: {
+          anxiety_level?: number
+          confidence_level?: number
+          created_at?: string
+          current_level?: number
+          error_streak?: number
+          id: string
+          last_activity_date?: string | null
+          learning_style?: string
+          name?: string
+          preferred_chunk_duration?: number
+          semantic_context?: string
+          streak_days?: number
+          total_xp?: number
+          updated_at?: string
+          vocabulary_level?: string
+        }
+        Update: {
+          anxiety_level?: number
+          confidence_level?: number
+          created_at?: string
+          current_level?: number
+          error_streak?: number
+          id?: string
+          last_activity_date?: string | null
+          learning_style?: string
+          name?: string
+          preferred_chunk_duration?: number
+          semantic_context?: string
+          streak_days?: number
+          total_xp?: number
+          updated_at?: string
+          vocabulary_level?: string
+        }
+        Relationships: []
+      }
+      vocabulary_learned: {
+        Row: {
+          context: string | null
+          created_at: string
+          id: string
+          last_reviewed_at: string
+          mastery_level: number
+          times_reviewed: number
+          user_id: string
+          word: string
+        }
+        Insert: {
+          context?: string | null
+          created_at?: string
+          id?: string
+          last_reviewed_at?: string
+          mastery_level?: number
+          times_reviewed?: number
+          user_id: string
+          word: string
+        }
+        Update: {
+          context?: string | null
+          created_at?: string
+          id?: string
+          last_reviewed_at?: string
+          mastery_level?: number
+          times_reviewed?: number
+          user_id?: string
+          word?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vocabulary_learned_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
