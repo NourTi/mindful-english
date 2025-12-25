@@ -14,6 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_users: {
+        Row: {
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      lesson_content: {
+        Row: {
+          content: string
+          content_type: string
+          created_at: string
+          display_order: number
+          id: string
+          is_active: boolean
+          learning_style: string
+          lesson_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          content_type?: string
+          created_at?: string
+          display_order?: number
+          id?: string
+          is_active?: boolean
+          learning_style?: string
+          lesson_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          content_type?: string
+          created_at?: string
+          display_order?: number
+          id?: string
+          is_active?: boolean
+          learning_style?: string
+          lesson_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       lesson_progress: {
         Row: {
           chunk_index: number
@@ -118,6 +175,145 @@ export type Database = {
           total_xp?: number
           updated_at?: string
           vocabulary_level?: string
+        }
+        Relationships: []
+      }
+      quiz_questions: {
+        Row: {
+          correct_answer: string
+          created_at: string
+          difficulty: number
+          id: string
+          is_active: boolean
+          learning_style: string
+          lesson_id: string
+          options: Json
+          question: string
+          updated_at: string
+        }
+        Insert: {
+          correct_answer: string
+          created_at?: string
+          difficulty?: number
+          id?: string
+          is_active?: boolean
+          learning_style?: string
+          lesson_id: string
+          options?: Json
+          question: string
+          updated_at?: string
+        }
+        Update: {
+          correct_answer?: string
+          created_at?: string
+          difficulty?: number
+          id?: string
+          is_active?: boolean
+          learning_style?: string
+          lesson_id?: string
+          options?: Json
+          question?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      scenario_choices: {
+        Row: {
+          choice_text: string
+          created_at: string
+          dialogue_id: string
+          feedback: string
+          id: string
+          is_correct: boolean
+        }
+        Insert: {
+          choice_text: string
+          created_at?: string
+          dialogue_id: string
+          feedback: string
+          id?: string
+          is_correct?: boolean
+        }
+        Update: {
+          choice_text?: string
+          created_at?: string
+          dialogue_id?: string
+          feedback?: string
+          id?: string
+          is_correct?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scenario_choices_dialogue_id_fkey"
+            columns: ["dialogue_id"]
+            isOneToOne: false
+            referencedRelation: "scenario_dialogues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scenario_dialogues: {
+        Row: {
+          created_at: string
+          display_order: number
+          id: string
+          message: string
+          scenario_id: string
+          speaker: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          message: string
+          scenario_id: string
+          speaker: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          message?: string
+          scenario_id?: string
+          speaker?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scenario_dialogues_scenario_id_fkey"
+            columns: ["scenario_id"]
+            isOneToOne: false
+            referencedRelation: "scenarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scenarios: {
+        Row: {
+          context_type: string
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          context_type?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          context_type?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }
