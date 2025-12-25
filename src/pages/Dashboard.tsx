@@ -20,11 +20,11 @@ const styleConfig: Record<LearningStyle, { icon: React.ReactNode; color: string;
 };
 
 const lessons = [
-  { id: 1, title: 'Greetings & Introductions', category: 'Speaking', duration: '5 min', progress: 100, xp: 50 },
-  { id: 2, title: 'At the Restaurant', category: 'Vocabulary', duration: '7 min', progress: 75, xp: 75 },
-  { id: 3, title: 'Making Plans', category: 'Grammar', duration: '6 min', progress: 30, xp: 60 },
-  { id: 4, title: 'Shopping Conversation', category: 'Speaking', duration: '8 min', progress: 0, xp: 80 },
-  { id: 5, title: 'Describing People', category: 'Vocabulary', duration: '5 min', progress: 0, xp: 50 },
+  { id: 'greetings-intro', title: 'Greetings & Introductions', category: 'Speaking', duration: '5 min', progress: 100, xp: 50 },
+  { id: 'restaurant-basics', title: 'At the Restaurant', category: 'Vocabulary', duration: '7 min', progress: 75, xp: 75 },
+  { id: 'making-plans', title: 'Making Plans', category: 'Grammar', duration: '6 min', progress: 30, xp: 60 },
+  { id: 'shopping-convo', title: 'Shopping Conversation', category: 'Speaking', duration: '8 min', progress: 0, xp: 80 },
+  { id: 'describing-people', title: 'Describing People', category: 'Vocabulary', duration: '5 min', progress: 0, xp: 50 },
 ];
 
 const Dashboard = () => {
@@ -126,7 +126,12 @@ const Dashboard = () => {
                         </span>
                       </div>
                     </div>
-                    <Button variant="glass" size="lg" className="bg-white/20 hover:bg-white/30 text-white border-white/30">
+                    <Button 
+                      variant="glass" 
+                      size="lg" 
+                      className="bg-white/20 hover:bg-white/30 text-white border-white/30"
+                      onClick={() => navigate('/lesson/restaurant-basics')}
+                    >
                       <Play className="w-5 h-5 mr-2" />
                       Resume
                     </Button>
@@ -160,7 +165,7 @@ const Dashboard = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 + index * 0.1 }}
                   >
-                    <Card variant="cognitive" className="group cursor-pointer border-border hover:border-primary/50">
+                    <Card variant="cognitive" className="group cursor-pointer border-border hover:border-primary/50" onClick={() => navigate(`/lesson/${lesson.id}`)}>
                       <CardContent className="p-5">
                         <div className="flex items-start justify-between mb-3">
                           <div className={`p-2 rounded-lg ${style.bgColor}`}>
