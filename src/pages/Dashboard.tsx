@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, Play, Flame, Trophy, Brain, Heart, 
   Eye, Headphones, Hand, Clock, Sparkles, 
-  TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home
+  TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { useAssessmentStore } from '@/stores/assessmentStore';
 import { LearningStyle } from '@/types/learning';
+import { useAdmin } from '@/hooks/useAdmin';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,6 +39,7 @@ const lessons = [
 const Dashboard = () => {
   const navigate = useNavigate();
   const { calculateProfile, userName } = useAssessmentStore();
+  const { isAdmin } = useAdmin();
   const [profile, setProfile] = useState(calculateProfile());
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -100,6 +102,12 @@ const Dashboard = () => {
                   <Home className="w-4 h-4 mr-2" />
                   Home
                 </DropdownMenuItem>
+                {isAdmin && (
+                  <DropdownMenuItem onClick={() => navigate('/admin')}>
+                    <LayoutDashboard className="w-4 h-4 mr-2" />
+                    Admin CMS
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem onClick={() => {
                   useAssessmentStore.getState().reset();
                   navigate('/');
