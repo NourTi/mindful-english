@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import Lesson from "./pages/Lesson";
 import Scenario from "./pages/Scenario";
 import Admin from "./pages/Admin";
+import Community from "./pages/Community";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/lesson/:lessonId" element={<Lesson />} />
             <Route path="/scenario" element={<Scenario />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/community" element={<Community />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
