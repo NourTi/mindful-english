@@ -1,11 +1,14 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, Clock, Sparkles, Filter, Search, 
   Play, CheckCircle, Circle, ChevronDown, Eye, 
-  Headphones, Hand, ArrowLeft
+  Headphones, Hand, ArrowLeft, Bookmark
 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -118,7 +121,7 @@ const lessonsData = [
 ];
 
 const categories = ['All', 'Speaking', 'Vocabulary', 'Grammar'];
-const progressFilters = ['All', 'Not Started', 'In Progress', 'Completed'];
+const progressFilters = ['All', 'Not Started', 'In Progress', 'Completed', 'Bookmarked'];
 const difficultyFilters = ['All', 'Beginner', 'Intermediate', 'Advanced'];
 
 const styleConfig: Record<LearningStyle, { icon: React.ReactNode; color: string; bgColor: string }> = {
@@ -130,6 +133,7 @@ const styleConfig: Record<LearningStyle, { icon: React.ReactNode; color: string;
 
 const Lessons = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { calculateProfile } = useAssessmentStore();
   const profile = calculateProfile();
   const style = styleConfig[profile.learningStyle];
@@ -138,6 +142,62 @@ const Lessons = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedProgress, setSelectedProgress] = useState('All');
   const [selectedDifficulty, setSelectedDifficulty] = useState('All');
+  const [bookmarkedLessons, setBookmarkedLessons] = useState<Set<string>>(new Set());
+
+  // Fetch bookmarked lessons
+  useEffect(() => {
+    const fetchBookmarks = async () => {
+      if (!user) return;
+      
+      const { data, error } = await supabase
+        .from('bookmarked_lessons')
+        .select('lesson_id')
+        .eq('user_id', user.id);
+      
+      if (!error && data) {
+        setBookmarkedLessons(new Set(data.map(b => b.lesson_id)));
+      }
+    };
+    
+    fetchBookmarks();
+  }, [user]);
+
+  const toggleBookmark = async (e: React.MouseEvent, lessonId: string) => {
+    e.stopPropagation();
+    
+    if (!user) {
+      toast.error('Please sign in to bookmark lessons');
+      return;
+    }
+    
+    const isBookmarked = bookmarkedLessons.has(lessonId);
+    
+    if (isBookmarked) {
+      const { error } = await supabase
+        .from('bookmarked_lessons')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('lesson_id', lessonId);
+      
+      if (!error) {
+        setBookmarkedLessons(prev => {
+          const next = new Set(prev);
+          next.delete(lessonId);
+          return next;
+        });
+        toast.success('Bookmark removed');
+      }
+    } else {
+      const { error } = await supabase
+        .from('bookmarked_lessons')
+        .insert({ user_id: user.id, lesson_id: lessonId });
+      
+      if (!error) {
+        setBookmarkedLessons(prev => new Set([...prev, lessonId]));
+        toast.success('Lesson bookmarked');
+      }
+    }
+  };
 
   const filteredLessons = useMemo(() => {
     return lessonsData.filter(lesson => {
@@ -153,6 +213,7 @@ const Lessons = () => {
       if (selectedProgress === 'Not Started') matchesProgress = lesson.progress === 0;
       else if (selectedProgress === 'In Progress') matchesProgress = lesson.progress > 0 && lesson.progress < 100;
       else if (selectedProgress === 'Completed') matchesProgress = lesson.progress === 100;
+      else if (selectedProgress === 'Bookmarked') matchesProgress = bookmarkedLessons.has(lesson.id);
       
       // Difficulty filter
       const matchesDifficulty = selectedDifficulty === 'All' || 
@@ -160,7 +221,7 @@ const Lessons = () => {
       
       return matchesSearch && matchesCategory && matchesProgress && matchesDifficulty;
     });
-  }, [searchQuery, selectedCategory, selectedProgress, selectedDifficulty]);
+  }, [searchQuery, selectedCategory, selectedProgress, selectedDifficulty, bookmarkedLessons]);
 
   const getProgressIcon = (progress: number) => {
     if (progress === 100) return <CheckCircle className="w-4 h-4 text-success" />;
@@ -355,6 +416,18 @@ const Lessons = () => {
                           {style.icon}
                         </div>
                         <div className="flex items-center gap-2">
+                          <button
+                            onClick={(e) => toggleBookmark(e, lesson.id)}
+                            className={`p-1.5 rounded-full transition-colors ${
+                              bookmarkedLessons.has(lesson.id) 
+                                ? 'text-primary bg-primary/10' 
+                                : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
+                            }`}
+                          >
+                            <Bookmark 
+                              className={`w-4 h-4 ${bookmarkedLessons.has(lesson.id) ? 'fill-current' : ''}`} 
+                            />
+                          </button>
                           <Badge variant="outline" className={getDifficultyColor(lesson.difficulty)}>
                             {lesson.difficulty}
                           </Badge>
