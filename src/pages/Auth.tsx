@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, User, ArrowRight, Sparkles, Brain, Zap, Globe } from 'lucide-react';
@@ -23,6 +23,8 @@ const Auth = () => {
   const [name, setName] = useState('');
   const [errors, setErrors] = useState<{ email?: string; password?: string; name?: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedPath, setSelectedPath] = useState<'learn' | 'volunteer' | null>(null);
+  const formRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!loading && user) {
@@ -155,9 +157,15 @@ const Auth = () => {
           {/* Learn Card */}
           <motion.div
             whileHover={{ scale: 1.02, y: -4 }}
+            whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 300 }}
+            onClick={() => {
+              setSelectedPath('learn');
+              setIsLogin(false);
+              formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }}
           >
-            <Card className="glass-card-cyber h-full cursor-pointer group">
+            <Card className={`glass-card-cyber h-full cursor-pointer group transition-all ${selectedPath === 'learn' ? 'ring-2 ring-[hsl(187,90%,50%)] shadow-[0_0_30px_hsl(187,90%,50%/0.3)]' : ''}`}>
               <CardContent className="p-8 text-center">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[hsl(187,90%,50%)] to-[hsl(187,95%,65%)] flex items-center justify-center shadow-lg group-hover:shadow-[0_0_30px_hsl(187,90%,50%/0.4)] transition-shadow">
                   <Brain className="w-8 h-8 text-[hsl(234,40%,6%)]" />
@@ -177,9 +185,15 @@ const Auth = () => {
           {/* Volunteer Card */}
           <motion.div
             whileHover={{ scale: 1.02, y: -4 }}
+            whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 300 }}
+            onClick={() => {
+              setSelectedPath('volunteer');
+              setIsLogin(false);
+              formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }}
           >
-            <Card className="glass-card-cyber h-full cursor-pointer group">
+            <Card className={`glass-card-cyber h-full cursor-pointer group transition-all ${selectedPath === 'volunteer' ? 'ring-2 ring-[hsl(38,92%,55%)] shadow-[0_0_30px_hsl(38,92%,55%/0.3)]' : ''}`}>
               <CardContent className="p-8 text-center">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[hsl(38,92%,55%)] to-[hsl(38,95%,70%)] flex items-center justify-center shadow-lg group-hover:shadow-[0_0_30px_hsl(38,92%,55%/0.4)] transition-shadow">
                   <Globe className="w-8 h-8 text-[hsl(234,40%,6%)]" />
@@ -198,12 +212,13 @@ const Auth = () => {
         </div>
 
         {/* Auth Form */}
-        <Card className="glass-card-cyber max-w-md mx-auto">
-          <CardHeader className="text-center pb-4">
-            <CardTitle className="text-2xl font-display text-[hsl(195,80%,95%)]">
-              {isLogin ? 'Welcome Back' : 'Start Your Journey'}
-            </CardTitle>
-            <CardDescription className="text-[hsl(195,40%,60%)]">
+        <div ref={formRef}>
+          <Card className="glass-card-cyber max-w-md mx-auto">
+            <CardHeader className="text-center pb-4">
+              <CardTitle className="text-2xl font-display text-[hsl(195,80%,95%)]">
+                {isLogin ? 'Welcome Back' : selectedPath === 'volunteer' ? 'Join as Volunteer' : 'Start Your Journey'}
+              </CardTitle>
+              <CardDescription className="text-[hsl(195,40%,60%)]">
               {isLogin 
                 ? 'Sign in to continue your learning' 
                 : 'Create your neuro-adaptive learning profile'
@@ -340,7 +355,8 @@ const Auth = () => {
               </button>
             </div>
           </CardContent>
-        </Card>
+          </Card>
+        </div>
       </motion.div>
 
       {/* Features preview */}
