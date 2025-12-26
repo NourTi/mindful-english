@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -6,6 +6,7 @@ import {
   Eye, Headphones, Hand, Clock, Sparkles, 
   TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users, MessageCircle, GraduationCap
 } from 'lucide-react';
+import Scene3D from '@/components/Scene3D';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -68,7 +69,14 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* 3D Scene Background */}
+      <Suspense fallback={null}>
+        <Scene3D variant="dashboard" className="pointer-events-none opacity-50" />
+      </Suspense>
+      
+      {/* Gradient overlay */}
+      <div className="fixed inset-0 bg-gradient-to-b from-background/70 via-background/80 to-background pointer-events-none" />
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
