@@ -327,55 +327,85 @@ export type Database = {
       }
       profiles: {
         Row: {
+          address: string | null
           anxiety_level: number
           confidence_level: number
           created_at: string
           current_level: number
+          date_of_birth: string | null
+          email: string | null
           error_streak: number
+          first_name: string | null
           id: string
+          is_volunteer: boolean | null
           last_activity_date: string | null
+          last_name: string | null
           learning_style: string
+          marital_status: string | null
           name: string
+          phone_number: string | null
           preferred_chunk_duration: number
+          profile_completed: boolean | null
           semantic_context: string
           streak_days: number
           total_xp: number
           updated_at: string
           vocabulary_level: string
+          whatsapp_number: string | null
         }
         Insert: {
+          address?: string | null
           anxiety_level?: number
           confidence_level?: number
           created_at?: string
           current_level?: number
+          date_of_birth?: string | null
+          email?: string | null
           error_streak?: number
+          first_name?: string | null
           id: string
+          is_volunteer?: boolean | null
           last_activity_date?: string | null
+          last_name?: string | null
           learning_style?: string
+          marital_status?: string | null
           name?: string
+          phone_number?: string | null
           preferred_chunk_duration?: number
+          profile_completed?: boolean | null
           semantic_context?: string
           streak_days?: number
           total_xp?: number
           updated_at?: string
           vocabulary_level?: string
+          whatsapp_number?: string | null
         }
         Update: {
+          address?: string | null
           anxiety_level?: number
           confidence_level?: number
           created_at?: string
           current_level?: number
+          date_of_birth?: string | null
+          email?: string | null
           error_streak?: number
+          first_name?: string | null
           id?: string
+          is_volunteer?: boolean | null
           last_activity_date?: string | null
+          last_name?: string | null
           learning_style?: string
+          marital_status?: string | null
           name?: string
+          phone_number?: string | null
           preferred_chunk_duration?: number
+          profile_completed?: boolean | null
           semantic_context?: string
           streak_days?: number
           total_xp?: number
           updated_at?: string
           vocabulary_level?: string
+          whatsapp_number?: string | null
         }
         Relationships: []
       }
