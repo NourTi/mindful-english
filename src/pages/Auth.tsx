@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, ArrowRight, Sparkles, Brain, Zap, Globe } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Sparkles, Brain, Zap, Globe, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -165,18 +165,46 @@ const Auth = () => {
               formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }}
           >
-            <Card className={`glass-card-cyber h-full cursor-pointer group transition-all ${selectedPath === 'learn' ? 'ring-2 ring-[hsl(187,90%,50%)] shadow-[0_0_30px_hsl(187,90%,50%/0.3)]' : ''}`}>
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[hsl(187,90%,50%)] to-[hsl(187,95%,65%)] flex items-center justify-center shadow-lg group-hover:shadow-[0_0_30px_hsl(187,90%,50%/0.4)] transition-shadow">
+            <Card className={`glass-card-cyber h-full cursor-pointer group transition-all duration-300 relative overflow-hidden ${
+              selectedPath === 'learn' 
+                ? 'ring-2 ring-[hsl(187,90%,50%)] shadow-[0_0_40px_hsl(187,90%,50%/0.4)]' 
+                : 'hover:border-[hsl(187,90%,50%)/30]'
+            }`}>
+              {/* Selected indicator badge */}
+              {selectedPath === 'learn' && (
+                <motion.div 
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[hsl(187,90%,50%)] flex items-center justify-center shadow-lg"
+                >
+                  <Check className="w-5 h-5 text-[hsl(234,40%,6%)]" />
+                </motion.div>
+              )}
+              {/* Glow effect when selected */}
+              {selectedPath === 'learn' && (
+                <div className="absolute inset-0 bg-gradient-to-br from-[hsl(187,90%,50%)/10] to-transparent pointer-events-none" />
+              )}
+              <CardContent className="p-8 text-center relative z-10">
+                <motion.div 
+                  className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[hsl(187,90%,50%)] to-[hsl(187,95%,65%)] flex items-center justify-center shadow-lg transition-all duration-300 ${
+                    selectedPath === 'learn' ? 'shadow-[0_0_40px_hsl(187,90%,50%/0.6)] scale-110' : 'group-hover:shadow-[0_0_30px_hsl(187,90%,50%/0.4)]'
+                  }`}
+                  animate={selectedPath === 'learn' ? { scale: [1, 1.05, 1] } : {}}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
                   <Brain className="w-8 h-8 text-[hsl(234,40%,6%)]" />
-                </div>
-                <h3 className="font-display text-2xl font-bold text-[hsl(195,80%,95%)] mb-2">I Want to Learn</h3>
+                </motion.div>
+                <h3 className={`font-display text-2xl font-bold mb-2 transition-colors duration-300 ${
+                  selectedPath === 'learn' ? 'text-[hsl(187,90%,50%)]' : 'text-[hsl(195,80%,95%)]'
+                }`}>I Want to Learn</h3>
                 <p className="text-[hsl(195,40%,60%)] text-sm mb-4">
                   Personalized English learning adapted to your cognitive style
                 </p>
-                <div className="flex items-center justify-center gap-2 text-[hsl(187,90%,50%)] text-sm font-medium">
+                <div className={`flex items-center justify-center gap-2 text-sm font-medium transition-all duration-300 ${
+                  selectedPath === 'learn' ? 'text-[hsl(187,90%,50%)] scale-105' : 'text-[hsl(187,90%,50%)]'
+                }`}>
                   <Zap className="w-4 h-4" />
-                  <span>Start your journey</span>
+                  <span>{selectedPath === 'learn' ? 'Selected!' : 'Start your journey'}</span>
                 </div>
               </CardContent>
             </Card>
@@ -193,18 +221,46 @@ const Auth = () => {
               formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }}
           >
-            <Card className={`glass-card-cyber h-full cursor-pointer group transition-all ${selectedPath === 'volunteer' ? 'ring-2 ring-[hsl(38,92%,55%)] shadow-[0_0_30px_hsl(38,92%,55%/0.3)]' : ''}`}>
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[hsl(38,92%,55%)] to-[hsl(38,95%,70%)] flex items-center justify-center shadow-lg group-hover:shadow-[0_0_30px_hsl(38,92%,55%/0.4)] transition-shadow">
+            <Card className={`glass-card-cyber h-full cursor-pointer group transition-all duration-300 relative overflow-hidden ${
+              selectedPath === 'volunteer' 
+                ? 'ring-2 ring-[hsl(38,92%,55%)] shadow-[0_0_40px_hsl(38,92%,55%/0.4)]' 
+                : 'hover:border-[hsl(38,92%,55%)/30]'
+            }`}>
+              {/* Selected indicator badge */}
+              {selectedPath === 'volunteer' && (
+                <motion.div 
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[hsl(38,92%,55%)] flex items-center justify-center shadow-lg"
+                >
+                  <Check className="w-5 h-5 text-[hsl(234,40%,6%)]" />
+                </motion.div>
+              )}
+              {/* Glow effect when selected */}
+              {selectedPath === 'volunteer' && (
+                <div className="absolute inset-0 bg-gradient-to-br from-[hsl(38,92%,55%)/10] to-transparent pointer-events-none" />
+              )}
+              <CardContent className="p-8 text-center relative z-10">
+                <motion.div 
+                  className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[hsl(38,92%,55%)] to-[hsl(38,95%,70%)] flex items-center justify-center shadow-lg transition-all duration-300 ${
+                    selectedPath === 'volunteer' ? 'shadow-[0_0_40px_hsl(38,92%,55%/0.6)] scale-110' : 'group-hover:shadow-[0_0_30px_hsl(38,92%,55%/0.4)]'
+                  }`}
+                  animate={selectedPath === 'volunteer' ? { scale: [1, 1.05, 1] } : {}}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
                   <Globe className="w-8 h-8 text-[hsl(234,40%,6%)]" />
-                </div>
-                <h3 className="font-display text-2xl font-bold text-[hsl(195,80%,95%)] mb-2">I Want to Volunteer</h3>
+                </motion.div>
+                <h3 className={`font-display text-2xl font-bold mb-2 transition-colors duration-300 ${
+                  selectedPath === 'volunteer' ? 'text-[hsl(38,92%,55%)]' : 'text-[hsl(195,80%,95%)]'
+                }`}>I Want to Volunteer</h3>
                 <p className="text-[hsl(195,40%,60%)] text-sm mb-4">
                   Join our global community of educators making a difference
                 </p>
-                <div className="flex items-center justify-center gap-2 text-[hsl(38,92%,55%)] text-sm font-medium">
+                <div className={`flex items-center justify-center gap-2 text-sm font-medium transition-all duration-300 ${
+                  selectedPath === 'volunteer' ? 'text-[hsl(38,92%,55%)] scale-105' : 'text-[hsl(38,92%,55%)]'
+                }`}>
                   <Sparkles className="w-4 h-4" />
-                  <span>Make an impact</span>
+                  <span>{selectedPath === 'volunteer' ? 'Selected!' : 'Make an impact'}</span>
                 </div>
               </CardContent>
             </Card>
