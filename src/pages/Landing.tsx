@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { 
   Brain, Sparkles, Users, Target, Zap, Heart, 
   BookOpen, Globe, ChevronRight, Star, Play, Check,
-  MousePointer, MessageSquare, Award, ArrowRight, RotateCcw
+  MessageSquare, Award, ArrowRight, RotateCcw, Eye, HandHeart
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -153,9 +153,10 @@ const Landing = () => {
           <SEELogo size={44} showText animated theme="auto" />
           
           <nav className="hidden md:flex items-center gap-8">
+            <a href="#about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">About</a>
             <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
+            <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Demo</a>
             <a href="#testimonials" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Testimonials</a>
-            <a href="#cta" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Get Started</a>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -273,6 +274,232 @@ const Landing = () => {
                   transition={{ duration: 6, repeat: Infinity }}
                 >
                   <Zap className="w-8 h-8 text-warning" />
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* About Section - The Convergence of Science and Soul */}
+        <section id="about" className="py-32 relative overflow-hidden">
+          {/* Neural network background effect */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none" />
+          
+          {/* Floating tagline */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="inline-block px-6 py-3 rounded-full bg-primary/10 border border-primary/20 text-primary font-medium text-sm tracking-wide">
+              Decoding Barriers. Empowering Voices. Transforming Futures.
+            </span>
+          </motion.div>
+
+          <div className="max-w-5xl mx-auto px-4 relative">
+            {/* Main Headline */}
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-12"
+            >
+              <span className="text-foreground">The Convergence of</span>
+              <br />
+              <span className="bg-gradient-to-r from-primary via-cognitive-visual to-cognitive-auditory bg-clip-text text-transparent">
+                Science and Soul
+              </span>
+            </motion.h2>
+
+            {/* Introduction paragraphs with scroll reveal */}
+            <div className="space-y-8 text-lg md:text-xl leading-relaxed">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="text-foreground font-medium"
+              >
+                At SEE, we believe that the failure to communicate is not a lack of intelligence—it is a failure of the system. Traditional education treats learners as data points, forcing them into rigid, standardized boxes that ignore the beautiful complexity of the human brain.{" "}
+                <span className="text-primary font-bold">We exist to dismantle those boxes.</span>
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="py-8 px-6 md:px-10 rounded-2xl bg-gradient-to-r from-primary/10 via-cognitive-visual/10 to-cognitive-auditory/10 border border-primary/20"
+              >
+                <p className="text-2xl md:text-3xl font-display font-bold text-center text-foreground">
+                  SEE is the world&apos;s first{" "}
+                  <span className="bg-gradient-to-r from-primary to-cognitive-visual bg-clip-text text-transparent">
+                    Neuro-Adaptive Learning Ecosystem
+                  </span>
+                </p>
+              </motion.div>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="text-muted-foreground"
+              >
+                We do not simply teach English; we re-engineer the way it is acquired. By synthesizing{" "}
+                <span className="text-foreground font-medium">Cognitive Science</span>,{" "}
+                <span className="text-foreground font-medium">Artificial Intelligence</span>, and{" "}
+                <span className="text-foreground font-medium">Immersive Virtual Reality</span>, we have built a platform that understands{" "}
+                <em className="text-primary">how you learn</em> before it teaches you <em>what to learn</em>.
+              </motion.p>
+            </div>
+
+            {/* Three Audience Cards */}
+            <div className="grid md:grid-cols-3 gap-6 mt-16">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+              >
+                <Card className="h-full border-border/50 bg-card/50 backdrop-blur hover:border-cognitive-visual/50 transition-all duration-300 group">
+                  <CardContent className="p-6">
+                    <div className="w-12 h-12 rounded-xl bg-cognitive-visual/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <BookOpen className="w-6 h-6 text-cognitive-visual" />
+                    </div>
+                    <h3 className="font-semibold text-lg mb-3 text-foreground">For Practitioners</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      A pedagogical revolution grounded in Psycholinguistics and Neuro-Linguistic Programming (NLP), reducing anxiety and optimizing retention through personalized cognitive pathways.
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+              >
+                <Card className="h-full border-border/50 bg-card/50 backdrop-blur hover:border-primary/50 transition-all duration-300 group">
+                  <CardContent className="p-6">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <Target className="w-6 h-6 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-lg mb-3 text-foreground">For Investors</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      A scalable, high-impact solution addressing a $60+ billion market gap, utilizing proprietary algorithms to democratize elite-level education.
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.6 }}
+              >
+                <Card className="h-full border-border/50 bg-card/50 backdrop-blur hover:border-success/50 transition-all duration-300 group">
+                  <CardContent className="p-6">
+                    <div className="w-12 h-12 rounded-xl bg-success/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <Globe className="w-6 h-6 text-success" />
+                    </div>
+                    <h3 className="font-semibold text-lg mb-3 text-foreground">For Policy Makers</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      A bridge to workforce development and social equity, turning underserved communities into hubs of global opportunity.
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </div>
+
+            {/* Movement Statement */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.7 }}
+              className="mt-16 text-center"
+            >
+              <p className="text-lg md:text-xl text-muted-foreground mb-6 max-w-3xl mx-auto">
+                We are more than an EdTech startup. We are a movement to unlock the latent potential of millions, proving that when you align technology with the architecture of the human mind,{" "}
+                <span className="text-foreground font-medium">learning is no longer a struggle—it is a transformation.</span>
+              </p>
+              
+              <div className="inline-flex flex-col items-center gap-2 mt-8">
+                <span className="text-sm text-muted-foreground uppercase tracking-widest">Welcome to the Future of Fluency</span>
+                <span className="font-display text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary via-cognitive-visual to-success bg-clip-text text-transparent">
+                  Welcome to SEE
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Three Pillars Visual */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.8 }}
+              className="mt-20 pt-16 border-t border-border/50"
+            >
+              <h3 className="text-center text-sm font-medium text-muted-foreground uppercase tracking-widest mb-12">
+                The Three Pillars of SEE
+              </h3>
+              
+              <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+                {/* Pillar 1: Science */}
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="text-center group"
+                >
+                  <div className="relative mx-auto w-24 h-24 mb-6">
+                    <div className="absolute inset-0 bg-gradient-to-br from-cognitive-visual/30 to-primary/30 rounded-full blur-xl group-hover:blur-2xl transition-all" />
+                    <div className="relative w-full h-full rounded-full bg-gradient-to-br from-cognitive-visual to-primary flex items-center justify-center shadow-lg">
+                      <Brain className="w-10 h-10 text-white" />
+                    </div>
+                  </div>
+                  <h4 className="font-display text-xl font-bold text-foreground mb-2">The Brain</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Neuro-Linguistic Programming & Cognitive Science
+                  </p>
+                </motion.div>
+
+                {/* Pillar 2: Technology */}
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="text-center group"
+                >
+                  <div className="relative mx-auto w-24 h-24 mb-6">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-cognitive-auditory/30 rounded-full blur-xl group-hover:blur-2xl transition-all" />
+                    <div className="relative w-full h-full rounded-full bg-gradient-to-br from-primary to-cognitive-auditory flex items-center justify-center shadow-lg">
+                      <Eye className="w-10 h-10 text-white" />
+                    </div>
+                  </div>
+                  <h4 className="font-display text-xl font-bold text-foreground mb-2">The Lens</h4>
+                  <p className="text-sm text-muted-foreground">
+                    AI & VR Immersive Technology
+                  </p>
+                </motion.div>
+
+                {/* Pillar 3: Community */}
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="text-center group"
+                >
+                  <div className="relative mx-auto w-24 h-24 mb-6">
+                    <div className="absolute inset-0 bg-gradient-to-br from-success/30 to-warning/30 rounded-full blur-xl group-hover:blur-2xl transition-all" />
+                    <div className="relative w-full h-full rounded-full bg-gradient-to-br from-success to-warning flex items-center justify-center shadow-lg">
+                      <HandHeart className="w-10 h-10 text-white" />
+                    </div>
+                  </div>
+                  <h4 className="font-display text-xl font-bold text-foreground mb-2">The Hand</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Global Community Empowerment
+                  </p>
                 </motion.div>
               </div>
             </motion.div>
