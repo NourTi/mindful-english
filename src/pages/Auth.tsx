@@ -71,7 +71,7 @@ const Auth = () => {
     } else {
       const { error } = await signUp(email, password, name);
       if (!error) {
-        navigate('/complete-profile');
+        navigate('/complete-profile', { state: { isVolunteer: selectedPath === 'volunteer' } });
       }
     }
 

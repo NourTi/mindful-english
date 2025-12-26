@@ -1,6 +1,6 @@
 import { useState, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { User, Calendar, MapPin, Phone, MessageCircle, Heart, Check, ArrowRight, Brain } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,10 +19,20 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/use-toast';
 import NeuralNetwork3D from '@/components/NeuralNetwork3D';
 
+interface LocationState {
+  isVolunteer?: boolean;
+}
+
 const CompleteProfile = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, loading } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Get volunteer selection from navigation state
+  const locationState = location.state as LocationState | null;
+  const initialVolunteer = locationState?.isVolunteer ?? false;
+
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -31,7 +41,7 @@ const CompleteProfile = () => {
     phone_number: '',
     whatsapp_number: '',
     marital_status: '',
-    is_volunteer: false,
+    is_volunteer: initialVolunteer,
   });
 
   useEffect(() => {
