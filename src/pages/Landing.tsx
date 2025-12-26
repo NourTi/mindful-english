@@ -286,6 +286,153 @@ const Landing = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background pointer-events-none" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none" />
           
+          {/* Animated Neural Network Nodes */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {/* Floating nodes */}
+            {[...Array(12)].map((_, i) => (
+              <motion.div
+                key={`node-${i}`}
+                className="absolute"
+                style={{
+                  left: `${10 + (i % 4) * 25 + Math.random() * 10}%`,
+                  top: `${10 + Math.floor(i / 4) * 30 + Math.random() * 10}%`,
+                }}
+                animate={{
+                  y: [0, -20, 0, 20, 0],
+                  x: [0, 10, 0, -10, 0],
+                  scale: [1, 1.1, 1, 0.9, 1],
+                }}
+                transition={{
+                  duration: 8 + i * 0.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: i * 0.3,
+                }}
+              >
+                <div 
+                  className={`rounded-full blur-sm ${
+                    i % 3 === 0 ? 'w-3 h-3 bg-primary/40' : 
+                    i % 3 === 1 ? 'w-2 h-2 bg-cognitive-visual/40' : 
+                    'w-4 h-4 bg-cognitive-auditory/30'
+                  }`}
+                />
+              </motion.div>
+            ))}
+            
+            {/* Glowing orbs */}
+            <motion.div
+              className="absolute top-20 left-[15%] w-32 h-32 rounded-full bg-primary/10 blur-3xl"
+              animate={{ 
+                scale: [1, 1.3, 1],
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute top-[40%] right-[10%] w-40 h-40 rounded-full bg-cognitive-visual/10 blur-3xl"
+              animate={{ 
+                scale: [1.2, 1, 1.2],
+                opacity: [0.4, 0.2, 0.4],
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute bottom-32 left-[20%] w-28 h-28 rounded-full bg-success/10 blur-3xl"
+              animate={{ 
+                scale: [1, 1.4, 1],
+                opacity: [0.2, 0.5, 0.2],
+              }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            />
+            
+            {/* Neural connection lines */}
+            <svg className="absolute inset-0 w-full h-full opacity-20">
+              <motion.line
+                x1="15%" y1="20%" x2="40%" y2="35%"
+                stroke="url(#neural-gradient)" strokeWidth="1"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: [0, 0.5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, repeatDelay: 2 }}
+              />
+              <motion.line
+                x1="40%" y1="35%" x2="70%" y2="25%"
+                stroke="url(#neural-gradient)" strokeWidth="1"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: [0, 0.5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, repeatDelay: 2, delay: 1 }}
+              />
+              <motion.line
+                x1="70%" y1="25%" x2="85%" y2="50%"
+                stroke="url(#neural-gradient)" strokeWidth="1"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: [0, 0.5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, repeatDelay: 2, delay: 2 }}
+              />
+              <motion.line
+                x1="20%" y1="60%" x2="45%" y2="70%"
+                stroke="url(#neural-gradient-alt)" strokeWidth="1"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: [0, 0.4, 0] }}
+                transition={{ duration: 5, repeat: Infinity, repeatDelay: 1.5, delay: 0.5 }}
+              />
+              <motion.line
+                x1="45%" y1="70%" x2="75%" y2="65%"
+                stroke="url(#neural-gradient-alt)" strokeWidth="1"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: [0, 0.4, 0] }}
+                transition={{ duration: 5, repeat: Infinity, repeatDelay: 1.5, delay: 1.5 }}
+              />
+              <motion.line
+                x1="30%" y1="40%" x2="60%" y2="55%"
+                stroke="url(#neural-gradient)" strokeWidth="1"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: [0, 0.3, 0] }}
+                transition={{ duration: 6, repeat: Infinity, repeatDelay: 1, delay: 0.8 }}
+              />
+              <defs>
+                <linearGradient id="neural-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="hsl(var(--primary))" />
+                  <stop offset="100%" stopColor="hsl(var(--cognitive-visual))" />
+                </linearGradient>
+                <linearGradient id="neural-gradient-alt" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="hsl(var(--cognitive-auditory))" />
+                  <stop offset="100%" stopColor="hsl(var(--success))" />
+                </linearGradient>
+              </defs>
+            </svg>
+            
+            {/* Pulsing connection points */}
+            {[
+              { left: '15%', top: '20%' },
+              { left: '40%', top: '35%' },
+              { left: '70%', top: '25%' },
+              { left: '85%', top: '50%' },
+              { left: '20%', top: '60%' },
+              { left: '45%', top: '70%' },
+              { left: '75%', top: '65%' },
+            ].map((pos, i) => (
+              <motion.div
+                key={`pulse-${i}`}
+                className="absolute w-2 h-2"
+                style={{ left: pos.left, top: pos.top }}
+              >
+                <motion.div
+                  className="absolute inset-0 rounded-full bg-primary"
+                  animate={{
+                    scale: [1, 2, 1],
+                    opacity: [0.6, 0, 0.6],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    delay: i * 0.4,
+                  }}
+                />
+                <div className="absolute inset-0 rounded-full bg-primary/60" />
+              </motion.div>
+            ))}
+          </div>
+          
           {/* Floating tagline */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
