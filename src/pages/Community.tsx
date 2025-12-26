@@ -5,6 +5,7 @@ import {
   Users, Plus, Flag, ArrowLeft, Search, Filter,
   Eye, Headphones, BookOpen, Hand, MessageCircle, X, Send
 } from 'lucide-react';
+import SEELogo from '@/components/SEELogo';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -286,6 +287,7 @@ const Community = () => {
               <span className="font-display text-xl font-semibold">Community</span>
             </div>
           </div>
+          <SEELogo size={36} variant="icon" animated={false} theme="auto" />
 
           <Dialog open={showNewRequestDialog} onOpenChange={setShowNewRequestDialog}>
             <DialogTrigger asChild>
