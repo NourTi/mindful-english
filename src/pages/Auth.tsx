@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useAuth } from '@/hooks/useAuth';
 import { z } from 'zod';
 import NeuralNetwork3D from '@/components/NeuralNetwork3D';
+import SEELogo from '@/components/SEELogo';
 
 const emailSchema = z.string().email('Please enter a valid email address');
 const passwordSchema = z.string().min(6, 'Password must be at least 6 characters');
@@ -116,14 +117,8 @@ const Auth = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="flex items-center justify-center gap-4 mb-6">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[hsl(187,90%,50%)] to-[hsl(187,95%,65%)] flex items-center justify-center text-[hsl(234,40%,6%)] font-bold text-3xl shadow-lg glow-cyan">
-            S
-          </div>
-          <div className="text-left">
-            <h1 className="font-display text-4xl font-bold text-[hsl(195,80%,95%)] text-glow-cyan">SEE</h1>
-            <p className="text-sm text-[hsl(195,60%,70%)]">Students for Education Empowerment</p>
-          </div>
+        <div className="flex items-center justify-center mb-6">
+          <SEELogo size={64} showText animated />
         </div>
         
         <motion.h2 
