@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Playfair Display", "serif"],
+        display: ["Nunito", "sans-serif"],
         sans: ["Inter", "sans-serif"],
       },
       colors: {
@@ -27,6 +27,7 @@ export default {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
           glow: "hsl(var(--primary-glow))",
+          dark: "hsl(var(--primary-dark))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -76,6 +77,11 @@ export default {
           reading: "hsl(var(--reading))",
           kinesthetic: "hsl(var(--kinesthetic))",
         },
+        path: {
+          complete: "hsl(var(--path-complete))",
+          current: "hsl(var(--path-current))",
+          locked: "hsl(var(--path-locked))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -88,6 +94,7 @@ export default {
         soft: "var(--shadow-soft)",
         glow: "var(--shadow-glow)",
         card: "var(--shadow-card)",
+        node: "var(--shadow-node)",
       },
       keyframes: {
         "accordion-down": {
@@ -106,18 +113,30 @@ export default {
           "0%, 100%": { boxShadow: "0 0 20px hsl(var(--primary) / 0.3)" },
           "50%": { boxShadow: "0 0 40px hsl(var(--primary) / 0.5)" },
         },
+        "bounce-gentle": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" },
+        },
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-3deg)" },
+          "50%": { transform: "rotate(3deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         shimmer: "shimmer 2s linear infinite",
         glow: "glow 2s ease-in-out infinite",
+        "bounce-gentle": "bounce-gentle 2s ease-in-out infinite",
+        wiggle: "wiggle 0.3s ease-in-out",
       },
       backgroundImage: {
-        "gradient-calm": "var(--gradient-calm)",
-        "gradient-warm": "var(--gradient-warm)",
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-accent": "var(--gradient-accent)",
+        "gradient-success": "var(--gradient-success)",
         "gradient-hero": "var(--gradient-hero)",
         "gradient-glass": "var(--gradient-glass)",
+        "gradient-path": "var(--gradient-path)",
       },
     },
   },
