@@ -1,12 +1,14 @@
-import { Suspense } from 'react';
-import { motion } from 'framer-motion';
+import { Suspense, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
   Brain, Sparkles, Users, Target, Zap, Heart, 
-  BookOpen, Globe, ChevronRight, Star, Play
+  BookOpen, Globe, ChevronRight, Star, Play, Check,
+  MousePointer, MessageSquare, Award, ArrowRight, RotateCcw
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
 import Scene3D from '@/components/Scene3D';
 import SEELogo from '@/components/SEELogo';
 
@@ -72,8 +74,67 @@ const stats = [
   { value: '150+', label: 'Lessons' },
 ];
 
+const walkthroughSteps = [
+  {
+    id: 1,
+    title: 'Take a Quick Assessment',
+    description: 'Answer a few questions about your learning preferences and goals. Our AI analyzes your cognitive profile.',
+    icon: Brain,
+    color: 'text-primary',
+    bgColor: 'bg-primary/10',
+    demo: 'assessment',
+  },
+  {
+    id: 2,
+    title: 'Get Your Personalized Path',
+    description: 'Receive a custom learning journey designed for your unique brain. No one-size-fits-all here.',
+    icon: Target,
+    color: 'text-cognitive-visual',
+    bgColor: 'bg-cognitive-visual/10',
+    demo: 'path',
+  },
+  {
+    id: 3,
+    title: 'Learn at Your Pace',
+    description: 'Engage with adaptive lessons that adjust in real-time based on your performance and emotional state.',
+    icon: BookOpen,
+    color: 'text-success',
+    bgColor: 'bg-success/10',
+    demo: 'lesson',
+  },
+  {
+    id: 4,
+    title: 'Practice with Partners',
+    description: 'Connect with learning partners matched to your style. Practice real conversations in a safe space.',
+    icon: Users,
+    color: 'text-cognitive-auditory',
+    bgColor: 'bg-cognitive-auditory/10',
+    demo: 'community',
+  },
+  {
+    id: 5,
+    title: 'Celebrate Your Progress',
+    description: 'Track achievements, earn rewards, and watch your confidence soar as you master English.',
+    icon: Award,
+    color: 'text-warning',
+    bgColor: 'bg-warning/10',
+    demo: 'achievement',
+  },
+];
+
 const Landing = () => {
   const navigate = useNavigate();
+  const [activeStep, setActiveStep] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  // Auto-advance walkthrough
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    const interval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % walkthroughSteps.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isAutoPlaying]);
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
@@ -255,6 +316,356 @@ const Landing = () => {
                   </Card>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Interactive Walkthrough Section */}
+        <section id="how-it-works" className="py-24 relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
+          
+          <div className="max-w-7xl mx-auto px-4 relative">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-success/10 border border-success/20 mb-6">
+                <Play className="w-4 h-4 text-success" />
+                <span className="text-sm font-medium text-success">Interactive Demo</span>
+              </div>
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
+                See How It Works
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Take a quick tour of your learning journey with SEE.
+              </p>
+            </motion.div>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+              {/* Steps Navigation */}
+              <div className="space-y-4">
+                {walkthroughSteps.map((step, index) => (
+                  <motion.div
+                    key={step.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <button
+                      onClick={() => {
+                        setActiveStep(index);
+                        setIsAutoPlaying(false);
+                      }}
+                      className={`w-full text-left p-4 rounded-2xl border transition-all duration-300 group ${
+                        activeStep === index
+                          ? 'bg-card border-primary shadow-lg'
+                          : 'bg-card/50 border-border/50 hover:border-border hover:bg-card/80'
+                      }`}
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className={`w-12 h-12 rounded-xl ${step.bgColor} flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110 ${
+                          activeStep === index ? 'scale-110' : ''
+                        }`}>
+                          <step.icon className={`w-6 h-6 ${step.color}`} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xs font-medium text-muted-foreground">Step {step.id}</span>
+                            {activeStep > index && (
+                              <Check className="w-4 h-4 text-success" />
+                            )}
+                          </div>
+                          <h3 className={`font-semibold mb-1 transition-colors ${
+                            activeStep === index ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
+                          }`}>
+                            {step.title}
+                          </h3>
+                          <AnimatePresence mode="wait">
+                            {activeStep === index && (
+                              <motion.p
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                className="text-sm text-muted-foreground"
+                              >
+                                {step.description}
+                              </motion.p>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                        <ArrowRight className={`w-5 h-5 flex-shrink-0 transition-all ${
+                          activeStep === index ? 'text-primary translate-x-1' : 'text-muted-foreground/30'
+                        }`} />
+                      </div>
+                    </button>
+                  </motion.div>
+                ))}
+
+                {/* Controls */}
+                <div className="flex items-center justify-between pt-4">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setActiveStep(0);
+                      setIsAutoPlaying(true);
+                    }}
+                    className="gap-2"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                    Restart
+                  </Button>
+                  <Progress 
+                    value={((activeStep + 1) / walkthroughSteps.length) * 100} 
+                    className="w-32 h-2"
+                  />
+                </div>
+              </div>
+
+              {/* Demo Preview */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="sticky top-24"
+              >
+                <Card className="border-border/50 bg-card overflow-hidden shadow-2xl">
+                  <div className="bg-muted/50 px-4 py-3 border-b border-border/50 flex items-center gap-2">
+                    <div className="flex gap-1.5">
+                      <div className="w-3 h-3 rounded-full bg-destructive/60" />
+                      <div className="w-3 h-3 rounded-full bg-warning/60" />
+                      <div className="w-3 h-3 rounded-full bg-success/60" />
+                    </div>
+                    <span className="text-xs text-muted-foreground ml-2">SEE Learning Platform</span>
+                  </div>
+                  
+                  <CardContent className="p-0">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={activeStep}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3 }}
+                        className="p-6 min-h-[400px] flex flex-col"
+                      >
+                        {/* Assessment Demo */}
+                        {walkthroughSteps[activeStep].demo === 'assessment' && (
+                          <div className="space-y-6">
+                            <div className="text-center mb-4">
+                              <h4 className="font-semibold text-lg text-foreground mb-2">Learning Style Assessment</h4>
+                              <p className="text-sm text-muted-foreground">How do you prefer to learn new concepts?</p>
+                            </div>
+                            <div className="space-y-3">
+                              {['Visual diagrams & charts', 'Listening to explanations', 'Reading & writing notes', 'Hands-on practice'].map((option, i) => (
+                                <motion.div
+                                  key={option}
+                                  initial={{ opacity: 0, x: -10 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ delay: i * 0.1 }}
+                                  className={`p-4 rounded-xl border transition-all cursor-pointer ${
+                                    i === 0 ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-3">
+                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                                      i === 0 ? 'border-primary bg-primary' : 'border-muted-foreground'
+                                    }`}>
+                                      {i === 0 && <Check className="w-3 h-3 text-primary-foreground" />}
+                                    </div>
+                                    <span className="text-sm">{option}</span>
+                                  </div>
+                                </motion.div>
+                              ))}
+                            </div>
+                            <motion.div
+                              initial={{ scaleX: 0 }}
+                              animate={{ scaleX: 1 }}
+                              transition={{ delay: 0.5, duration: 1 }}
+                              className="h-2 bg-primary/20 rounded-full overflow-hidden origin-left"
+                            >
+                              <div className="h-full w-1/4 bg-primary rounded-full" />
+                            </motion.div>
+                          </div>
+                        )}
+
+                        {/* Learning Path Demo */}
+                        {walkthroughSteps[activeStep].demo === 'path' && (
+                          <div className="space-y-6">
+                            <div className="text-center mb-4">
+                              <h4 className="font-semibold text-lg text-foreground mb-2">Your Learning Path</h4>
+                              <p className="text-sm text-muted-foreground">Personalized for visual learners</p>
+                            </div>
+                            <div className="flex flex-col items-center gap-3">
+                              {['Foundations', 'Vocabulary', 'Grammar', 'Conversation', 'Fluency'].map((level, i) => (
+                                <motion.div
+                                  key={level}
+                                  initial={{ opacity: 0, scale: 0.8 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  transition={{ delay: i * 0.15 }}
+                                  className="flex items-center gap-4 w-full max-w-xs"
+                                >
+                                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${
+                                    i === 0 ? 'bg-success text-success-foreground' :
+                                    i === 1 ? 'bg-primary text-primary-foreground ring-4 ring-primary/30' :
+                                    'bg-muted text-muted-foreground'
+                                  }`}>
+                                    {i < 1 ? <Check className="w-5 h-5" /> : i + 1}
+                                  </div>
+                                  <div className="flex-1">
+                                    <span className={`text-sm font-medium ${i <= 1 ? 'text-foreground' : 'text-muted-foreground'}`}>
+                                      {level}
+                                    </span>
+                                  </div>
+                                  {i === 1 && (
+                                    <span className="text-xs text-primary font-medium">Current</span>
+                                  )}
+                                </motion.div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Lesson Demo */}
+                        {walkthroughSteps[activeStep].demo === 'lesson' && (
+                          <div className="space-y-6">
+                            <div className="bg-success/10 border border-success/20 rounded-xl p-4">
+                              <div className="flex items-center gap-2 text-success mb-2">
+                                <Sparkles className="w-4 h-4" />
+                                <span className="text-sm font-medium">Adaptive Content</span>
+                              </div>
+                              <p className="text-sm text-muted-foreground">
+                                Based on your visual learning style, we're showing you infographics and diagrams.
+                              </p>
+                            </div>
+                            <Card className="border-border">
+                              <CardContent className="p-4">
+                                <div className="aspect-video bg-gradient-to-br from-primary/20 to-cognitive-visual/20 rounded-lg flex items-center justify-center mb-4">
+                                  <motion.div
+                                    animate={{ scale: [1, 1.1, 1] }}
+                                    transition={{ duration: 2, repeat: Infinity }}
+                                    className="w-16 h-16 rounded-full bg-card border border-border flex items-center justify-center"
+                                  >
+                                    <Play className="w-8 h-8 text-primary ml-1" />
+                                  </motion.div>
+                                </div>
+                                <h5 className="font-medium mb-1">Interactive Vocabulary</h5>
+                                <p className="text-xs text-muted-foreground">Tap words to see visual definitions</p>
+                              </CardContent>
+                            </Card>
+                          </div>
+                        )}
+
+                        {/* Community Demo */}
+                        {walkthroughSteps[activeStep].demo === 'community' && (
+                          <div className="space-y-4">
+                            <div className="text-center mb-2">
+                              <h4 className="font-semibold text-lg text-foreground mb-1">Find Learning Partners</h4>
+                              <p className="text-xs text-muted-foreground">Matched by learning style & level</p>
+                            </div>
+                            {[
+                              { name: 'Ana M.', style: 'Visual', level: 3, match: 94 },
+                              { name: 'Carlos R.', style: 'Visual', level: 3, match: 89 },
+                              { name: 'Maria S.', style: 'Mixed', level: 4, match: 82 },
+                            ].map((partner, i) => (
+                              <motion.div
+                                key={partner.name}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: i * 0.15 }}
+                                className="flex items-center gap-3 p-3 rounded-xl border border-border hover:border-primary/50 transition-colors"
+                              >
+                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-cognitive-visual flex items-center justify-center text-primary-foreground font-bold text-sm">
+                                  {partner.name.split(' ').map(n => n[0]).join('')}
+                                </div>
+                                <div className="flex-1">
+                                  <div className="font-medium text-sm">{partner.name}</div>
+                                  <div className="text-xs text-muted-foreground">{partner.style} • Level {partner.level}</div>
+                                </div>
+                                <div className="text-right">
+                                  <div className="text-sm font-bold text-success">{partner.match}%</div>
+                                  <div className="text-xs text-muted-foreground">match</div>
+                                </div>
+                              </motion.div>
+                            ))}
+                            <Button className="w-full gap-2" size="sm">
+                              <MessageSquare className="w-4 h-4" />
+                              Start Practicing
+                            </Button>
+                          </div>
+                        )}
+
+                        {/* Achievement Demo */}
+                        {walkthroughSteps[activeStep].demo === 'achievement' && (
+                          <div className="flex flex-col items-center justify-center h-full text-center">
+                            <motion.div
+                              initial={{ scale: 0, rotate: -180 }}
+                              animate={{ scale: 1, rotate: 0 }}
+                              transition={{ type: 'spring', duration: 0.8 }}
+                              className="w-24 h-24 rounded-full bg-gradient-to-br from-warning to-warning/60 flex items-center justify-center mb-6 shadow-lg"
+                            >
+                              <Award className="w-12 h-12 text-warning-foreground" />
+                            </motion.div>
+                            <motion.h4
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: 0.3 }}
+                              className="font-bold text-xl text-foreground mb-2"
+                            >
+                              First Milestone! 🎉
+                            </motion.h4>
+                            <motion.p
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ delay: 0.5 }}
+                              className="text-muted-foreground mb-4"
+                            >
+                              You've completed 5 lessons!
+                            </motion.p>
+                            <motion.div
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: 0.7 }}
+                              className="flex items-center gap-6"
+                            >
+                              <div className="text-center">
+                                <div className="text-2xl font-bold text-primary">250</div>
+                                <div className="text-xs text-muted-foreground">XP Earned</div>
+                              </div>
+                              <div className="text-center">
+                                <div className="text-2xl font-bold text-success">5</div>
+                                <div className="text-xs text-muted-foreground">Day Streak</div>
+                              </div>
+                              <div className="text-center">
+                                <div className="text-2xl font-bold text-warning">3</div>
+                                <div className="text-xs text-muted-foreground">Badges</div>
+                              </div>
+                            </motion.div>
+                          </div>
+                        )}
+                      </motion.div>
+                    </AnimatePresence>
+                  </CardContent>
+                </Card>
+
+                {/* CTA under demo */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 }}
+                  className="text-center mt-6"
+                >
+                  <Button size="lg" onClick={() => navigate('/auth')} className="gap-2">
+                    Try It Yourself
+                    <ChevronRight className="w-5 h-5" />
+                  </Button>
+                </motion.div>
+              </motion.div>
             </div>
           </div>
         </section>
