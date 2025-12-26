@@ -9,7 +9,8 @@ import { ScenarioManager } from '@/components/admin/ScenarioManager';
 import { QuizManager } from '@/components/admin/QuizManager';
 import { ContentManager } from '@/components/admin/ContentManager';
 import { ReportsManager } from '@/components/admin/ReportsManager';
-import { LayoutDashboard, MessageSquare, HelpCircle, FileText, ArrowLeft, Shield, Flag } from 'lucide-react';
+import { UserManager } from '@/components/admin/UserManager';
+import { LayoutDashboard, MessageSquare, HelpCircle, FileText, ArrowLeft, Shield, Flag, Users } from 'lucide-react';
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -79,8 +80,12 @@ const Admin = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-        <Tabs defaultValue="scenarios" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
+        <Tabs defaultValue="users" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-grid">
+            <TabsTrigger value="users" className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              <span className="hidden sm:inline">Users</span>
+            </TabsTrigger>
             <TabsTrigger value="scenarios" className="flex items-center gap-2">
               <MessageSquare className="w-4 h-4" />
               <span className="hidden sm:inline">Scenarios</span>
@@ -98,6 +103,10 @@ const Admin = () => {
               <span className="hidden sm:inline">Reports</span>
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="users">
+            <UserManager />
+          </TabsContent>
 
           <TabsContent value="scenarios">
             <ScenarioManager />
