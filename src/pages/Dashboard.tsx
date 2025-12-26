@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, Play, Flame, Trophy, Brain, Heart, 
   Eye, Headphones, Hand, Clock, Sparkles, 
-  TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users, MessageCircle
+  TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users, MessageCircle, GraduationCap
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -62,6 +62,7 @@ const Dashboard = () => {
 
   const navItems = [
     { label: 'Lessons', path: '/lessons', icon: BookOpen },
+    { label: 'Vocabulary', path: '/vocabulary', icon: GraduationCap },
     { label: 'Community', path: '/community', icon: Users },
     { label: 'Messages', path: '/messages', icon: MessageCircle },
   ];

@@ -13,6 +13,7 @@ import Scenario from "./pages/Scenario";
 import Admin from "./pages/Admin";
 import Community from "./pages/Community";
 import Messages from "./pages/Messages";
+import Vocabulary from "./pages/Vocabulary";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/admin" element={<Admin />} />
             <Route path="/community" element={<Community />} />
             <Route path="/messages" element={<Messages />} />
+            <Route path="/vocabulary" element={<Vocabulary />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
