@@ -7,6 +7,7 @@ import {
   TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users, MessageCircle, GraduationCap
 } from 'lucide-react';
 import Scene3D from '@/components/Scene3D';
+import SEELogo from '@/components/SEELogo';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -80,12 +81,7 @@ const Dashboard = () => {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center text-primary-foreground font-bold text-lg">
-              S
-            </div>
-            <span className="font-display text-xl font-semibold text-foreground">SEE</span>
-          </div>
+          <SEELogo size={40} showText animated={false} theme="auto" />
           
           {/* Navigation - Desktop */}
           <nav className="hidden md:flex items-center gap-1">

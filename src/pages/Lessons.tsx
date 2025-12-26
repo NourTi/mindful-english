@@ -6,6 +6,7 @@ import {
   Play, CheckCircle, Circle, ChevronDown, Eye, 
   Headphones, Hand, ArrowLeft, Bookmark
 } from 'lucide-react';
+import SEELogo from '@/components/SEELogo';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
@@ -255,16 +256,19 @@ const Lessons = () => {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/')}>
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-            <div>
-              <h1 className="font-display text-2xl font-bold text-foreground">Lessons</h1>
-              <p className="text-sm text-muted-foreground">
-                {filteredLessons.length} lessons available
-              </p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Button variant="ghost" size="icon" onClick={() => navigate('/')}>
+                <ArrowLeft className="w-5 h-5" />
+              </Button>
+              <div>
+                <h1 className="font-display text-2xl font-bold text-foreground">Lessons</h1>
+                <p className="text-sm text-muted-foreground">
+                  {filteredLessons.length} lessons available
+                </p>
+              </div>
             </div>
+            <SEELogo size={36} variant="icon" animated={false} theme="auto" />
           </div>
         </div>
       </header>
