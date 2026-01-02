@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { 
   Brain, Sparkles, Users, Target, Zap, Heart, 
   BookOpen, Globe, ChevronRight, Star, Play, Check,
-  MessageSquare, Award, ArrowRight, RotateCcw, Eye, HandHeart
+  MessageSquare, Award, ArrowRight, RotateCcw, Eye, HandHeart,
+  Send, Mail, MessageCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -1144,21 +1145,216 @@ const Landing = () => {
           </div>
         </section>
 
+        {/* Newsletter & Contact Section */}
+        <section id="contact" className="py-24 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden">
+          {/* Background decorations */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
+            <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/5 rounded-full blur-3xl" />
+          </div>
+          
+          <div className="max-w-6xl mx-auto px-4 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+                Stay <span className="gradient-text">Connected</span>
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Join our community and be the first to know about new features, learning resources, and educational insights.
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-12">
+              {/* Newsletter Signup */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+              >
+                <Card className="h-full border-border/50 bg-card/80 backdrop-blur-sm">
+                  <CardContent className="p-8">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <Send className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-display text-2xl font-bold">Newsletter</h3>
+                        <p className="text-sm text-muted-foreground">Weekly insights delivered</p>
+                      </div>
+                    </div>
+                    
+                    <p className="text-muted-foreground mb-6">
+                      Get exclusive access to learning tips, scientific insights on language acquisition, and early feature announcements.
+                    </p>
+                    
+                    <form className="space-y-4" onSubmit={(e) => {
+                      e.preventDefault();
+                      // Newsletter signup logic would go here
+                    }}>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                        <input 
+                          type="email" 
+                          placeholder="Enter your email"
+                          className="w-full pl-11 pr-4 py-3 rounded-xl border border-border bg-background focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all"
+                          required
+                        />
+                      </div>
+                      <Button type="submit" className="w-full" size="lg">
+                        Subscribe
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </form>
+                    
+                    <p className="text-xs text-muted-foreground mt-4 text-center">
+                      We respect your privacy. Unsubscribe at any time.
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Contact Form */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                <Card className="h-full border-border/50 bg-card/80 backdrop-blur-sm">
+                  <CardContent className="p-8">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
+                        <MessageCircle className="w-6 h-6 text-accent" />
+                      </div>
+                      <div>
+                        <h3 className="font-display text-2xl font-bold">Get in Touch</h3>
+                        <p className="text-sm text-muted-foreground">We'd love to hear from you</p>
+                      </div>
+                    </div>
+                    
+                    <form className="space-y-4" onSubmit={(e) => {
+                      e.preventDefault();
+                      // Contact form logic would go here
+                    }}>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <input 
+                            type="text" 
+                            placeholder="First name"
+                            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <input 
+                            type="text" 
+                            placeholder="Last name"
+                            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <input 
+                          type="email" 
+                          placeholder="Email address"
+                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <select 
+                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all text-muted-foreground"
+                          defaultValue=""
+                        >
+                          <option value="" disabled>I am a...</option>
+                          <option value="learner">Learner</option>
+                          <option value="educator">Educator / Practitioner</option>
+                          <option value="investor">Investor</option>
+                          <option value="policymaker">Policy Maker</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+                      <div>
+                        <textarea 
+                          placeholder="Your message"
+                          rows={3}
+                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all resize-none"
+                          required
+                        />
+                      </div>
+                      <Button type="submit" className="w-full" size="lg" variant="warm">
+                        Send Message
+                        <Send className="w-4 h-4 ml-2" />
+                      </Button>
+                    </form>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
         {/* Footer */}
-        <footer className="py-12 border-t border-border/50">
+        <footer className="py-12 border-t border-border/50 bg-muted/20">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <SEELogo size={36} showText animated={false} theme="auto" />
-              
-              <div className="flex items-center gap-8 text-sm text-muted-foreground">
-                <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
-                <a href="#" className="hover:text-foreground transition-colors">Terms</a>
-                <a href="#" className="hover:text-foreground transition-colors">Contact</a>
+            <div className="grid md:grid-cols-4 gap-8 mb-8">
+              {/* Brand */}
+              <div className="md:col-span-1">
+                <SEELogo size={36} showText animated={false} theme="auto" />
+                <p className="text-sm text-muted-foreground mt-4">
+                  Transforming language learning through the convergence of science, technology, and human connection.
+                </p>
               </div>
               
+              {/* Quick Links */}
+              <div>
+                <h4 className="font-semibold mb-4">Platform</h4>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li><a href="#about" className="hover:text-foreground transition-colors">About Us</a></li>
+                  <li><a href="#features" className="hover:text-foreground transition-colors">Features</a></li>
+                  <li><a href="#walkthrough" className="hover:text-foreground transition-colors">How It Works</a></li>
+                </ul>
+              </div>
+              
+              {/* Resources */}
+              <div>
+                <h4 className="font-semibold mb-4">Resources</h4>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li><a href="#" className="hover:text-foreground transition-colors">Blog</a></li>
+                  <li><a href="#" className="hover:text-foreground transition-colors">Research</a></li>
+                  <li><a href="#" className="hover:text-foreground transition-colors">FAQ</a></li>
+                </ul>
+              </div>
+              
+              {/* Legal */}
+              <div>
+                <h4 className="font-semibold mb-4">Legal</h4>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li><a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a></li>
+                  <li><a href="#" className="hover:text-foreground transition-colors">Terms of Service</a></li>
+                  <li><a href="#contact" className="hover:text-foreground transition-colors">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
               <p className="text-sm text-muted-foreground">
-                © 2024 SEE. Students for Education Empowerment.
+                © 2024 SEE. Students for Education Empowerment. All rights reserved.
               </p>
+              <div className="flex items-center gap-4">
+                <a href="#" className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-colors">
+                  <Globe className="w-5 h-5" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-colors">
+                  <Mail className="w-5 h-5" />
+                </a>
+              </div>
             </div>
           </div>
         </footer>
