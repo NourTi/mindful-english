@@ -10,6 +10,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { z } from 'zod';
 import { BackgroundPaths } from '@/components/ui/background-paths';
 import SEELogo from '@/components/SEELogo';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const emailSchema = z.string().email('Please enter a valid email address');
 const passwordSchema = z.string().min(6, 'Password must be at least 6 characters');
@@ -100,6 +101,11 @@ const Auth = () => {
 
   return (
     <BackgroundPaths title="">
+      {/* Theme Toggle - Fixed Position */}
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
+      
       <div className="w-full max-w-4xl mx-auto px-4">
         {/* Logo & Hero */}
         <motion.div 

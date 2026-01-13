@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Assessment from "./pages/Assessment";
@@ -22,29 +23,31 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/complete-profile" element={<CompleteProfile />} />
-            <Route path="/assessment" element={<Assessment />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/lessons" element={<Lessons />} />
-            <Route path="/lesson/:lessonId" element={<Lesson />} />
-            <Route path="/scenario" element={<Scenario />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/community" element={<Community />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/vocabulary" element={<Vocabulary />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/complete-profile" element={<CompleteProfile />} />
+              <Route path="/assessment" element={<Assessment />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/lessons" element={<Lessons />} />
+              <Route path="/lesson/:lessonId" element={<Lesson />} />
+              <Route path="/scenario" element={<Scenario />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/messages" element={<Messages />} />
+              <Route path="/vocabulary" element={<Vocabulary />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
