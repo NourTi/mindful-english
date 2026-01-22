@@ -130,6 +130,8 @@
     --gradient-glass: linear-gradient(135deg, rgba(15,20,35,0.85), rgba(15,20,35,0.5));
     --gradient-path: linear-gradient(180deg, hsl(187 90% 50% / 0.1), hsl(160 70% 45% / 0.1));
     --gradient-neural: radial-gradient(ellipse at center, hsl(187 90% 50% / 0.05) 0%, transparent 70%);
+    --gradient-holographic: linear-gradient(135deg, hsl(187 90% 50% / 0.1) 0%, hsl(38 92% 55% / 0.1) 50%, hsl(262 65% 58% / 0.1) 100%);
+    --gradient-cyber: linear-gradient(to right, hsl(187 90% 50%), hsl(262 65% 58%), hsl(38 92% 55%));
 
     --path-complete: 160 70% 45%;
     --path-current: 187 90% 50%;
@@ -138,8 +140,11 @@
     /* Neural glow effects */
     --neural-cyan: 187 90% 50%;
     --neural-amber: 38 92% 55%;
+    --neural-purple: 262 65% 58%;
     --glow-cyan: 0 0 30px hsl(187 90% 50% / 0.4);
     --glow-amber: 0 0 30px hsl(38 92% 55% / 0.4);
+    --glow-purple: 0 0 30px hsl(262 65% 58% / 0.4);
+    --glow-intense: 0 0 60px hsl(187 90% 50% / 0.6), 0 0 120px hsl(187 90% 50% / 0.3);
 
     --sidebar-background: 234 35% 8%;
     --sidebar-foreground: 195 80% 95%;
@@ -188,12 +193,56 @@
       inset 0 1px 0 0 hsl(187 90% 50% / 0.1);
   }
 
+  .holographic-border {
+    position: relative;
+    background: linear-gradient(135deg, hsl(var(--card) / 0.9), hsl(var(--card) / 0.5));
+    border: 1px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .holographic-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--cognitive-visual)));
+    z-index: -1;
+    opacity: 0.5;
+  }
+
+  .cyber-scanline {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cyber-scanline::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      hsl(var(--primary) / 0.03) 2px,
+      hsl(var(--primary) / 0.03) 4px
+    );
+    pointer-events: none;
+  }
+
   .glow-cyan {
     box-shadow: var(--glow-cyan);
   }
 
   .glow-amber {
     box-shadow: var(--glow-amber);
+  }
+
+  .glow-purple {
+    box-shadow: var(--glow-purple);
+  }
+
+  .glow-intense {
+    box-shadow: var(--glow-intense);
   }
 
   .text-glow-cyan {
@@ -204,6 +253,10 @@
     text-shadow: 0 0 20px hsl(38 92% 55% / 0.6);
   }
 
+  .text-glow-purple {
+    text-shadow: 0 0 20px hsl(262 65% 58% / 0.6);
+  }
+
   .gradient-text {
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-primary);
@@ -212,6 +265,18 @@
   .gradient-text-accent {
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-accent);
+  }
+
+  .gradient-text-cyber {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-cyber);
+  }
+
+  .neon-border {
+    border: 1px solid hsl(var(--primary) / 0.5);
+    box-shadow: 
+      0 0 5px hsl(var(--primary) / 0.3),
+      inset 0 0 5px hsl(var(--primary) / 0.1);
   }
 
   /* Path Node Styles */
