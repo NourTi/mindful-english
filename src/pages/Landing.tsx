@@ -18,6 +18,7 @@ import HolographicCard from '@/components/HolographicCard';
 import VRMockup from '@/components/VRMockup';
 import GlitchText from '@/components/GlitchText';
 import AIBrainVisualizer from '@/components/AIBrainVisualizer';
+import VRScenePreview from '@/components/VRScenePreview';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const features = [
@@ -422,6 +423,22 @@ const Landing = () => {
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                 Language learning transcends screens. Experience full cognitive immersion in our VR environments.
               </p>
+            </motion.div>
+
+            {/* Interactive 3D VR Scene Preview */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-24"
+            >
+              <Suspense fallback={
+                <div className="w-full h-[500px] rounded-2xl bg-card/50 animate-pulse flex items-center justify-center">
+                  <div className="text-muted-foreground">Loading 3D Scene...</div>
+                </div>
+              }>
+                <VRScenePreview />
+              </Suspense>
             </motion.div>
 
             <div className="grid lg:grid-cols-2 gap-16 items-center">
