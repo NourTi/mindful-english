@@ -19,6 +19,7 @@ import VRMockup from '@/components/VRMockup';
 import GlitchText from '@/components/GlitchText';
 import AIBrainVisualizer from '@/components/AIBrainVisualizer';
 import VRScenePreview from '@/components/VRScenePreview';
+import DemoVideoModal from '@/components/DemoVideoModal';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const features = [
@@ -98,6 +99,7 @@ const Landing = () => {
   const navigate = useNavigate();
   const [activeFeature, setActiveFeature] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -233,6 +235,7 @@ const Landing = () => {
                     size="lg" 
                     variant="outline" 
                     className="gap-2 text-lg px-8 border-primary/30 hover:border-primary/60 hover:bg-primary/5"
+                    onClick={() => setIsDemoOpen(true)}
                   >
                     <Eye className="w-5 h-5" />
                     Watch Demo
@@ -715,6 +718,9 @@ const Landing = () => {
           </div>
         </div>
       </footer>
+
+      {/* Demo Video Modal */}
+      <DemoVideoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
     </div>
   );
 };
