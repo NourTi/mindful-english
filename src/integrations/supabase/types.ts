@@ -144,6 +144,33 @@ export type Database = {
           },
         ]
       }
+      data_export_log: {
+        Row: {
+          admin_user_id: string
+          created_at: string
+          export_type: string
+          fields_exported: string[]
+          id: string
+          record_count: number
+        }
+        Insert: {
+          admin_user_id: string
+          created_at?: string
+          export_type: string
+          fields_exported?: string[]
+          id?: string
+          record_count: number
+        }
+        Update: {
+          admin_user_id?: string
+          created_at?: string
+          export_type?: string
+          fields_exported?: string[]
+          id?: string
+          record_count?: number
+        }
+        Relationships: []
+      }
       lesson_content: {
         Row: {
           content: string

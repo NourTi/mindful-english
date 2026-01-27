@@ -18,9 +18,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/use-toast';
-import { Users, Download, Search, Filter, RefreshCw, UserCheck, UserX, Mail, Phone, Calendar } from 'lucide-react';
+import { Users, Download, Search, Filter, RefreshCw, UserCheck, UserX, Mail, Phone, Calendar, Shield, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface Profile {
@@ -46,6 +56,9 @@ export const UserManager = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterVolunteer, setFilterVolunteer] = useState<string>('all');
   const [filterCompleted, setFilterCompleted] = useState<string>('all');
+  const [exportDialogOpen, setExportDialogOpen] = useState(false);
+  const [exportType, setExportType] = useState<'all_users' | 'volunteers'>('all_users');
+  const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
     fetchProfiles();
@@ -94,54 +107,46 @@ export const UserManager = () => {
 
   const volunteers = profiles.filter(p => p.is_volunteer);
 
-  const exportToCSV = (dataToExport: Profile[], filename: string) => {
-    const headers = [
-      'Name',
-      'Email',
-      'First Name',
-      'Last Name',
-      'Phone',
-      'WhatsApp',
-      'Marital Status',
-      'Is Volunteer',
-      'Profile Completed',
-      'Learning Style',
-      'Level',
-      'Total XP',
-      'Created At'
-    ];
+  const handleExportRequest = (type: 'all_users' | 'volunteers') => {
+    setExportType(type);
+    setExportDialogOpen(true);
+  };
 
-    const csvData = dataToExport.map(profile => [
-      profile.name || '',
-      profile.email || '',
-      profile.first_name || '',
-      profile.last_name || '',
-      profile.phone_number || '',
-      profile.whatsapp_number || '',
-      profile.marital_status || '',
-      profile.is_volunteer ? 'Yes' : 'No',
-      profile.profile_completed ? 'Yes' : 'No',
-      profile.learning_style || '',
-      profile.current_level?.toString() || '',
-      profile.total_xp?.toString() || '',
-      profile.created_at ? format(new Date(profile.created_at), 'yyyy-MM-dd HH:mm') : ''
-    ]);
+  const handleConfirmedExport = async () => {
+    setIsExporting(true);
+    setExportDialogOpen(false);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('export-users', {
+        body: { exportType: exportType }
+      });
 
-    const csvContent = [
-      headers.join(','),
-      ...csvData.map(row => row.map(cell => `"${cell}"`).join(','))
-    ].join('\n');
+      if (error) throw error;
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `${filename}_${format(new Date(), 'yyyy-MM-dd')}.csv`;
-    link.click();
+      if (data?.csv) {
+        // Download the CSV
+        const blob = new Blob([data.csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `${exportType}_${format(new Date(), 'yyyy-MM-dd')}.csv`;
+        link.click();
+        URL.revokeObjectURL(link.href);
 
-    toast({
-      title: 'Export successful',
-      description: `Exported ${dataToExport.length} records to ${filename}.csv`,
-    });
+        toast({
+          title: 'Export successful',
+          description: `Exported ${data.recordCount} records. This action has been logged for security compliance.`,
+        });
+      }
+    } catch (error: any) {
+      console.error('Export error:', error);
+      toast({
+        title: 'Export failed',
+        description: error.message || 'Failed to export data. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   return (
@@ -215,8 +220,8 @@ export const UserManager = () => {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => exportToCSV(volunteers, 'volunteers')}
-                disabled={volunteers.length === 0}
+                onClick={() => handleExportRequest('volunteers')}
+                disabled={volunteers.length === 0 || isExporting}
               >
                 <Download className="w-4 h-4 mr-2" />
                 Export Volunteers
@@ -224,7 +229,8 @@ export const UserManager = () => {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => exportToCSV(filteredProfiles, 'all_users')}
+                onClick={() => handleExportRequest('all_users')}
+                disabled={isExporting}
               >
                 <Download className="w-4 h-4 mr-2" />
                 Export All
@@ -379,6 +385,46 @@ export const UserManager = () => {
           </p>
         </CardContent>
       </Card>
+
+      {/* Export Confirmation Dialog */}
+      <AlertDialog open={exportDialogOpen} onOpenChange={setExportDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-warning" />
+              Confirm Data Export
+            </AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3">
+                <p>
+                  You are about to export {exportType === 'volunteers' ? 'volunteer' : 'all user'} data.
+                </p>
+                <div className="bg-warning/10 border border-warning/20 rounded-md p-3 flex items-start gap-2">
+                  <AlertTriangle className="w-4 h-4 text-warning mt-0.5 flex-shrink-0" />
+                  <div className="text-sm">
+                    <p className="font-medium text-warning">Security Notice</p>
+                    <ul className="text-muted-foreground mt-1 space-y-1">
+                      <li>• This export will be logged for compliance</li>
+                      <li>• Phone numbers will be partially masked</li>
+                      <li>• Handle exported data according to privacy policies</li>
+                    </ul>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Estimated records: {exportType === 'volunteers' ? volunteers.length : profiles.length}
+                </p>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmedExport}>
+              <Download className="w-4 h-4 mr-2" />
+              Confirm Export
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
