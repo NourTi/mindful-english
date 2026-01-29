@@ -12,6 +12,7 @@ import Dashboard from "./pages/Dashboard";
 import Lessons from "./pages/Lessons";
 import Lesson from "./pages/Lesson";
 import Scenario from "./pages/Scenario";
+import ImmersiveScenario from "./pages/ImmersiveScenario";
 import Admin from "./pages/Admin";
 import Community from "./pages/Community";
 import Messages from "./pages/Messages";
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/lessons" element={<Lessons />} />
               <Route path="/lesson/:lessonId" element={<Lesson />} />
               <Route path="/scenario" element={<Scenario />} />
+              <Route path="/immersive" element={<ImmersiveScenario />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/community" element={<Community />} />
               <Route path="/messages" element={<Messages />} />
