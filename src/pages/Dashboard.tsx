@@ -4,11 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, Play, Flame, Trophy, Brain, Heart, 
   Eye, Headphones, Hand, Clock, Sparkles, 
-  TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users, MessageCircle, GraduationCap
+  TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users, MessageCircle, GraduationCap, Compass
 } from 'lucide-react';
 import Scene3D from '@/components/Scene3D';
 import SEELogo from '@/components/SEELogo';
 import { Button } from '@/components/ui/button';
+import { LearningEnvironments } from '@/components/LearningEnvironments';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { useAssessmentStore } from '@/stores/assessmentStore';
@@ -319,6 +320,27 @@ const Dashboard = () => {
                   </motion.div>
                 ))}
               </div>
+            </motion.div>
+
+            {/* Immersive Learning Environments */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <Compass className="w-5 h-5 text-primary" />
+                  <h2 className="font-display text-xl font-semibold">Explore Learning Environments</h2>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/scenario')}>
+                  View All
+                </Button>
+              </div>
+              <p className="text-sm text-muted-foreground mb-6">
+                Choose an immersive environment that matches your personality and learning style
+              </p>
+              <LearningEnvironments />
             </motion.div>
 
             {/* Emotional Check-in */}
