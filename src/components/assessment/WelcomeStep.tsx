@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
-import { Brain, Heart, Sparkles, BookOpen } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Brain, Heart, Sparkles, BookOpen, ArrowRight, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAssessmentStore } from '@/stores/assessmentStore';
 
 const WelcomeStep = () => {
+  const navigate = useNavigate();
   const { setStep, setUserName, userName } = useAssessmentStore();
 
   return (
@@ -101,6 +103,24 @@ const WelcomeStep = () => {
           Begin Your Journey
           <Sparkles className="w-5 h-5 ml-2" />
         </Button>
+
+        {/* Skip to Dashboard - Direct immersion */}
+        <Button
+          variant="outline"
+          size="lg"
+          className="w-full group"
+          onClick={() => {
+            if (userName.trim()) {
+              // Save the name and skip to dashboard
+              navigate('/dashboard');
+            }
+          }}
+          disabled={!userName.trim()}
+        >
+          <Rocket className="w-4 h-4 mr-2 group-hover:animate-bounce" />
+          Skip to Learning
+          <ArrowRight className="w-4 h-4 ml-2" />
+        </Button>
       </motion.div>
 
       <motion.p
@@ -109,8 +129,8 @@ const WelcomeStep = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
       >
-        We'll start with a quick assessment to understand how your brain learns best. 
-        This helps us create a personalized experience just for you.
+        Take the assessment to personalize your experience, or skip ahead and start learning immediately. 
+        You can complete your profile anytime from the Dashboard.
       </motion.p>
     </motion.div>
   );
