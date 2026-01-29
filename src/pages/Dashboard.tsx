@@ -228,6 +228,28 @@ const Dashboard = () => {
           </p>
         </motion.div>
 
+        {/* Hero: Learning Environments Card Stack */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="mb-8"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Compass className="w-6 h-6 text-primary" />
+              <h2 className="font-display text-2xl font-bold">Choose Your Learning Environment</h2>
+            </div>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/scenario')}>
+              View All Scenarios
+            </Button>
+          </div>
+          <p className="text-muted-foreground mb-6">
+            Select an immersive environment that matches your personality and learning style
+          </p>
+          <LearningEnvironments />
+        </motion.div>
+
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Main Content Area */}
           <div className="lg:col-span-2 space-y-6">
@@ -235,7 +257,7 @@ const Dashboard = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
+              transition={{ delay: 0.2 }}
             >
               <Card variant="elevated" className="overflow-hidden">
                 <div className="bg-gradient-to-r from-primary to-primary-glow p-6 text-primary-foreground">
@@ -276,7 +298,7 @@ const Dashboard = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.3 }}
             >
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-display text-xl font-semibold">Recommended for You</h2>
@@ -289,7 +311,7 @@ const Dashboard = () => {
                     key={lesson.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + index * 0.1 }}
+                    transition={{ delay: 0.4 + index * 0.1 }}
                   >
                     <Card variant="cognitive" className="group cursor-pointer border-border hover:border-primary/50" onClick={() => navigate(`/lesson/${lesson.id}`)}>
                       <CardContent className="p-5">
@@ -320,27 +342,6 @@ const Dashboard = () => {
                   </motion.div>
                 ))}
               </div>
-            </motion.div>
-
-            {/* Immersive Learning Environments */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <Compass className="w-5 h-5 text-primary" />
-                  <h2 className="font-display text-xl font-semibold">Explore Learning Environments</h2>
-                </div>
-                <Button variant="ghost" size="sm" onClick={() => navigate('/scenario')}>
-                  View All
-                </Button>
-              </div>
-              <p className="text-sm text-muted-foreground mb-6">
-                Choose an immersive environment that matches your personality and learning style
-              </p>
-              <LearningEnvironments />
             </motion.div>
 
             {/* Emotional Check-in */}
