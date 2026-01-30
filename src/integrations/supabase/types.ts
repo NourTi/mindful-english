@@ -545,6 +545,66 @@ export type Database = {
           },
         ]
       }
+      scenario_progress: {
+        Row: {
+          completed: boolean
+          completed_at: string | null
+          correct_answers: number
+          current_step: number
+          emotion_score: number
+          id: string
+          scenario_id: string
+          selected_choices: number[]
+          started_at: string
+          total_answers: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          completed_at?: string | null
+          correct_answers?: number
+          current_step?: number
+          emotion_score?: number
+          id?: string
+          scenario_id: string
+          selected_choices?: number[]
+          started_at?: string
+          total_answers?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          completed_at?: string | null
+          correct_answers?: number
+          current_step?: number
+          emotion_score?: number
+          id?: string
+          scenario_id?: string
+          selected_choices?: number[]
+          started_at?: string
+          total_answers?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scenario_progress_scenario_id_fkey"
+            columns: ["scenario_id"]
+            isOneToOne: false
+            referencedRelation: "scenarios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scenario_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       scenarios: {
         Row: {
           context_type: string
