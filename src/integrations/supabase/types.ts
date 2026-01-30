@@ -550,28 +550,46 @@ export type Database = {
           context_type: string
           created_at: string
           description: string | null
+          dialogue_data: Json | null
+          difficulty_level: number | null
+          environment_slug: string | null
+          estimated_duration_minutes: number | null
           id: string
           is_active: boolean
+          neuro_emotional_state: string | null
           title: string
           updated_at: string
+          visual_context: Json | null
         }
         Insert: {
           context_type?: string
           created_at?: string
           description?: string | null
+          dialogue_data?: Json | null
+          difficulty_level?: number | null
+          environment_slug?: string | null
+          estimated_duration_minutes?: number | null
           id?: string
           is_active?: boolean
+          neuro_emotional_state?: string | null
           title: string
           updated_at?: string
+          visual_context?: Json | null
         }
         Update: {
           context_type?: string
           created_at?: string
           description?: string | null
+          dialogue_data?: Json | null
+          difficulty_level?: number | null
+          environment_slug?: string | null
+          estimated_duration_minutes?: number | null
           id?: string
           is_active?: boolean
+          neuro_emotional_state?: string | null
           title?: string
           updated_at?: string
+          visual_context?: Json | null
         }
         Relationships: []
       }
