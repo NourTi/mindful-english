@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Play, Pause, Volume2, VolumeX, Maximize2, Settings, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import DemoAnimation from '@/components/DemoAnimation';
+import P5DemoAnimation from '@/components/P5DemoAnimation';
 
 interface DemoVideoModalProps {
   isOpen: boolean;
@@ -96,11 +96,11 @@ const DemoVideoModal = ({
               {/* Main Video / Animation Area */}
               <div className="flex-1 relative bg-[hsl(234_40%_6%)] flex items-center justify-center overflow-hidden">
                 {showAnimationView ? (
-                  /* Psychological Transformation Animation */
-                  <div className="w-full h-full p-4 md:p-8">
-                    <DemoAnimation 
+                  /* P5.js Psychological Transformation Animation */
+                  <div className="w-full h-full">
+                    <P5DemoAnimation 
                       key={animationKey}
-                      autoPlay={true}
+                      autoPlay={false}
                       onComplete={() => {
                         // Animation completed
                       }}
