@@ -1,24 +1,29 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Play, Pause, Volume2, VolumeX, Maximize2, Settings } from 'lucide-react';
+import { X, Play, Pause, Volume2, VolumeX, Maximize2, Settings, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import DemoAnimation from '@/components/DemoAnimation';
 
 interface DemoVideoModalProps {
   isOpen: boolean;
   onClose: () => void;
   videoUrl?: string;
   posterImage?: string;
+  showAnimation?: boolean;
 }
 
 const DemoVideoModal = ({ 
   isOpen, 
   onClose, 
   videoUrl,
-  posterImage = '/placeholder.svg'
+  posterImage = '/placeholder.svg',
+  showAnimation = true
 }: DemoVideoModalProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [showAnimationView, setShowAnimationView] = useState(showAnimation);
+  const [animationKey, setAnimationKey] = useState(0);
 
   // Demo timeline items to show product features
   const demoFeatures = [
@@ -73,7 +78,9 @@ const DemoVideoModal = ({
                 <div className="w-3 h-3 rounded-full bg-warning" />
                 <div className="w-3 h-3 rounded-full bg-success" />
               </div>
-              <h3 className="font-mono text-sm text-muted-foreground">SEE_DEMO_v2.0.mp4</h3>
+              <h3 className="font-mono text-sm text-muted-foreground">
+                {showAnimationView ? 'SEE_TRANSFORMATION.anim' : 'SEE_DEMO_v2.0.mp4'}
+              </h3>
               <Button
                 variant="ghost"
                 size="icon"
@@ -86,10 +93,20 @@ const DemoVideoModal = ({
 
             {/* Video Player Area */}
             <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
-              {/* Main Video */}
-              <div className="flex-1 relative bg-black/50 flex items-center justify-center">
-                {/* Video placeholder / actual video */}
-                {videoUrl ? (
+              {/* Main Video / Animation Area */}
+              <div className="flex-1 relative bg-[hsl(234_40%_6%)] flex items-center justify-center overflow-hidden">
+                {showAnimationView ? (
+                  /* Psychological Transformation Animation */
+                  <div className="w-full h-full p-4 md:p-8">
+                    <DemoAnimation 
+                      key={animationKey}
+                      autoPlay={true}
+                      onComplete={() => {
+                        // Animation completed
+                      }}
+                    />
+                  </div>
+                ) : videoUrl ? (
                   <video
                     src={videoUrl}
                     poster={posterImage}
@@ -104,6 +121,7 @@ const DemoVideoModal = ({
                     {/* Neural network animation background */}
                     <div className="absolute inset-0 overflow-hidden">
                       <svg className="w-full h-full opacity-20" viewBox="0 0 800 600">
+                        <title>Neural Network Background</title>
                         {/* Animated nodes */}
                         {[...Array(15)].map((_, i) => (
                           <motion.circle
@@ -209,42 +227,67 @@ const DemoVideoModal = ({
                   </div>
                 )}
 
-                {/* Video controls overlay */}
+                {/* Video/Animation controls overlay */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                  {/* Progress bar */}
-                  <div className="relative h-1 bg-muted/30 rounded-full mb-4 cursor-pointer group">
-                    <motion.div
-                      className="absolute h-full bg-primary rounded-full"
-                      style={{ width: `${progress}%` }}
-                    />
-                    <div 
-                      className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                      style={{ left: `${progress}%` }}
-                    />
-                  </div>
+                  {/* Progress bar - only for video mode */}
+                  {!showAnimationView && (
+                    <div className="relative h-1 bg-muted/30 rounded-full mb-4 cursor-pointer group">
+                      <motion.div
+                        className="absolute h-full bg-primary rounded-full"
+                        style={{ width: `${progress}%` }}
+                      />
+                      <div 
+                        className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                        style={{ left: `${progress}%` }}
+                      />
+                    </div>
+                  )}
 
                   {/* Controls */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
+                      {showAnimationView ? (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-white hover:bg-white/20"
+                          onClick={() => setAnimationKey(prev => prev + 1)}
+                        >
+                          <RotateCcw className="w-5 h-5" />
+                        </Button>
+                      ) : (
+                        <>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-white hover:bg-white/20"
+                            onClick={handlePlayDemo}
+                          >
+                            {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-white hover:bg-white/20"
+                            onClick={() => setIsMuted(!isMuted)}
+                          >
+                            {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                          </Button>
+                          <span className="text-sm text-white/80 font-mono">
+                            {Math.floor(progress / 100 * 180 / 60)}:{String(Math.floor(progress / 100 * 180 % 60)).padStart(2, '0')} / 3:00
+                          </span>
+                        </>
+                      )}
+                      
+                      {/* Toggle between Animation and Video mode */}
                       <Button
                         variant="ghost"
-                        size="icon"
-                        className="text-white hover:bg-white/20"
-                        onClick={handlePlayDemo}
+                        size="sm"
+                        className="text-white hover:bg-white/20 text-xs"
+                        onClick={() => setShowAnimationView(!showAnimationView)}
                       >
-                        {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                        {showAnimationView ? 'Switch to Video' : 'Watch Animation'}
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="text-white hover:bg-white/20"
-                        onClick={() => setIsMuted(!isMuted)}
-                      >
-                        {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-                      </Button>
-                      <span className="text-sm text-white/80 font-mono">
-                        {Math.floor(progress / 100 * 180 / 60)}:{String(Math.floor(progress / 100 * 180 % 60)).padStart(2, '0')} / 3:00
-                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Button variant="ghost" size="icon" className="text-white hover:bg-white/20">
