@@ -3,13 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { 
   Send, ArrowLeft, Mic, MicOff, Volume2, VolumeX, 
-  Sparkles, MessageSquare, RefreshCw, Settings
+  Sparkles, MessageSquare, RefreshCw
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
+import { useVoiceChat } from '@/hooks/useVoiceChat';
 import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
 
@@ -111,6 +111,18 @@ const ImmersiveScenario = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // Voice chat hook
+  const {
+    isRecording,
+    isSpeaking,
+    voiceEnabled,
+    startRecording,
+    stopRecording,
+    speakText,
+    stopSpeaking,
+    toggleVoice,
+  } = useVoiceChat(envKey);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -232,20 +244,26 @@ Tell me, what brings you to this place? What would you like to explore together?
     }
   }, [profileLoading, authLoading, user, initializeConversation]);
 
-  // Send message
-  const sendMessage = async () => {
-    if (!inputValue.trim() || isLoading) return;
+  // Send message (text or voice)
+  const sendMessage = async (textOverride?: string) => {
+    const messageText = textOverride || inputValue.trim();
+    if (!messageText || isLoading) return;
+
+    // Stop any current speech
+    stopSpeaking();
 
     const userMessage: Message = {
       id: `user-${Date.now()}`,
       role: 'user',
-      content: inputValue.trim(),
+      content: messageText,
       timestamp: new Date()
     };
 
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
     setIsLoading(true);
+
+    let fullAssistantResponse = '';
 
     try {
       const userProfile = {
@@ -326,6 +344,7 @@ Tell me, what brings you to this place? What would you like to explore together?
             const content = parsed.choices?.[0]?.delta?.content as string | undefined;
             if (content) {
               assistantContent += content;
+              fullAssistantResponse = assistantContent;
               setMessages(prev => 
                 prev.map(m => 
                   m.id === assistantId 
@@ -340,11 +359,30 @@ Tell me, what brings you to this place? What would you like to explore together?
           }
         }
       }
+
+      // Speak the complete response
+      if (fullAssistantResponse && voiceEnabled) {
+        speakText(fullAssistantResponse);
+      }
     } catch (error) {
       console.error('Failed to send message:', error);
       toast.error("Failed to send message. Please try again.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Handle voice recording
+  const handleVoiceInput = async () => {
+    if (isRecording) {
+      const transcription = await stopRecording();
+      if (transcription && transcription.trim()) {
+        setInputValue(transcription);
+        // Auto-send after transcription
+        sendMessage(transcription);
+      }
+    } else {
+      startRecording();
     }
   };
 
@@ -491,17 +529,74 @@ Tell me, what brings you to this place? What would you like to explore together?
         {/* Input Area */}
         <div className="sticky bottom-0 bg-black/40 backdrop-blur-lg border-t border-white/10">
           <div className="max-w-4xl mx-auto p-4">
+            {/* Voice Controls */}
+            <div className="flex justify-center gap-2 mb-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleVoice}
+                className={`text-white/70 hover:text-white hover:bg-white/10 ${!voiceEnabled ? 'opacity-50' : ''}`}
+              >
+                {voiceEnabled ? (
+                  <>
+                    <Volume2 className="w-4 h-4 mr-1" />
+                    <span className="text-xs">Voice On</span>
+                  </>
+                ) : (
+                  <>
+                    <VolumeX className="w-4 h-4 mr-1" />
+                    <span className="text-xs">Voice Off</span>
+                  </>
+                )}
+              </Button>
+              
+              {isSpeaking && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={stopSpeaking}
+                  className="text-white/70 hover:text-white hover:bg-white/10"
+                >
+                  <motion.div
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 0.5, repeat: Infinity }}
+                  >
+                    <Volume2 className="w-4 h-4 mr-1" />
+                  </motion.div>
+                  <span className="text-xs">Stop</span>
+                </Button>
+              )}
+            </div>
+
             <div className="flex gap-3">
+              {/* Voice Input Button */}
+              <Button
+                onClick={handleVoiceInput}
+                disabled={isLoading || isInitializing || isSpeaking}
+                variant="ghost"
+                className={`${isRecording 
+                  ? 'bg-red-500/80 text-white animate-pulse' 
+                  : 'bg-white/10 text-white/80 hover:bg-white/20'
+                }`}
+              >
+                {isRecording ? (
+                  <MicOff className="w-5 h-5" />
+                ) : (
+                  <Mic className="w-5 h-5" />
+                )}
+              </Button>
+
               <Input
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyPress}
-                placeholder="Type your response..."
-                disabled={isLoading || isInitializing}
+                placeholder={isRecording ? "Listening..." : "Type or tap mic to speak..."}
+                disabled={isLoading || isInitializing || isRecording}
                 className="flex-1 bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-white/40"
               />
+              
               <Button
-                onClick={sendMessage}
+                onClick={() => sendMessage()}
                 disabled={!inputValue.trim() || isLoading || isInitializing}
                 className={`${environment.accentColor} hover:opacity-90`}
               >
@@ -517,8 +612,12 @@ Tell me, what brings you to this place? What would you like to explore together?
                 )}
               </Button>
             </div>
+            
             <p className="text-xs text-white/40 text-center mt-2">
-              Practice naturally — the AI adapts to your level
+              {isRecording 
+                ? "Tap mic again when done speaking" 
+                : "Speak or type naturally — AI reads responses aloud"
+              }
             </p>
           </div>
         </div>
