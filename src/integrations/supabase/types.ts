@@ -263,6 +263,33 @@ export type Database = {
           },
         ]
       }
+      message_access_log: {
+        Row: {
+          access_type: string
+          conversation_id: string
+          created_at: string
+          id: string
+          message_count: number | null
+          user_id: string
+        }
+        Insert: {
+          access_type: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          message_count?: number | null
+          user_id: string
+        }
+        Update: {
+          access_type?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          message_count?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           content: string
