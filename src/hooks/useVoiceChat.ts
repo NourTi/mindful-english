@@ -1,34 +1,64 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { toast } from 'sonner';
 
-const TTS_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-tts`;
 const STT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-stt`;
 
-// Voice IDs for different environment personas
-export const environmentVoices: Record<string, string> = {
-  gothic: 'onwK4e9ZLuTAKqWW03F9',    // Daniel - deep, mysterious
-  cyber: 'cjVigY5qzO86Huf0OWal',     // Eric - tech/futuristic
-  cosmic: 'XrExE9yKIg1WjnnlVkGX',    // Matilda - ethereal
-  zen: 'pFZP5JQG7iQjIQuC4Bku',       // Lily - calm, soothing
-  urban: 'TX3LPaxmHKxFdv7VOQHJ',     // Liam - casual, friendly
-  forest: 'EXAVITQu4vr4xnSDxMaL',    // Sarah - warm, nurturing
-  arcade: 'iP95p4xoKVk53GoZ742B',    // Chris - energetic
+// Voice settings for different environment personas (Web Speech API)
+export const environmentVoiceSettings: Record<string, { pitch: number; rate: number }> = {
+  gothic: { pitch: 0.8, rate: 0.9 },    // Deep, slow
+  cyber: { pitch: 1.1, rate: 1.1 },     // Slightly robotic
+  cosmic: { pitch: 1.0, rate: 0.85 },   // Ethereal, slow
+  zen: { pitch: 0.95, rate: 0.8 },      // Calm, soothing
+  urban: { pitch: 1.0, rate: 1.0 },     // Natural
+  forest: { pitch: 0.9, rate: 0.9 },    // Warm
+  arcade: { pitch: 1.2, rate: 1.15 },   // Energetic
 };
 
 export const useVoiceChat = (environment: string) => {
   const [isRecording, setIsRecording] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [voiceEnabled, setVoiceEnabled] = useState(false); // Disabled by default - user must opt-in
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
-  const voiceId = environmentVoices[environment] || environmentVoices.urban;
+  const voiceSettings = environmentVoiceSettings[environment] || environmentVoiceSettings.urban;
 
-  // Text-to-Speech: Speak AI response
+  // Load available voices
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices();
+      setVoices(availableVoices);
+    };
+
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+
+    return () => {
+      window.speechSynthesis.onvoiceschanged = null;
+    };
+  }, []);
+
+  // Get a good English voice
+  const getVoice = useCallback(() => {
+    // Prefer high-quality voices
+    const preferredVoices = voices.filter(v => 
+      v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Microsoft') || v.name.includes('Samantha'))
+    );
+    return preferredVoices[0] || voices.find(v => v.lang.startsWith('en')) || voices[0];
+  }, [voices]);
+
+  // Text-to-Speech: Speak AI response using Web Speech API
   const speakText = useCallback(async (text: string) => {
     if (!voiceEnabled || !text.trim()) return;
+
+    // Check if Web Speech API is available
+    if (!('speechSynthesis' in window)) {
+      toast.error('Speech synthesis not supported in this browser');
+      return;
+    }
 
     // Clean markdown from text for natural speech
     const cleanText = text
@@ -43,59 +73,47 @@ export const useVoiceChat = (environment: string) => {
     if (!cleanText) return;
 
     try {
+      // Stop any current speech
+      window.speechSynthesis.cancel();
+
       setIsSpeaking(true);
-      console.log('Requesting TTS for:', cleanText.substring(0, 50));
+      console.log('Speaking with Web Speech API:', cleanText.substring(0, 50));
 
-      const response = await fetch(TTS_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-        },
-        body: JSON.stringify({ text: cleanText, voiceId }),
-      });
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utteranceRef.current = utterance;
 
-      if (!response.ok) {
-        throw new Error(`TTS request failed: ${response.status}`);
+      // Apply environment-specific settings
+      utterance.pitch = voiceSettings.pitch;
+      utterance.rate = voiceSettings.rate;
+      utterance.volume = 1;
+
+      // Set voice
+      const selectedVoice = getVoice();
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
       }
 
-      const audioBlob = await response.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
-      
-      // Stop any current audio
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-
-      const audio = new Audio(audioUrl);
-      audioRef.current = audio;
-      
-      audio.onended = () => {
+      utterance.onend = () => {
         setIsSpeaking(false);
-        URL.revokeObjectURL(audioUrl);
-      };
-      
-      audio.onerror = () => {
-        setIsSpeaking(false);
-        URL.revokeObjectURL(audioUrl);
-        console.error('Audio playback error');
       };
 
-      await audio.play();
+      utterance.onerror = (event) => {
+        console.error('Speech synthesis error:', event.error);
+        setIsSpeaking(false);
+      };
+
+      window.speechSynthesis.speak(utterance);
     } catch (error) {
       console.error('TTS error:', error);
       setIsSpeaking(false);
       toast.error('Voice playback failed');
     }
-  }, [voiceEnabled, voiceId]);
+  }, [voiceEnabled, voiceSettings, getVoice]);
 
   // Stop speaking
   const stopSpeaking = useCallback(() => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current = null;
-    }
+    window.speechSynthesis.cancel();
+    utteranceRef.current = null;
     setIsSpeaking(false);
   }, []);
 
