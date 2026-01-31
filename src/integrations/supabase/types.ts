@@ -171,6 +171,33 @@ export type Database = {
         }
         Relationships: []
       }
+      export_log_access: {
+        Row: {
+          access_type: string
+          admin_user_id: string
+          created_at: string
+          id: string
+          ip_address: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          access_type?: string
+          admin_user_id: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          access_type?: string
+          admin_user_id?: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       lesson_content: {
         Row: {
           content: string
