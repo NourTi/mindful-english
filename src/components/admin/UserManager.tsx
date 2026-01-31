@@ -32,6 +32,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/use-toast';
 import { Users, Download, Search, Filter, RefreshCw, UserCheck, UserX, Mail, Phone, Calendar, Shield, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
+import { ExportLogViewer } from './ExportLogViewer';
 
 interface Profile {
   id: string;
@@ -425,6 +426,9 @@ export const UserManager = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Export Log Viewer with Re-authentication */}
+      <ExportLogViewer />
     </div>
   );
 };
