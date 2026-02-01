@@ -40,7 +40,6 @@ const ImmergoChat = () => {
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
-  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
   // Load session from sessionStorage
@@ -64,45 +63,78 @@ const ImmergoChat = () => {
     return lang?.name || code;
   }, []);
 
-  // TTS: Speak text using Web Speech API
-  const speakText = useCallback((text: string) => {
-    if (!voiceEnabled || !text.trim()) return;
-    if (!('speechSynthesis' in window)) return;
+  // Audio element ref for ElevenLabs TTS
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-    // Clean markdown
+  // TTS: Speak text using ElevenLabs API (high-quality neural voice)
+  const speakText = useCallback(async (text: string) => {
+    if (!voiceEnabled || !text.trim()) return;
+
+    // Clean markdown for TTS
     const cleanText = text
       .replace(/\*\*(.+?)\*\*/g, '$1')
       .replace(/\*(.+?)\*/g, '$1')
       .replace(/#{1,6}\s/g, '')
       .replace(/`(.+?)`/g, '$1')
+      .replace(/\[.*?\]\(.*?\)/g, '') // Remove markdown links
       .trim();
 
     if (!cleanText) return;
 
-    window.speechSynthesis.cancel();
+    // Stop any currently playing audio
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+
     setIsAISpeaking(true);
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utteranceRef.current = utterance;
-    utterance.rate = 0.9;
-    utterance.pitch = 1;
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-tts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({ text: cleanText }),
+      });
 
-    // Try to match target language voice
-    const voices = window.speechSynthesis.getVoices();
-    const targetLangCode = session?.targetLang || 'en';
-    const langVoice = voices.find(v => v.lang.startsWith(targetLangCode));
-    if (langVoice) utterance.voice = langVoice;
+      if (!response.ok) {
+        throw new Error('TTS request failed');
+      }
 
-    utterance.onend = () => setIsAISpeaking(false);
-    utterance.onerror = () => setIsAISpeaking(false);
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      
+      const audio = new Audio(audioUrl);
+      audioRef.current = audio;
+      
+      audio.onended = () => {
+        setIsAISpeaking(false);
+        URL.revokeObjectURL(audioUrl);
+        audioRef.current = null;
+      };
+      
+      audio.onerror = () => {
+        setIsAISpeaking(false);
+        URL.revokeObjectURL(audioUrl);
+        audioRef.current = null;
+      };
 
-    window.speechSynthesis.speak(utterance);
-  }, [voiceEnabled, session?.targetLang]);
+      await audio.play();
+    } catch (error) {
+      console.error('ElevenLabs TTS error:', error);
+      setIsAISpeaking(false);
+      // Don't show toast - silent fallback to no voice
+    }
+  }, [voiceEnabled]);
 
   // Stop speaking
   const stopSpeaking = useCallback(() => {
-    window.speechSynthesis.cancel();
-    utteranceRef.current = null;
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
     setIsAISpeaking(false);
   }, []);
 
