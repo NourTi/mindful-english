@@ -2,6 +2,13 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { LessonContent, LearningStyle, CognitiveProfile, EmotionalFeedback } from '@/types/learning';
 import { determineEmotionalFeedback } from '@/lib/psycholinguistics';
+import { 
+  decideNextStep, 
+  updateLearnerState, 
+  LearnerAdaptivityState, 
+  PsyState, 
+  AdaptivityResult 
+} from '@/lib/adaptivityEngine';
 
 export interface LessonChunk {
   id: string;
@@ -33,6 +40,10 @@ interface LessonState {
   completedLessons: string[];
   totalXP: number;
   
+  // Adaptivity state
+  adaptivityState: LearnerAdaptivityState;
+  lastAdaptivityResult: AdaptivityResult | null;
+  
   // Actions
   startLesson: (lesson: LessonContent, profile: CognitiveProfile) => void;
   nextChunk: () => void;
@@ -44,6 +55,10 @@ interface LessonState {
   clearEmotionalFeedback: () => void;
   completeLesson: () => void;
   resetLesson: () => void;
+  
+  // Adaptivity actions
+  setPsyState: (state: PsyState) => void;
+  getNextStepRecommendation: () => AdaptivityResult | null;
 }
 
 // Generate chunks based on content type and profile
@@ -140,6 +155,14 @@ export const useLessonStore = create<LessonState>()(
       isInBreathingExercise: false,
       completedLessons: [],
       totalXP: 0,
+      
+      // Adaptivity state
+      adaptivityState: {
+        psyState: 'neutral' as PsyState,
+        streakSuccessCount: 0,
+        lastExerciseResult: undefined,
+      },
+      lastAdaptivityResult: null,
 
       startLesson: (lesson, profile) => {
         const chunks = generateChunks(lesson, profile);
@@ -216,11 +239,17 @@ export const useLessonStore = create<LessonState>()(
       },
 
       recordAnswer: (correct) => {
-        const { progress } = get();
+        const { progress, adaptivityState } = get();
         if (!progress) return;
         
         const newConsecutiveErrors = correct ? 0 : progress.consecutiveErrors + 1;
         const feedback = determineEmotionalFeedback(newConsecutiveErrors, correct);
+        
+        // Update adaptivity state based on answer
+        const newAdaptivityState = updateLearnerState(
+          adaptivityState,
+          correct ? 'pass' : 'fail'
+        );
         
         set({
           progress: {
@@ -233,6 +262,7 @@ export const useLessonStore = create<LessonState>()(
           },
           emotionalFeedback: feedback,
           isInBreathingExercise: feedback?.action === 'simplify' || newConsecutiveErrors >= 3,
+          adaptivityState: newAdaptivityState,
         });
       },
 
@@ -276,7 +306,39 @@ export const useLessonStore = create<LessonState>()(
           progress: null,
           emotionalFeedback: null,
           isInBreathingExercise: false,
+          adaptivityState: {
+            psyState: 'neutral' as PsyState,
+            streakSuccessCount: 0,
+            lastExerciseResult: undefined,
+          },
+          lastAdaptivityResult: null,
         });
+      },
+      
+      // Adaptivity actions
+      setPsyState: (state: PsyState) => {
+        const { adaptivityState } = get();
+        set({
+          adaptivityState: {
+            ...adaptivityState,
+            psyState: state,
+          },
+        });
+      },
+      
+      getNextStepRecommendation: () => {
+        const { currentLesson, adaptivityState } = get();
+        if (!currentLesson) return null;
+        
+        const result = decideNextStep(
+          currentLesson.id,
+          adaptivityState.psyState,
+          adaptivityState.streakSuccessCount,
+          adaptivityState.lastExerciseResult
+        );
+        
+        set({ lastAdaptivityResult: result });
+        return result;
       },
     }),
     {
