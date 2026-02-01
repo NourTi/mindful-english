@@ -1,1 +1,9 @@
 
+[
+  {
+    "id": "path-social-confidence",
+    "label": "Social Confidence Path",
+    "psyProfile": ["mild_anxiety"],
+    "sequence": ["see-airport-1", "see-cafe-1", "see-meetup-1"]
+  }
+]
