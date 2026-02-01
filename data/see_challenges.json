@@ -1,1 +1,27 @@
+[
+  {
+    "id": "see-airport-1",
+    "label": "Airport Small Talk",
+    "type": "challenge",
+    "environment": "airport",
+    "difficulty": "easy",
+    "psyProfile": ["mild_anxiety", "introvert"],
+    "skills": ["listening", "speaking", "confidence"],
+    "xpReward": 10,
+    "steps": [
+      {
+        "kind": "psyground",
+        "text": "You arrive at the gate. Notice your breath and count 3 slow inhales and exhales."
+      },
+      {
+        "kind": "dialogue",
+        "text": "Say hello to the person next to you and ask one simple question about their trip."
+      },
+      {
+        "kind": "reflection",
+        "text": "How did that feel? Choose: 'easier', 'same', or 'harder than expected'."
+      }
+    ]
+  }
+]
 
