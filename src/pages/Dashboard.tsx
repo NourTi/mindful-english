@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { LearningEnvironments } from '@/components/LearningEnvironments';
 import { EnvironmentGrid } from '@/components/EnvironmentGrid';
 import { GrowthBar } from '@/components/GrowthBar';
+import LearningPathsSection from '@/components/LearningPathsSection';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { useAssessmentStore } from '@/stores/assessmentStore';
@@ -279,6 +280,9 @@ const Dashboard = () => {
           </p>
           <EnvironmentGrid />
         </motion.div>
+
+        {/* Learning Paths from see_learning_system.json */}
+        <LearningPathsSection />
 
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Main Content Area */}
