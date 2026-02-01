@@ -8,6 +8,7 @@ export interface ImmergoMission {
 }
 
 export const immergoMissions: ImmergoMission[] = [
+  // Easy Scenarios
   {
     id: 0,
     title: "Say Hello",
@@ -24,6 +25,23 @@ export const immergoMissions: ImmergoMission[] = [
     target_role: "Flustered Barista",
     icon: "☕"
   },
+  {
+    id: 10,
+    title: "At the Bakery",
+    difficulty: "Easy",
+    desc: "Buy fresh bread and croissants for breakfast.",
+    target_role: "Friendly Baker",
+    icon: "🥐"
+  },
+  {
+    id: 11,
+    title: "Ask the Time",
+    difficulty: "Easy",
+    desc: "Your phone is dead, ask a stranger for the time.",
+    target_role: "Busy Commuter",
+    icon: "⌚"
+  },
+  // Medium Scenarios
   {
     id: 1,
     title: "Buy a Bus Ticket",
@@ -49,6 +67,31 @@ export const immergoMissions: ImmergoMission[] = [
     icon: "👕"
   },
   {
+    id: 12,
+    title: "Hotel Check-in",
+    difficulty: "Medium",
+    desc: "Check into your hotel and ask about amenities.",
+    target_role: "Concierge",
+    icon: "🏨"
+  },
+  {
+    id: 13,
+    title: "Doctor's Appointment",
+    difficulty: "Medium",
+    desc: "Describe your symptoms to the doctor.",
+    target_role: "Patient Doctor",
+    icon: "🩺"
+  },
+  {
+    id: 14,
+    title: "At the Bank",
+    difficulty: "Medium",
+    desc: "Open a new account and ask about services.",
+    target_role: "Bank Teller",
+    icon: "🏦"
+  },
+  // Hard Scenarios
+  {
     id: 3,
     title: "Ask for Directions",
     difficulty: "Hard",
@@ -65,6 +108,31 @@ export const immergoMissions: ImmergoMission[] = [
     icon: "🍎"
   },
   {
+    id: 15,
+    title: "File a Complaint",
+    difficulty: "Hard",
+    desc: "Your order arrived damaged, you want compensation.",
+    target_role: "Customer Service Rep",
+    icon: "📞"
+  },
+  {
+    id: 16,
+    title: "The Car Mechanic",
+    difficulty: "Hard",
+    desc: "Your car broke down, explain the problem.",
+    target_role: "Skeptical Mechanic",
+    icon: "🔧"
+  },
+  {
+    id: 17,
+    title: "Airport Emergency",
+    difficulty: "Hard",
+    desc: "You missed your flight and need rebooking.",
+    target_role: "Stressed Airline Agent",
+    icon: "✈️"
+  },
+  // Expert Scenarios
+  {
     id: 4,
     title: "Negotiate Rent",
     difficulty: "Expert",
@@ -79,6 +147,30 @@ export const immergoMissions: ImmergoMission[] = [
     desc: "Explain your strengths and weaknesses.",
     target_role: "Company Recruiter",
     icon: "💼"
+  },
+  {
+    id: 18,
+    title: "Business Presentation",
+    difficulty: "Expert",
+    desc: "Present your quarterly results to stakeholders.",
+    target_role: "CEO & Board Members",
+    icon: "📊"
+  },
+  {
+    id: 19,
+    title: "The Debate",
+    difficulty: "Expert",
+    desc: "Defend your position on a controversial topic.",
+    target_role: "Political Opponent",
+    icon: "🎤"
+  },
+  {
+    id: 20,
+    title: "Medical Emergency",
+    difficulty: "Expert",
+    desc: "Translate for a patient who doesn't speak the language.",
+    target_role: "ER Doctor & Patient",
+    icon: "🚑"
   }
 ];
 
