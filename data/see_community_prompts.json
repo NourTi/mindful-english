@@ -1,1 +1,10 @@
+[
+  {
+    "id": "template-social-anxiety",
+    "title": "Design a Social Courage Scenario",
+    "description": "Help another learner practice courage in a social setting.",
+    "prompt": "Describe a place (cafe, classroom, meetup). Then write 3 short steps: a grounding step, a simple English interaction, and a reflection question.",
+    "tags": ["community", "social", "anxiety"]
+  }
+]
 
