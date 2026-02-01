@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, Play, Flame, Trophy, Brain, Heart, 
   Eye, Headphones, Hand, Clock, Sparkles, 
-  TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users, MessageCircle, GraduationCap, Compass
+  TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users, MessageCircle, GraduationCap, Compass, Route, Hammer, MapPin
 } from 'lucide-react';
 import Scene3D from '@/components/Scene3D';
 import SEELogo from '@/components/SEELogo';
 import { Button } from '@/components/ui/button';
 import { LearningEnvironments } from '@/components/LearningEnvironments';
+import { EnvironmentGrid } from '@/components/EnvironmentGrid';
+import { GrowthBar } from '@/components/GrowthBar';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { useAssessmentStore } from '@/stores/assessmentStore';
@@ -65,10 +67,10 @@ const Dashboard = () => {
 
   const navItems = [
     { label: 'Immergo', path: '/immergo', icon: Compass },
+    { label: 'Paths', path: '/paths', icon: Route },
     { label: 'Lessons', path: '/lessons', icon: BookOpen },
-    { label: 'Vocabulary', path: '/vocabulary', icon: GraduationCap },
+    { label: 'Builder', path: '/community-builder', icon: Hammer },
     { label: 'Community', path: '/community', icon: Users },
-    { label: 'Messages', path: '/messages', icon: MessageCircle },
   ];
 
   return (
@@ -102,14 +104,19 @@ const Dashboard = () => {
           </nav>
 
           <div className="flex items-center gap-4">
+            {/* Growth Bar - Hidden on mobile */}
+            <div className="hidden lg:block">
+              <GrowthBar currentXP={totalXP} />
+            </div>
+            
             {/* Streak */}
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary">
               <Flame className="w-4 h-4 text-warning" />
               <span className="text-sm font-semibold">{streak}</span>
             </div>
             
-            {/* XP */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary">
+            {/* XP - shown on mobile only since GrowthBar has it on desktop */}
+            <div className="lg:hidden flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary">
               <Sparkles className="w-4 h-4 text-accent" />
               <span className="text-sm font-semibold">{totalXP} XP</span>
             </div>
@@ -249,6 +256,28 @@ const Dashboard = () => {
             Select an immersive environment that matches your personality and learning style
           </p>
           <LearningEnvironments />
+        </motion.div>
+
+        {/* SEE Challenges by Environment */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="mb-8"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-6 h-6 text-primary" />
+              <h2 className="font-display text-2xl font-bold">SEE Challenges</h2>
+            </div>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/paths')}>
+              View Paths
+            </Button>
+          </div>
+          <p className="text-muted-foreground mb-6">
+            Practice English in real-world environments with guided challenges
+          </p>
+          <EnvironmentGrid />
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-6">

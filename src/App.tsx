@@ -21,6 +21,9 @@ import Community from "./pages/Community";
 import Messages from "./pages/Messages";
 import Vocabulary from "./pages/Vocabulary";
 import CompleteProfile from "./pages/CompleteProfile";
+import EnvironmentChallenges from "./pages/EnvironmentChallenges";
+import CommunityBuilder from "./pages/CommunityBuilder";
+import Paths from "./pages/Paths";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +53,9 @@ const App = () => (
               <Route path="/community" element={<Community />} />
               <Route path="/messages" element={<Messages />} />
               <Route path="/vocabulary" element={<Vocabulary />} />
+              <Route path="/environment/:id" element={<EnvironmentChallenges />} />
+              <Route path="/community-builder" element={<CommunityBuilder />} />
+              <Route path="/paths" element={<Paths />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
