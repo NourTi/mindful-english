@@ -1,1 +1,67 @@
+[
+  {
+    "id": "rb-001",
+    "title": "Airport Small Talk",
+    "description": "Practice calm, confident small talk with a stranger in an airport while managing mild social anxiety.",
+    "category": "social_english",
+    "difficulty": "easy",
+    "environment": "airport",
+    "targetSkills": ["listening", "speaking", "confidence"],
+    "psyTags": ["mild_anxiety", "shyness"],
+    "steps": [
+      {
+        "stepId": "intro",
+        "type": "psy_intro",
+        "prompt": "You are at the boarding gate. Your heart is beating fast. Take 3 deep breaths and notice what you see and hear."
+      },
+      {
+        "stepId": "dialogue",
+        "type": "english_dialogue",
+        "prompt": "Greet the person next to you and ask one simple question about their trip.",
+        "successHint": "Keep your sentence short and simple, like: 'Hi, is this your first time traveling here?'"
+      },
+      {
+        "stepId": "reflection",
+        "type": "reflection",
+        "prompt": "How did that feel? Choose one word: 'easier than expected', 'still scary', or 'impossible'."
+      }
+    ],
+    "reward": {
+      "xp": 10,
+      "badge": "First Contact"
+    }
+  },
+  {
+    "id": "rb-002",
+    "title": "Café Confidence",
+    "description": "Order coffee in English while staying grounded and focused.",
+    "category": "daily_life",
+    "difficulty": "medium",
+    "environment": "cafe",
+    "targetSkills": ["speaking", "pronunciation"],
+    "psyTags": ["performance_anxiety"],
+    "steps": [
+      {
+        "stepId": "prep",
+        "type": "psy_prep",
+        "prompt": "Imagine the barista smiling at you. Visualize the scene going well."
+      },
+      {
+        "stepId": "order",
+        "type": "english_dialogue",
+        "prompt": "Order a coffee with one extra detail: size, milk type, or flavor.",
+        "successHint": "Example: 'Hi, can I have a medium latte with oat milk, please?'"
+      },
+      {
+        "stepId": "debrief",
+        "type": "reflection",
+        "prompt": "Rate your confidence from 1–5 and write one thing that went well."
+      }
+    ],
+    "reward": {
+      "xp": 15,
+      "badge": "Café Speaker"
+    }
+  }
+]
 
