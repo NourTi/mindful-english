@@ -14,6 +14,8 @@ import Lesson from "./pages/Lesson";
 import Scenario from "./pages/Scenario";
 import ImmersiveScenario from "./pages/ImmersiveScenario";
 import StructuredScenario from "./pages/StructuredScenario";
+import ImmergoMissions from "./pages/ImmergoMissions";
+import ImmergoChat from "./pages/ImmergoChat";
 import Admin from "./pages/Admin";
 import Community from "./pages/Community";
 import Messages from "./pages/Messages";
@@ -42,6 +44,8 @@ const App = () => (
               <Route path="/scenario" element={<Scenario />} />
               <Route path="/immersive" element={<ImmersiveScenario />} />
               <Route path="/structured-scenario" element={<StructuredScenario />} />
+              <Route path="/immergo" element={<ImmergoMissions />} />
+              <Route path="/immergo-chat" element={<ImmergoChat />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/community" element={<Community />} />
               <Route path="/messages" element={<Messages />} />

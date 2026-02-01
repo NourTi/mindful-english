@@ -64,6 +64,7 @@ const Dashboard = () => {
   const nextLevelXP = 1500;
 
   const navItems = [
+    { label: 'Immergo', path: '/immergo', icon: Compass },
     { label: 'Lessons', path: '/lessons', icon: BookOpen },
     { label: 'Vocabulary', path: '/vocabulary', icon: GraduationCap },
     { label: 'Community', path: '/community', icon: Users },
