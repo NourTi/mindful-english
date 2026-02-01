@@ -1,1 +1,12 @@
+{
+  "levels": [
+    { "level": 1, "label": "Explorer", "requiredXP": 0 },
+    { "level": 2, "label": "Communicator", "requiredXP": 50 },
+    { "level": 3, "label": "Storyteller", "requiredXP": 150 }
+  ],
+  "badges": [
+    { "id": "first-contact", "label": "First Contact", "description": "Completed your first social English challenge." },
+    { "id": "calm-voice", "label": "Calm Voice", "description": "Completed 3 anxiety-aware speaking challenges." }
+  ]
+}
 
