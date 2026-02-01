@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ChevronDown } from 'lucide-react';
+import { ArrowLeft, ChevronDown, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { 
@@ -11,6 +11,7 @@ import {
   type LearningMode 
 } from '@/data/immergoMissions';
 import { cn } from '@/lib/utils';
+import immergoDemoVideo from '@/assets/immergo-demo.mp4';
 
 const ImmergoMissions = () => {
   const navigate = useNavigate();
@@ -181,6 +182,35 @@ const ImmergoMissions = () => {
             </div>
           </div>
         </Card>
+
+        {/* Demo Video Section */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="relative rounded-2xl overflow-hidden border border-border/50 bg-card/30"
+        >
+          <video
+            src={immergoDemoVideo}
+            className="w-full aspect-video object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-6">
+            <div className="flex items-center gap-2 mb-2">
+              <Play className="w-5 h-5 text-primary" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+                Interactive Demo
+              </span>
+            </div>
+            <h3 className="text-xl font-bold">Step Into Real Conversations</h3>
+            <p className="text-sm text-muted-foreground mt-1">
+              Practice with AI characters in immersive scenarios
+            </p>
+          </div>
+        </motion.div>
 
         {/* Mission Selection */}
         <div className="space-y-4">
