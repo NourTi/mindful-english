@@ -8,3 +8,9 @@ verify_jwt = false
 
 [functions.elevenlabs-stt]
 verify_jwt = false
+
+[functions.immergo-chat]
+verify_jwt = false
+
+[functions.lesson-chat]
+verify_jwt = false
