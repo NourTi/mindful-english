@@ -24,6 +24,8 @@ import CompleteProfile from "./pages/CompleteProfile";
 import EnvironmentChallenges from "./pages/EnvironmentChallenges";
 import CommunityBuilder from "./pages/CommunityBuilder";
 import Paths from "./pages/Paths";
+import SituationPicker from "./pages/SituationPicker";
+import ChatLesson from "./pages/ChatLesson";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -56,6 +58,8 @@ const App = () => (
               <Route path="/environment/:id" element={<EnvironmentChallenges />} />
               <Route path="/community-builder" element={<CommunityBuilder />} />
               <Route path="/paths" element={<Paths />} />
+              <Route path="/situations" element={<SituationPicker />} />
+              <Route path="/chat/:lessonId" element={<ChatLesson />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
