@@ -2,31 +2,52 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { toast } from 'sonner';
 
 const STT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-stt`;
+const KOKORO_TTS_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/kokoro-tts`;
 
-// Voice settings for different environment personas (Web Speech API)
+// Kokoro voice mappings for different environments
+export const environmentKokoroVoices: Record<string, { voice: string; speed: number }> = {
+  gothic: { voice: 'bf_emma', speed: 0.9 },      // Deep female voice, slower
+  cyber: { voice: 'am_adam', speed: 1.1 },       // Male voice, faster
+  cosmic: { voice: 'af_sarah', speed: 0.85 },    // Ethereal female, slow
+  zen: { voice: 'af_bella', speed: 0.8 },        // Calm female, soothing
+  urban: { voice: 'am_michael', speed: 1.0 },    // Natural male
+  forest: { voice: 'bf_emma', speed: 0.9 },      // Warm female
+  arcade: { voice: 'am_adam', speed: 1.15 },     // Energetic male
+  // Default environments from scenarios
+  'corporate-boardroom': { voice: 'am_michael', speed: 1.0 },
+  'international-airport': { voice: 'af_bella', speed: 1.0 },
+  'university-campus': { voice: 'af_sarah', speed: 0.95 },
+  'local-coffee-shop': { voice: 'bf_emma', speed: 1.0 },
+  'medical-clinic': { voice: 'af_bella', speed: 0.9 },
+};
+
+// Fallback Web Speech API settings
 export const environmentVoiceSettings: Record<string, { pitch: number; rate: number }> = {
-  gothic: { pitch: 0.8, rate: 0.9 },    // Deep, slow
-  cyber: { pitch: 1.1, rate: 1.1 },     // Slightly robotic
-  cosmic: { pitch: 1.0, rate: 0.85 },   // Ethereal, slow
-  zen: { pitch: 0.95, rate: 0.8 },      // Calm, soothing
-  urban: { pitch: 1.0, rate: 1.0 },     // Natural
-  forest: { pitch: 0.9, rate: 0.9 },    // Warm
-  arcade: { pitch: 1.2, rate: 1.15 },   // Energetic
+  gothic: { pitch: 0.8, rate: 0.9 },
+  cyber: { pitch: 1.1, rate: 1.1 },
+  cosmic: { pitch: 1.0, rate: 0.85 },
+  zen: { pitch: 0.95, rate: 0.8 },
+  urban: { pitch: 1.0, rate: 1.0 },
+  forest: { pitch: 0.9, rate: 0.9 },
+  arcade: { pitch: 1.2, rate: 1.15 },
 };
 
 export const useVoiceChat = (environment: string) => {
   const [isRecording, setIsRecording] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [voiceEnabled, setVoiceEnabled] = useState(false); // Disabled by default - user must opt-in
+  const [voiceEnabled, setVoiceEnabled] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [useKokoro, setUseKokoro] = useState(true); // Try Kokoro first
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
+  const kokoroSettings = environmentKokoroVoices[environment] || environmentKokoroVoices.urban || { voice: 'af_bella', speed: 1.0 };
   const voiceSettings = environmentVoiceSettings[environment] || environmentVoiceSettings.urban;
 
-  // Load available voices
+  // Load available voices for fallback
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
@@ -41,26 +62,111 @@ export const useVoiceChat = (environment: string) => {
     };
   }, []);
 
-  // Get a good English voice
+  // Get a good English voice for fallback
   const getVoice = useCallback(() => {
-    // Prefer high-quality voices
     const preferredVoices = voices.filter(v => 
       v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Microsoft') || v.name.includes('Samantha'))
     );
     return preferredVoices[0] || voices.find(v => v.lang.startsWith('en')) || voices[0];
   }, [voices]);
 
-  // Text-to-Speech: Speak AI response using Web Speech API
-  const speakText = useCallback(async (text: string) => {
-    if (!voiceEnabled || !text.trim()) return;
-
-    // Check if Web Speech API is available
+  // Fallback to Web Speech API
+  const speakWithWebSpeech = useCallback((cleanText: string) => {
     if (!('speechSynthesis' in window)) {
-      toast.error('Speech synthesis not supported in this browser');
+      toast.error('Speech synthesis not supported');
       return;
     }
 
-    // Clean markdown from text for natural speech
+    window.speechSynthesis.cancel();
+    setIsSpeaking(true);
+    console.log('Speaking with Web Speech API (fallback):', cleanText.substring(0, 50));
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utteranceRef.current = utterance;
+    utterance.pitch = voiceSettings.pitch;
+    utterance.rate = voiceSettings.rate;
+    utterance.volume = 1;
+
+    const selectedVoice = getVoice();
+    if (selectedVoice) utterance.voice = selectedVoice;
+
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+
+    window.speechSynthesis.speak(utterance);
+  }, [voiceSettings, getVoice]);
+
+  // Primary TTS: Kokoro neural TTS
+  const speakWithKokoro = useCallback(async (cleanText: string): Promise<boolean> => {
+    try {
+      console.log(`Speaking with Kokoro TTS: "${cleanText.substring(0, 50)}..." voice: ${kokoroSettings.voice}`);
+      
+      const response = await fetch(KOKORO_TTS_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({
+          text: cleanText,
+          voice: kokoroSettings.voice,
+          language: 'en-us',
+          speed: kokoroSettings.speed,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.warn('Kokoro TTS failed:', response.status, errorData);
+        return false;
+      }
+
+      const audioBlob = await response.blob();
+      if (audioBlob.size < 100) {
+        console.warn('Kokoro returned empty audio');
+        return false;
+      }
+
+      const audioUrl = URL.createObjectURL(audioBlob);
+      
+      // Stop any existing audio
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+
+      const audio = new Audio(audioUrl);
+      audioRef.current = audio;
+      
+      setIsSpeaking(true);
+      
+      audio.onended = () => {
+        setIsSpeaking(false);
+        URL.revokeObjectURL(audioUrl);
+        audioRef.current = null;
+      };
+      
+      audio.onerror = () => {
+        setIsSpeaking(false);
+        URL.revokeObjectURL(audioUrl);
+        audioRef.current = null;
+      };
+
+      await audio.play();
+      console.log('Kokoro audio playing successfully');
+      return true;
+    } catch (error) {
+      console.warn('Kokoro TTS error:', error);
+      return false;
+    }
+  }, [kokoroSettings]);
+
+  // Main speak function - tries Kokoro first, falls back to Web Speech
+  const speakText = useCallback(async (text: string) => {
+    if (!voiceEnabled || !text.trim()) return;
+
+    // Clean markdown from text
     const cleanText = text
       .replace(/\*\*(.+?)\*\*/g, '$1')
       .replace(/\*(.+?)\*/g, '$1')
@@ -72,46 +178,29 @@ export const useVoiceChat = (environment: string) => {
 
     if (!cleanText) return;
 
-    try {
-      // Stop any current speech
-      window.speechSynthesis.cancel();
+    setIsSpeaking(true);
 
-      setIsSpeaking(true);
-      console.log('Speaking with Web Speech API:', cleanText.substring(0, 50));
-
-      const utterance = new SpeechSynthesisUtterance(cleanText);
-      utteranceRef.current = utterance;
-
-      // Apply environment-specific settings
-      utterance.pitch = voiceSettings.pitch;
-      utterance.rate = voiceSettings.rate;
-      utterance.volume = 1;
-
-      // Set voice
-      const selectedVoice = getVoice();
-      if (selectedVoice) {
-        utterance.voice = selectedVoice;
-      }
-
-      utterance.onend = () => {
-        setIsSpeaking(false);
-      };
-
-      utterance.onerror = (event) => {
-        console.error('Speech synthesis error:', event.error);
-        setIsSpeaking(false);
-      };
-
-      window.speechSynthesis.speak(utterance);
-    } catch (error) {
-      console.error('TTS error:', error);
-      setIsSpeaking(false);
-      toast.error('Voice playback failed');
+    // Try Kokoro first if enabled
+    if (useKokoro) {
+      const success = await speakWithKokoro(cleanText);
+      if (success) return;
+      
+      // Kokoro failed, try Web Speech as fallback
+      console.log('Falling back to Web Speech API');
     }
-  }, [voiceEnabled, voiceSettings, getVoice]);
+
+    // Use Web Speech API
+    speakWithWebSpeech(cleanText);
+  }, [voiceEnabled, useKokoro, speakWithKokoro, speakWithWebSpeech]);
 
   // Stop speaking
   const stopSpeaking = useCallback(() => {
+    // Stop Kokoro audio
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+    // Stop Web Speech
     window.speechSynthesis.cancel();
     utteranceRef.current = null;
     setIsSpeaking(false);
