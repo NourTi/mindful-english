@@ -181,7 +181,7 @@ const Onboarding = () => {
           
           {/* Section Card */}
           <Card className="border-border/50 bg-card/80 backdrop-blur-sm shadow-soft">
-            <CardContent className="p-6 sm:p-8">
+            <CardContent className="p-4 sm:p-6 md:p-8">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentSection?.title}
@@ -191,14 +191,14 @@ const Onboarding = () => {
                   transition={{ duration: 0.3 }}
                 >
                   {/* Section Title */}
-                  <h2 className="text-xl font-display font-bold text-foreground mb-6">
+                  <h2 className="text-lg sm:text-xl font-display font-bold text-foreground mb-4 sm:mb-6">
                     {currentSection?.title}
                   </h2>
                   
-                  {/* Questions */}
-                  <div className="space-y-8">
+                  {/* Questions - Stack vertically on mobile */}
+                  <div className="space-y-6 sm:space-y-8">
                     {currentSection?.questions.map((question: AssessmentQuestion) => (
-                      <div key={question.id}>
+                      <div key={question.id} className="w-full">
                         {question.type === 'scale' ? (
                           <ScaleQuestionInput
                             question={question as ScaleQuestion}
@@ -218,13 +218,13 @@ const Onboarding = () => {
                 </motion.div>
               </AnimatePresence>
               
-              {/* Navigation */}
-              <div className="flex justify-between items-center mt-8 pt-6 border-t border-border/50">
+              {/* Navigation - Stack on mobile */}
+              <div className="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-border/50">
                 <Button
                   variant="ghost"
                   onClick={prevSection}
                   disabled={currentSectionIndex === 0}
-                  className="gap-2"
+                  className="gap-2 w-full sm:w-auto"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Back
@@ -234,7 +234,7 @@ const Onboarding = () => {
                   variant="hero"
                   onClick={handleNext}
                   disabled={!isSectionComplete}
-                  className="gap-2"
+                  className="gap-2 w-full sm:w-auto"
                 >
                   {isLastSection ? 'See My Results' : 'Continue'}
                   <ArrowRight className="w-4 h-4" />

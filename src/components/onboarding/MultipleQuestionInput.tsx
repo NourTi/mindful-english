@@ -15,16 +15,16 @@ const MultipleQuestionInput = ({ question, value, onChange }: MultipleQuestionIn
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="space-y-6"
+      className="space-y-4 sm:space-y-6"
     >
-      <Label className="text-lg font-medium text-foreground">
+      <Label className="text-base sm:text-lg font-medium text-foreground block">
         {question.question}
       </Label>
       
       <RadioGroup
         value={value}
         onValueChange={onChange}
-        className="space-y-3"
+        className="grid grid-cols-1 gap-2 sm:gap-3"
       >
         {question.options.map((option, index) => (
           <motion.div
@@ -35,10 +35,10 @@ const MultipleQuestionInput = ({ question, value, onChange }: MultipleQuestionIn
           >
             <label
               htmlFor={`${question.id}-${index}`}
-              className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
+              className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
                 value === option
                   ? 'border-primary bg-primary/10 shadow-soft'
-                  : 'border-border/50 bg-card/50 hover:border-primary/50 hover:bg-card'
+                  : 'border-border/50 bg-card/50 hover:border-primary/50 hover:bg-card active:bg-card'
               }`}
             >
               <RadioGroupItem
@@ -46,7 +46,7 @@ const MultipleQuestionInput = ({ question, value, onChange }: MultipleQuestionIn
                 id={`${question.id}-${index}`}
                 className="shrink-0"
               />
-              <span className={`text-sm ${value === option ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
+              <span className={`text-sm leading-relaxed ${value === option ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
                 {option}
               </span>
             </label>

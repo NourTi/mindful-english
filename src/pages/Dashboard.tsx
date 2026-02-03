@@ -13,8 +13,10 @@ import { LearningEnvironments } from '@/components/LearningEnvironments';
 import { EnvironmentGrid } from '@/components/EnvironmentGrid';
 import { GrowthBar } from '@/components/GrowthBar';
 import LearningPathsSection from '@/components/LearningPathsSection';
+import SessionAnalytics from '@/components/dashboard/SessionAnalytics';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAssessmentStore } from '@/stores/assessmentStore';
 import { LearningStyle } from '@/types/learning';
 import { useAdmin } from '@/hooks/useAdmin';
@@ -281,8 +283,26 @@ const Dashboard = () => {
           <EnvironmentGrid />
         </motion.div>
 
-        {/* Learning Paths from see_learning_system.json */}
-        <LearningPathsSection />
+        {/* Session Analytics Tab */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mb-8"
+        >
+          <Tabs defaultValue="paths" className="w-full">
+            <TabsList className="grid w-full max-w-md grid-cols-2">
+              <TabsTrigger value="paths">Learning Paths</TabsTrigger>
+              <TabsTrigger value="analytics">My Progress</TabsTrigger>
+            </TabsList>
+            <TabsContent value="paths" className="mt-6">
+              <LearningPathsSection />
+            </TabsContent>
+            <TabsContent value="analytics" className="mt-6">
+              <SessionAnalytics />
+            </TabsContent>
+          </Tabs>
+        </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Main Content Area */}

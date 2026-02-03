@@ -5,6 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import GDPRBanner from "@/components/GDPRBanner";
+import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Assessment from "./pages/Assessment";
@@ -32,43 +35,47 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-      <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/complete-profile" element={<CompleteProfile />} />
-              <Route path="/assessment" element={<Assessment />} />
-              <Route path="/onboarding" element={<Onboarding />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/lessons" element={<Lessons />} />
-              <Route path="/lesson/:lessonId" element={<Lesson />} />
-              <Route path="/scenario" element={<Scenario />} />
-              <Route path="/immersive" element={<ImmersiveScenario />} />
-              <Route path="/structured-scenario" element={<StructuredScenario />} />
-              <Route path="/immergo" element={<ImmergoMissions />} />
-              <Route path="/immergo-chat" element={<ImmergoChat />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/community" element={<Community />} />
-              <Route path="/messages" element={<Messages />} />
-              <Route path="/vocabulary" element={<Vocabulary />} />
-              <Route path="/environment/:id" element={<EnvironmentChallenges />} />
-              <Route path="/community-builder" element={<CommunityBuilder />} />
-              <Route path="/paths" element={<Paths />} />
-              <Route path="/situations" element={<SituationPicker />} />
-              <Route path="/chat/:lessonId" element={<ChatLesson />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </AuthProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <AuthProvider>
+          <TooltipProvider>
+            <GDPRBanner />
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/complete-profile" element={<CompleteProfile />} />
+                <Route path="/assessment" element={<Assessment />} />
+                <Route path="/onboarding" element={<Onboarding />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/lessons" element={<Lessons />} />
+                <Route path="/lesson/:lessonId" element={<Lesson />} />
+                <Route path="/scenario" element={<Scenario />} />
+                <Route path="/immersive" element={<ImmersiveScenario />} />
+                <Route path="/structured-scenario" element={<StructuredScenario />} />
+                <Route path="/immergo" element={<ImmergoMissions />} />
+                <Route path="/immergo-chat" element={<ImmergoChat />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/community" element={<Community />} />
+                <Route path="/messages" element={<Messages />} />
+                <Route path="/vocabulary" element={<Vocabulary />} />
+                <Route path="/environment/:id" element={<EnvironmentChallenges />} />
+                <Route path="/community-builder" element={<CommunityBuilder />} />
+                <Route path="/paths" element={<Paths />} />
+                <Route path="/situations" element={<SituationPicker />} />
+                <Route path="/chat/:lessonId" element={<ChatLesson />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+            <PWAInstallPrompt />
+          </TooltipProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;
