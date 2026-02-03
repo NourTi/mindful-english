@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Assessment from "./pages/Assessment";
+import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
 import Lessons from "./pages/Lessons";
 import Lesson from "./pages/Lesson";
@@ -43,6 +44,7 @@ const App = () => (
               <Route path="/auth" element={<Auth />} />
               <Route path="/complete-profile" element={<CompleteProfile />} />
               <Route path="/assessment" element={<Assessment />} />
+              <Route path="/onboarding" element={<Onboarding />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/lessons" element={<Lessons />} />
               <Route path="/lesson/:lessonId" element={<Lesson />} />

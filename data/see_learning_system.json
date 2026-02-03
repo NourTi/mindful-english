@@ -1,4 +1,42 @@
-,
+{
+  "meta": {
+    "version": "1.0",
+    "sourceModels": ["LearnMate", "SEE"],
+    "description": "SEE Learning System with adaptive assessment and path recommendation"
+  },
+  "learnerModel": {
+    "traits": ["visual", "auditory", "kinesthetic", "reading"],
+    "levels": [
+      { "level": 1, "label": "Explorer", "minXP": 0 },
+      { "level": 2, "label": "Practitioner", "minXP": 500 },
+      { "level": 3, "label": "Achiever", "minXP": 1500 },
+      { "level": 4, "label": "Master", "minXP": 3500 },
+      { "level": 5, "label": "Expert", "minXP": 7000 }
+    ]
+  },
+  "lessons": [],
+  "exercises": [],
+  "paths": [
+    {
+      "id": "path-social-confidence",
+      "label": "Social Confidence Path",
+      "forTraits": ["mild_anxiety", "introvert"],
+      "sequence": ["see-airport-1", "see-cafe-1", "see-meetup-1"]
+    },
+    {
+      "id": "path-travel-english",
+      "label": "Travel English Path",
+      "forTraits": ["traveler", "adventurer"],
+      "sequence": ["see-hotel-1", "see-restaurant-1", "see-directions-1"]
+    },
+    {
+      "id": "path-professional",
+      "label": "Professional English Path",
+      "forTraits": ["career", "professional"],
+      "sequence": ["see-interview-1", "see-meeting-1", "see-presentation-1"]
+    }
+  ],
+  "adaptivityRules": [],
   "assessment": {
     "welcome": "Let's create your perfect learning path. Answer 6 quick questions.",
     "sections": [
@@ -7,14 +45,16 @@
         "questions": [
           {
             "id": "speaking_level",
-            "question": "How comfortable are you speaking English with strangers? (1 = very nervous, 5 = confident)",
+            "question": "How comfortable are you speaking English with strangers?",
+            "description": "1 = very nervous, 5 = confident",
             "type": "scale",
             "min": 1,
             "max": 5
           },
           {
-            "id": "listening_level", 
-            "question": "How well do you understand spoken English in real conversations? (1 = struggle, 5 = excellent)",
+            "id": "listening_level",
+            "question": "How well do you understand spoken English in real conversations?",
+            "description": "1 = struggle, 5 = excellent",
             "type": "scale",
             "min": 1,
             "max": 5
@@ -26,13 +66,13 @@
         "questions": [
           {
             "id": "anxiety",
-            "question": "Social speaking anxiety level? (LearnMate style)",
+            "question": "What's your social speaking anxiety level?",
             "type": "multiple",
-            "options": ["High - avoid talking", "Medium - nervous but try", "Low - enjoy it"]
+            "options": ["High - I avoid talking", "Medium - nervous but I try", "Low - I enjoy it"]
           },
           {
             "id": "motivation",
-            "question": "What's driving you?",
+            "question": "What's driving you to learn?",
             "type": "multiple",
             "options": ["Job/career", "Travel/social", "Personal growth", "Exam prep"]
           }
@@ -43,7 +83,7 @@
         "questions": [
           {
             "id": "format",
-            "question": "Preferred practice style?",
+            "question": "What's your preferred practice style?",
             "type": "multiple",
             "options": ["Role-play scenarios", "VR immersion", "Chat with AI", "Audio exercises"]
           }
@@ -56,11 +96,31 @@
         "startingDifficulty": "easy",
         "psySupport": "high"
       },
+      "high_anxiety_low_speaking_travel": {
+        "recommendedPath": "path-social-confidence",
+        "startingDifficulty": "easy",
+        "psySupport": "high"
+      },
       "medium_anxiety_travel": {
         "recommendedPath": "path-travel-english",
         "startingDifficulty": "medium",
         "psySupport": "medium"
+      },
+      "medium_anxiety_job": {
+        "recommendedPath": "path-professional",
+        "startingDifficulty": "medium",
+        "psySupport": "medium"
+      },
+      "low_anxiety_job": {
+        "recommendedPath": "path-professional",
+        "startingDifficulty": "hard",
+        "psySupport": "low"
+      },
+      "low_anxiety_travel": {
+        "recommendedPath": "path-travel-english",
+        "startingDifficulty": "hard",
+        "psySupport": "low"
       }
     }
   }
-
+}

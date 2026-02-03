@@ -21,6 +21,8 @@ import AIBrainVisualizer from '@/components/AIBrainVisualizer';
 import VRScenePreview from '@/components/VRScenePreview';
 import DemoVideoModal from '@/components/DemoVideoModal';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { isOnboardingComplete } from '@/lib/onboardingEngine';
+import { useAuth } from '@/hooks/useAuth';
 
 const features = [
   {
@@ -97,9 +99,18 @@ const techStack = [
 
 const Landing = () => {
   const navigate = useNavigate();
+  const { user, loading } = useAuth();
   const [activeFeature, setActiveFeature] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isDemoOpen, setIsDemoOpen] = useState(false);
+
+  // Redirect first-time users to onboarding
+  useEffect(() => {
+    if (!loading && !user && !isOnboardingComplete()) {
+      // First-time visitor - send to onboarding
+      navigate('/onboarding');
+    }
+  }, [loading, user, navigate]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
