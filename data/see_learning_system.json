@@ -1,98 +1,66 @@
-{
-  "meta": {
-    "version": "1.0",
-    "sourceModels": ["rabbitbrain", "pal2.0", "see"],
-    "description": "Integrated SEE learning system combining English lessons, psychological profiles, and adaptive rules."
-  },
-
-  "learnerModel": {
-    "traits": ["introvert", "extrovert", "anxious", "confident"],
-    "levels": [
-      { "level": 1, "label": "Explorer", "minXP": 0 },
-      { "level": 2, "label": "Communicator", "minXP": 50 },
-      { "level": 3, "label": "Storyteller", "minXP": 150 }
-    ]
-  },
-
-  "lessons": [
-    {
-      "id": "lesson-airport-basic",
-      "title": "Surviving the Airport in English",
-      "environment": "airport",
-      "tags": ["listening", "speaking", "travel"],
-      "psyProfileTarget": ["mild_anxiety", "introvert"],
-      "difficulty": "easy",
-      "modules": [
-        {
-          "id": "mod-1",
-          "type": "psy_prep",
-          "title": "Grounding Before Boarding",
-          "content": "3 deep breaths, visualize a safe, calm gate area."
-        },
-        {
-          "id": "mod-2",
-          "type": "dialogue",
-          "title": "Gate Information",
-          "content": "Ask a staff member about gate or boarding time using simple phrases."
-        },
-        {
-          "id": "mod-3",
-          "type": "reflection",
-          "title": "Emotional Check-in",
-          "content": "Rate your stress from 1–5 and write one sentence about what helped."
-        }
-      ]
-    }
-  ],
-
-  "exercises": [
-    {
-      "id": "ex-airport-greeting-1",
-      "lessonId": "lesson-airport-basic",
-      "skill": "speaking",
-      "knowledgeComponent": "social_greeting",
-      "prompt": "Greet a fellow traveler and ask one simple question about their trip.",
-      "expectedResponseType": "spoken",
-      "maxAttempts": 3,
-      "xpReward": 10
-    }
-  ],
-
-  "paths": [
-    {
-      "id": "path-social-confidence",
-      "label": "Social Confidence Path",
-      "forTraits": ["mild_anxiety", "introvert"],
-      "sequence": [
-        "lesson-airport-basic"
-      ]
-    }
-  ],
-
-  "adaptivityRules": [
-    {
-      "id": "rule-anxious-easy",
-      "description": "If learner is anxious and fails an exercise, stay on current lesson with easier variant.",
-      "conditions": {
-        "psyState": ["anxious"],
-        "lastExerciseResult": "fail"
+,
+  "assessment": {
+    "welcome": "Let's create your perfect learning path. Answer 6 quick questions.",
+    "sections": [
+      {
+        "title": "Language Skills",
+        "questions": [
+          {
+            "id": "speaking_level",
+            "question": "How comfortable are you speaking English with strangers? (1 = very nervous, 5 = confident)",
+            "type": "scale",
+            "min": 1,
+            "max": 5
+          },
+          {
+            "id": "listening_level", 
+            "question": "How well do you understand spoken English in real conversations? (1 = struggle, 5 = excellent)",
+            "type": "scale",
+            "min": 1,
+            "max": 5
+          }
+        ]
       },
-      "action": {
-        "type": "repeat_lesson_with_support",
-        "supportModuleType": "psy_prep"
+      {
+        "title": "Psychological State",
+        "questions": [
+          {
+            "id": "anxiety",
+            "question": "Social speaking anxiety level? (LearnMate style)",
+            "type": "multiple",
+            "options": ["High - avoid talking", "Medium - nervous but try", "Low - enjoy it"]
+          },
+          {
+            "id": "motivation",
+            "question": "What's driving you?",
+            "type": "multiple",
+            "options": ["Job/career", "Travel/social", "Personal growth", "Exam prep"]
+          }
+        ]
+      },
+      {
+        "title": "Learning Preferences",
+        "questions": [
+          {
+            "id": "format",
+            "question": "Preferred practice style?",
+            "type": "multiple",
+            "options": ["Role-play scenarios", "VR immersion", "Chat with AI", "Audio exercises"]
+          }
+        ]
       }
-    },
-    {
-      "id": "rule-confident-progress",
-      "description": "If learner is confident and passes 3 exercises in a row, jump to next lesson in path.",
-      "conditions": {
-        "psyState": ["confident"],
-        "streakSuccessCount": 3
+    ],
+    "profileMapping": {
+      "high_anxiety_low_speaking_job": {
+        "recommendedPath": "path-social-confidence",
+        "startingDifficulty": "easy",
+        "psySupport": "high"
       },
-      "action": {
-        "type": "advance_in_path"
+      "medium_anxiety_travel": {
+        "recommendedPath": "path-travel-english",
+        "startingDifficulty": "medium",
+        "psySupport": "medium"
       }
     }
-  ]
-}
+  }
 
