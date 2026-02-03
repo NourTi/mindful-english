@@ -1,4 +1,5 @@
 import { AssessmentProfile, PathRecommendation, ProfileMapping } from '@/types/onboarding';
+import { safeGetItem, safeSetItem, safeRemoveItem, trackSession } from '@/lib/storage';
 import system from '../../data/see_learning_system.json';
 
 const STORAGE_KEY = 'see-onboarding-profile';
@@ -21,70 +22,85 @@ const typedSystem = system as unknown as SystemData;
  * Maps assessment profile to a recommended learning path
  */
 export function getRecommendedPath(profile: AssessmentProfile): PathRecommendation {
-  const { speaking_level, anxiety, motivation } = profile;
-  
-  // Determine anxiety level key
-  let anxietyKey: 'high' | 'medium' | 'low';
-  if (anxiety.toLowerCase().includes('high') || anxiety.toLowerCase().includes('avoid')) {
-    anxietyKey = 'high';
-  } else if (anxiety.toLowerCase().includes('medium') || anxiety.toLowerCase().includes('nervous')) {
-    anxietyKey = 'medium';
-  } else {
-    anxietyKey = 'low';
-  }
-  
-  // Determine speaking level key
-  const speakingKey = speaking_level <= 2 ? 'low_speaking' : speaking_level >= 4 ? 'high_speaking' : 'medium_speaking';
-  
-  // Determine motivation key
-  let motivationKey: string;
-  if (motivation.toLowerCase().includes('job') || motivation.toLowerCase().includes('career')) {
-    motivationKey = 'job';
-  } else if (motivation.toLowerCase().includes('travel') || motivation.toLowerCase().includes('social')) {
-    motivationKey = 'travel';
-  } else {
-    motivationKey = 'growth';
-  }
-  
-  // Build mapping key
-  const mappingKeys = [
-    `${anxietyKey}_anxiety_${speakingKey}_${motivationKey}`,
-    `${anxietyKey}_anxiety_${motivationKey}`,
-    `${anxietyKey}_anxiety`,
-  ];
-  
-  // Find matching profile mapping
-  let mapping: ProfileMapping | null = null;
-  for (const key of mappingKeys) {
-    if (typedSystem.assessment.profileMapping[key]) {
-      mapping = typedSystem.assessment.profileMapping[key];
-      break;
+  try {
+    const { speaking_level, anxiety, motivation } = profile;
+    
+    // Determine anxiety level key
+    let anxietyKey: 'high' | 'medium' | 'low';
+    if (anxiety.toLowerCase().includes('high') || anxiety.toLowerCase().includes('avoid')) {
+      anxietyKey = 'high';
+    } else if (anxiety.toLowerCase().includes('medium') || anxiety.toLowerCase().includes('nervous')) {
+      anxietyKey = 'medium';
+    } else {
+      anxietyKey = 'low';
     }
-  }
-  
-  // Fallback to default path
-  if (!mapping) {
-    mapping = {
-      recommendedPath: 'path-social-confidence',
-      startingDifficulty: 'easy',
-      psySupport: 'high'
+    
+    // Determine speaking level key
+    const speakingKey = speaking_level <= 2 ? 'low_speaking' : speaking_level >= 4 ? 'high_speaking' : 'medium_speaking';
+    
+    // Determine motivation key
+    let motivationKey: string;
+    if (motivation.toLowerCase().includes('job') || motivation.toLowerCase().includes('career')) {
+      motivationKey = 'job';
+    } else if (motivation.toLowerCase().includes('travel') || motivation.toLowerCase().includes('social')) {
+      motivationKey = 'travel';
+    } else {
+      motivationKey = 'growth';
+    }
+    
+    // Build mapping key
+    const mappingKeys = [
+      `${anxietyKey}_anxiety_${speakingKey}_${motivationKey}`,
+      `${anxietyKey}_anxiety_${motivationKey}`,
+      `${anxietyKey}_anxiety`,
+    ];
+    
+    // Find matching profile mapping
+    let mapping: ProfileMapping | null = null;
+    for (const key of mappingKeys) {
+      if (typedSystem.assessment.profileMapping[key]) {
+        mapping = typedSystem.assessment.profileMapping[key];
+        break;
+      }
+    }
+    
+    // Fallback to default path
+    if (!mapping) {
+      mapping = {
+        recommendedPath: 'path-social-confidence',
+        startingDifficulty: 'easy',
+        psySupport: 'high'
+      };
+    }
+    
+    // Find path label
+    const path = typedSystem.paths.find(p => p.id === mapping!.recommendedPath);
+    const pathLabel = path?.label || 'Social Confidence Path';
+    
+    // Generate recommendation reason
+    const reason = generateRecommendationReason(anxietyKey, speaking_level, motivationKey, mapping);
+    
+    // Track assessment completion
+    trackSession({ type: 'assessment', psySupportUsed: anxietyKey === 'high' });
+    
+    return {
+      pathId: mapping.recommendedPath,
+      pathLabel,
+      difficulty: mapping.startingDifficulty,
+      psySupport: mapping.psySupport,
+      reason
+    };
+  } catch (error) {
+    console.error('Error getting recommended path:', error);
+    // Return safe fallback
+    return {
+      pathId: 'path-social-confidence',
+      pathLabel: 'Social Confidence Path',
+      difficulty: 'easy',
+      psySupport: 'high',
+      reason: 'We recommend starting with our beginner-friendly path with full psychological support.'
     };
   }
-  
-  // Find path label
-  const path = typedSystem.paths.find(p => p.id === mapping!.recommendedPath);
-  const pathLabel = path?.label || 'Social Confidence Path';
-  
-  // Generate recommendation reason
-  const reason = generateRecommendationReason(anxietyKey, speaking_level, motivationKey, mapping);
-  
-  return {
-    pathId: mapping.recommendedPath,
-    pathLabel,
-    difficulty: mapping.startingDifficulty,
-    psySupport: mapping.psySupport,
-    reason
-  };
 }
 
 function generateRecommendationReason(
@@ -115,23 +131,32 @@ function generateRecommendationReason(
 }
 
 /**
- * Save assessment profile to localStorage
+ * Save assessment profile to localStorage with error handling
  */
-export function saveOnboardingProfile(profile: AssessmentProfile): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
-  localStorage.setItem(ONBOARDING_COMPLETE_KEY, 'true');
+export function saveOnboardingProfile(profile: AssessmentProfile): boolean {
+  try {
+    const { success: profileSuccess } = safeSetItem(STORAGE_KEY, profile);
+    const { success: completeSuccess } = safeSetItem(ONBOARDING_COMPLETE_KEY, true);
+    return profileSuccess && completeSuccess;
+  } catch (error) {
+    console.error('Failed to save onboarding profile:', error);
+    return false;
+  }
 }
 
 /**
- * Get saved assessment profile from localStorage
+ * Get saved assessment profile from localStorage with error handling
  */
 export function getOnboardingProfile(): AssessmentProfile | null {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (!stored) return null;
-  
   try {
-    return JSON.parse(stored) as AssessmentProfile;
-  } catch {
+    const { data, error } = safeGetItem<AssessmentProfile | null>(STORAGE_KEY, null);
+    if (error) {
+      console.warn('Error loading onboarding profile:', error.message);
+      return null;
+    }
+    return data;
+  } catch (error) {
+    console.error('Failed to get onboarding profile:', error);
     return null;
   }
 }
@@ -140,22 +165,36 @@ export function getOnboardingProfile(): AssessmentProfile | null {
  * Check if onboarding has been completed
  */
 export function isOnboardingComplete(): boolean {
-  return localStorage.getItem(ONBOARDING_COMPLETE_KEY) === 'true';
+  try {
+    const { data } = safeGetItem<boolean>(ONBOARDING_COMPLETE_KEY, false);
+    return data === true;
+  } catch {
+    return false;
+  }
 }
 
 /**
  * Clear onboarding data (for reset purposes)
  */
 export function clearOnboardingData(): void {
-  localStorage.removeItem(STORAGE_KEY);
-  localStorage.removeItem(ONBOARDING_COMPLETE_KEY);
+  try {
+    safeRemoveItem(STORAGE_KEY);
+    safeRemoveItem(ONBOARDING_COMPLETE_KEY);
+  } catch (error) {
+    console.error('Failed to clear onboarding data:', error);
+  }
 }
 
 /**
  * Get the first lesson ID from a path
  */
 export function getFirstLessonFromPath(pathId: string): string | null {
-  const path = typedSystem.paths.find(p => p.id === pathId);
-  if (!path || path.sequence.length === 0) return null;
-  return path.sequence[0];
+  try {
+    const path = typedSystem.paths.find(p => p.id === pathId);
+    if (!path || path.sequence.length === 0) return null;
+    return path.sequence[0];
+  } catch (error) {
+    console.error('Error getting first lesson from path:', error);
+    return null;
+  }
 }
