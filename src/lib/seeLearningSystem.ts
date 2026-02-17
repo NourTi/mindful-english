@@ -82,6 +82,15 @@ export interface SeeAdaptivityRule {
   action: SeeAdaptivityAction;
 }
 
+export interface SeeAvatarCharacter {
+  characterId: string;
+  role: string;
+  environments: string[];
+  defaultEmotion: string;
+  emotionProfile: Record<string, string>;
+  description: string;
+}
+
 export interface SeeLearningSystem {
   meta: SeeMeta;
   learnerModel: SeeLearnerModel;
@@ -91,6 +100,7 @@ export interface SeeLearningSystem {
   paths: SeePath[];
   adaptivityRules: SeeAdaptivityRule[];
   diagnosticEngine: unknown;
+  avatarCharacters?: SeeAvatarCharacter[];
 }
 
 // Import the JSON data
@@ -138,4 +148,15 @@ export function getModes(): SeeMode[] {
 
 export function getLessonsByMode(modeId: string): SeeLesson[] {
   return (typedSystem.lessons || []).filter(lesson => lesson.mode === modeId);
+}
+
+// Avatar character helpers
+export function getAvatarCharacters(): SeeAvatarCharacter[] {
+  return typedSystem.avatarCharacters || [];
+}
+
+export function getAvatarForEnvironment(environment: string): SeeAvatarCharacter | undefined {
+  return (typedSystem.avatarCharacters || []).find(c =>
+    c.environments.includes(environment)
+  );
 }

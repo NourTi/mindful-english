@@ -1,8 +1,11 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, Suspense, lazy } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Text, Environment, Html } from '@react-three/drei';
 import type { NPCEmotion } from '@/lib/npcEngine';
+import { isSmplpixAvailable } from '@/lib/smplpixClient';
 import * as THREE from 'three';
+
+const SmplAvatar3D = lazy(() => import('@/components/SmplAvatar3D'));
 
 interface ImmersiveNPCSceneProps {
   npcUtterance: string;
@@ -10,6 +13,9 @@ interface ImmersiveNPCSceneProps {
   environment: string;
   phase: string;
   is3D: boolean;
+  characterId?: string;
+  lessonId?: string;
+  turnCount?: number;
 }
 
 // ─── NPC Avatar with emotion-driven animation ─────────────────────────
@@ -166,11 +172,16 @@ function SpeechBubble({ text, emotion }: { text: string; emotion: NPCEmotion }) 
 
 // ─── 3D Scene Composition ─────────────────────────────────────────────
 
-function Scene3DContent({ npcUtterance, npcEmotion, environment }: {
+function Scene3DContent({ npcUtterance, npcEmotion, environment, characterId, lessonId, turnCount }: {
   npcUtterance: string;
   npcEmotion: NPCEmotion;
   environment: string;
+  characterId?: string;
+  lessonId?: string;
+  turnCount?: number;
 }) {
+  const [useSmplpix, setUseSmplpix] = useState(isSmplpixAvailable());
+
   return (
     <>
       <ambientLight intensity={0.5} />
@@ -179,7 +190,22 @@ function Scene3DContent({ npcUtterance, npcEmotion, environment }: {
       <Environment preset="city" />
 
       <EnvironmentScene environment={environment} />
-      <NPCAvatar emotion={npcEmotion} />
+
+      {/* Neural avatar (SMPLpix) or procedural fallback */}
+      {useSmplpix && characterId && lessonId ? (
+        <Suspense fallback={<NPCAvatar emotion={npcEmotion} />}>
+          <SmplAvatar3D
+            characterId={characterId}
+            lessonId={lessonId}
+            emotion={npcEmotion}
+            turnCount={turnCount ?? 0}
+            onFallback={() => setUseSmplpix(false)}
+          />
+        </Suspense>
+      ) : (
+        <NPCAvatar emotion={npcEmotion} />
+      )}
+
       <SpeechBubble text={npcUtterance} emotion={npcEmotion} />
 
       <OrbitControls
@@ -263,6 +289,9 @@ export default function ImmersiveNPCScene({
   environment,
   phase,
   is3D,
+  characterId,
+  lessonId,
+  turnCount,
 }: ImmersiveNPCSceneProps) {
   if (!is3D) {
     return (
@@ -285,6 +314,9 @@ export default function ImmersiveNPCScene({
         npcUtterance={npcUtterance}
         npcEmotion={npcEmotion}
         environment={environment}
+        characterId={characterId}
+        lessonId={lessonId}
+        turnCount={turnCount}
       />
     </Canvas>
   );
