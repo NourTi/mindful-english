@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef, Suspense, lazy } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getLessonById } from '@/lib/seeLearningSystem';
+import { getLessonById, getAvatarForEnvironment } from '@/lib/seeLearningSystem';
 import { getLearnerProfile } from '@/lib/onboardingEngine';
 import {
   createInitialNPCState,
@@ -39,7 +39,7 @@ export default function VRSimulation() {
 
   const lesson = lessonId ? getLessonById(lessonId) : null;
   const profile = getLearnerProfile();
-
+  const avatarCharacter = lesson ? getAvatarForEnvironment(lesson.environment) : undefined;
   const [npcState, setNpcState] = useState<NPCState>(() => createInitialNPCState(profile));
   const [conversation, setConversation] = useState<ConversationTurn[]>([]);
   const [input, setInput] = useState('');
@@ -253,6 +253,9 @@ export default function VRSimulation() {
               environment={lesson.environment}
               phase={npcState.phase}
               is3D={is3D}
+              characterId={avatarCharacter?.characterId}
+              lessonId={lessonId}
+              turnCount={npcState.turnCount}
             />
           </Suspense>
 

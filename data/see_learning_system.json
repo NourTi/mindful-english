@@ -433,5 +433,47 @@
     { "id": "rule-anxiety-spike", "description": "If learner reports high anxiety mid-session, insert a psy_prep module", "conditions": { "psyState": ["high_anxiety"], "lastExerciseResult": "fail" }, "action": { "type": "insert_module", "supportModuleType": "psy_prep" } },
     { "id": "rule-streak-success", "description": "After 3 consecutive successes, increase difficulty", "conditions": { "streakSuccessCount": 3 }, "action": { "type": "increase_difficulty" } },
     { "id": "rule-low-efficacy", "description": "If self-efficacy is low, add encouragement module", "conditions": { "psyState": ["low_self_efficacy"] }, "action": { "type": "insert_module", "supportModuleType": "confidence_task" } }
+  ],
+  "avatarCharacters": [
+    {
+      "characterId": "airport_officer",
+      "role": "Gate agent / airport security",
+      "environments": ["airport"],
+      "defaultEmotion": "calm",
+      "emotionProfile": { "greeting": "calm", "info_exchange": "supportive", "challenge": "pushing", "closure": "wrapping_up" },
+      "description": "Professional airport gate agent who handles delays and boarding procedures."
+    },
+    {
+      "characterId": "barista",
+      "role": "Café barista",
+      "environments": ["cafe"],
+      "defaultEmotion": "supportive",
+      "emotionProfile": { "greeting": "supportive", "info_exchange": "supportive", "challenge": "calm", "closure": "wrapping_up" },
+      "description": "Friendly London café barista with a warm, chatty personality."
+    },
+    {
+      "characterId": "interviewer",
+      "role": "HR interviewer / hiring manager",
+      "environments": ["job_interview"],
+      "defaultEmotion": "calm",
+      "emotionProfile": { "greeting": "calm", "info_exchange": "calm", "challenge": "pushing", "closure": "supportive" },
+      "description": "Professional but approachable interviewer at a UK company."
+    },
+    {
+      "characterId": "flatmate",
+      "role": "Potential flatmate",
+      "environments": ["flatshare"],
+      "defaultEmotion": "supportive",
+      "emotionProfile": { "greeting": "supportive", "info_exchange": "calm", "challenge": "pushing", "closure": "wrapping_up" },
+      "description": "Friendly existing tenant showing a prospective flatmate around."
+    },
+    {
+      "characterId": "receptionist",
+      "role": "Hotel receptionist",
+      "environments": ["hotel", "restaurant"],
+      "defaultEmotion": "calm",
+      "emotionProfile": { "greeting": "supportive", "info_exchange": "calm", "challenge": "supportive", "closure": "wrapping_up" },
+      "description": "Polite hotel front-desk staff who handles check-ins and guest requests."
+    }
   ]
 }
