@@ -37,10 +37,9 @@ export default function SmplAvatar3D({
   const [isLoading, setIsLoading] = useState(true);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  // ── Initial load ────────────────────────────────────────────────────
+  // ── Bail out immediately when SMPLpix is disabled ────────────────────
   useEffect(() => {
     if (!isSmplpixAvailable()) {
-      setIsLoading(false);
       onFallback?.();
       return;
     }

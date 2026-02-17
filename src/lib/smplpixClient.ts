@@ -53,7 +53,9 @@ function cacheKey(characterId: string, emotion: string): string {
 // ─── Availability check ───────────────────────────────────────────────
 
 export function isSmplpixAvailable(): boolean {
-  return !!SERVICE_URL && SERVICE_URL.length > 0;
+  // Disabled until a real SMPLpix GPU backend is deployed.
+  // When ready, remove this override and rely on VITE_SMPLPIX_SERVICE_URL.
+  return false;
 }
 
 // ─── Main API call ────────────────────────────────────────────────────
