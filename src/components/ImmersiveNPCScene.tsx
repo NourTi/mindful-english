@@ -16,6 +16,7 @@ interface ImmersiveNPCSceneProps {
   characterId?: string;
   lessonId?: string;
   turnCount?: number;
+  onSmplpixFallback?: () => void;
 }
 
 // ─── NPC Avatar with emotion-driven animation ─────────────────────────
@@ -172,13 +173,14 @@ function SpeechBubble({ text, emotion }: { text: string; emotion: NPCEmotion }) 
 
 // ─── 3D Scene Composition ─────────────────────────────────────────────
 
-function Scene3DContent({ npcUtterance, npcEmotion, environment, characterId, lessonId, turnCount }: {
+function Scene3DContent({ npcUtterance, npcEmotion, environment, characterId, lessonId, turnCount, onSmplpixFallback }: {
   npcUtterance: string;
   npcEmotion: NPCEmotion;
   environment: string;
   characterId?: string;
   lessonId?: string;
   turnCount?: number;
+  onSmplpixFallback?: () => void;
 }) {
   const [useSmplpix, setUseSmplpix] = useState(isSmplpixAvailable());
 
@@ -199,7 +201,7 @@ function Scene3DContent({ npcUtterance, npcEmotion, environment, characterId, le
             lessonId={lessonId}
             emotion={npcEmotion}
             turnCount={turnCount ?? 0}
-            onFallback={() => setUseSmplpix(false)}
+            onFallback={() => { setUseSmplpix(false); onSmplpixFallback?.(); }}
           />
         </Suspense>
       ) : (
@@ -292,6 +294,7 @@ export default function ImmersiveNPCScene({
   characterId,
   lessonId,
   turnCount,
+  onSmplpixFallback,
 }: ImmersiveNPCSceneProps) {
   if (!is3D) {
     return (
@@ -317,6 +320,7 @@ export default function ImmersiveNPCScene({
         characterId={characterId}
         lessonId={lessonId}
         turnCount={turnCount}
+        onSmplpixFallback={onSmplpixFallback}
       />
     </Canvas>
   );
