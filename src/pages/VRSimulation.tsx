@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, Suspense, lazy } from 'react';
+import { useState, useEffect, useCallback, useRef, Suspense, lazy } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getLessonById } from '@/lib/seeLearningSystem';
 import { getLearnerProfile } from '@/lib/onboardingEngine';
@@ -8,6 +8,7 @@ import {
   isConversationComplete,
   type NPCState,
 } from '@/lib/npcEngine';
+import { useVoiceChat } from '@/hooks/useVoiceChat';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -15,7 +16,7 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   ArrowLeft, Send, Loader2, Maximize2, Minimize2,
-  MessageCircle, CheckCircle2, AlertCircle,
+  MessageCircle, CheckCircle2, AlertCircle, Volume2, VolumeX, Mic, MicOff,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -47,6 +48,19 @@ export default function VRSimulation() {
   const [is3D, setIs3D] = useState(true);
   const [initialized, setInitialized] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const lastSpokenRef = useRef('');
+
+  // Voice chat integration (Kokoro TTS + Web Speech fallback)
+  const {
+    isSpeaking,
+    voiceEnabled,
+    isRecording,
+    speakText,
+    stopSpeaking,
+    toggleVoice,
+    startRecording,
+    stopRecording,
+  } = useVoiceChat(lesson?.environment || 'hotel');
 
   // Check for WebGL support
   useEffect(() => {
@@ -93,6 +107,29 @@ export default function VRSimulation() {
   useEffect(() => {
     initConversation();
   }, [initConversation]);
+
+  // Auto-speak NPC utterances when voice is enabled
+  useEffect(() => {
+    if (npcState.npcUtterance && npcState.npcUtterance !== lastSpokenRef.current) {
+      lastSpokenRef.current = npcState.npcUtterance;
+      if (voiceEnabled) {
+        speakText(npcState.npcUtterance);
+      }
+    }
+  }, [npcState.npcUtterance, voiceEnabled, speakText]);
+
+  // Handle voice recording result
+  const handleVoiceInput = useCallback(async () => {
+    if (isRecording) {
+      const transcript = await stopRecording();
+      if (transcript && transcript.trim()) {
+        setInput(transcript);
+      }
+    } else {
+      stopSpeaking(); // Stop NPC speaking when user starts recording
+      await startRecording();
+    }
+  }, [isRecording, startRecording, stopRecording, stopSpeaking]);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading || !lesson || completed) return;
@@ -172,7 +209,20 @@ export default function VRSimulation() {
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
+            <Button
+              variant={voiceEnabled ? 'default' : 'ghost'}
+              size="icon"
+              onClick={toggleVoice}
+              title={voiceEnabled ? 'Mute NPC voice' : 'Enable NPC voice'}
+              className="h-8 w-8"
+            >
+              {voiceEnabled ? (
+                <Volume2 className={`h-4 w-4 ${isSpeaking ? 'animate-pulse' : ''}`} />
+              ) : (
+                <VolumeX className="h-4 w-4" />
+              )}
+            </Button>
             <Button
               variant="ghost"
               size="sm"
@@ -181,7 +231,7 @@ export default function VRSimulation() {
             >
               {is3D ? '2D' : '3D'}
             </Button>
-            <Button variant="ghost" size="icon" onClick={() => setIsFullscreen(!isFullscreen)}>
+            <Button variant="ghost" size="icon" onClick={() => setIsFullscreen(!isFullscreen)} className="h-8 w-8">
               {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
             </Button>
           </div>
@@ -291,11 +341,21 @@ export default function VRSimulation() {
                 onSubmit={e => { e.preventDefault(); handleSend(); }}
                 className="flex gap-2"
               >
+                <Button
+                  type="button"
+                  variant={isRecording ? 'destructive' : 'ghost'}
+                  size="icon"
+                  onClick={handleVoiceInput}
+                  title={isRecording ? 'Stop recording' : 'Speak your reply'}
+                  className="shrink-0"
+                >
+                  {isRecording ? <MicOff className="h-4 w-4 animate-pulse" /> : <Mic className="h-4 w-4" />}
+                </Button>
                 <Input
                   value={input}
                   onChange={e => setInput(e.target.value)}
-                  placeholder="Type your reply..."
-                  disabled={isLoading}
+                  placeholder={isRecording ? 'Listening...' : 'Type your reply...'}
+                  disabled={isLoading || isRecording}
                   className="flex-1"
                 />
                 <Button type="submit" size="icon" disabled={!input.trim() || isLoading}>
