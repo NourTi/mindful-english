@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, Play, Flame, Trophy, Brain, Heart, 
   Eye, Headphones, Hand, Clock, Sparkles, 
-  TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users, MessageCircle, GraduationCap, Compass, Route, Hammer, MapPin
+  TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users, MessageCircle, GraduationCap, Compass, Route, Hammer, MapPin, Glasses, Theater
 } from 'lucide-react';
 import Scene3D from '@/components/Scene3D';
 import SEELogo from '@/components/SEELogo';
+import { getModes, getLessonsByMode } from '@/lib/seeLearningSystem';
 import { Button } from '@/components/ui/button';
 import { LearningEnvironments } from '@/components/LearningEnvironments';
 import { EnvironmentGrid } from '@/components/EnvironmentGrid';
@@ -237,6 +238,54 @@ const Dashboard = () => {
               'Welcome to SEE! Start your personalized English learning journey.'
             )}
           </p>
+        </motion.div>
+
+        {/* Learning Modes */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.08 }}
+          className="mb-8"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <GraduationCap className="w-6 h-6 text-primary" />
+              <h2 className="font-display text-2xl font-bold">Learning Modes</h2>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {getModes().map((mode, i) => {
+              const lessonCount = getLessonsByMode(mode.id).length;
+              const iconMap: Record<string, React.ReactNode> = {
+                'message-circle': <MessageCircle className="w-6 h-6" />,
+                'glasses': <Glasses className="w-6 h-6" />,
+                'theater': <Theater className="w-6 h-6" />,
+                'headphones': <Headphones className="w-6 h-6" />,
+              };
+              return (
+                <motion.div
+                  key={mode.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + i * 0.05 }}
+                >
+                  <Card
+                    variant="cognitive"
+                    className="group cursor-pointer h-full border-border hover:border-primary/50 transition-all"
+                    onClick={() => navigate(`/mode/${mode.id}`)}
+                  >
+                    <CardContent className="p-5 text-center">
+                      <div className="mx-auto mb-3 p-3 rounded-xl bg-primary/10 text-primary w-fit">
+                        {iconMap[mode.icon] || <BookOpen className="w-6 h-6" />}
+                      </div>
+                      <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{mode.label}</h3>
+                      <p className="text-xs text-muted-foreground">{lessonCount} lesson{lessonCount !== 1 ? 's' : ''}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            })}
+          </div>
         </motion.div>
 
         {/* Hero: Learning Environments Card Stack */}

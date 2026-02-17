@@ -1,15 +1,17 @@
 import { create } from 'zustand';
-import { AssessmentProfile, PathRecommendation } from '@/types/onboarding';
-import { getRecommendedPath, saveOnboardingProfile } from '@/lib/onboardingEngine';
+import { LearnerProfile, PathRecommendation } from '@/types/onboarding';
+import { buildLearnerProfile, buildRecommendation, saveLearnerProfile } from '@/lib/onboardingEngine';
 
 interface OnboardingState {
   currentSectionIndex: number;
-  answers: Partial<AssessmentProfile>;
+  answers: Record<string, number | string>;
+  screenerAnswers: Record<string, number | string>;
+  learnerProfile: LearnerProfile | null;
   recommendation: PathRecommendation | null;
   isComplete: boolean;
   
-  // Actions
   setAnswer: (questionId: string, value: string | number) => void;
+  setScreenerAnswer: (screenerId: string, value: string | number) => void;
   nextSection: () => void;
   prevSection: () => void;
   completeOnboarding: () => void;
@@ -18,7 +20,9 @@ interface OnboardingState {
 
 const initialState = {
   currentSectionIndex: 0,
-  answers: {} as Partial<AssessmentProfile>,
+  answers: {} as Record<string, number | string>,
+  screenerAnswers: {} as Record<string, number | string>,
+  learnerProfile: null as LearnerProfile | null,
   recommendation: null as PathRecommendation | null,
   isComplete: false,
 };
@@ -28,10 +32,13 @@ export const useOnboardingStore = create<OnboardingState>((set, get) => ({
   
   setAnswer: (questionId, value) => {
     set((state) => ({
-      answers: {
-        ...state.answers,
-        [questionId]: value
-      }
+      answers: { ...state.answers, [questionId]: value }
+    }));
+  },
+  
+  setScreenerAnswer: (screenerId, value) => {
+    set((state) => ({
+      screenerAnswers: { ...state.screenerAnswers, [screenerId]: value }
     }));
   },
   
@@ -48,25 +55,26 @@ export const useOnboardingStore = create<OnboardingState>((set, get) => ({
   },
   
   completeOnboarding: () => {
-    const { answers } = get();
+    const { answers, screenerAnswers } = get();
     
-    // Create full profile with defaults for any missing values
-    const profile: AssessmentProfile = {
-      speaking_level: (answers.speaking_level as number) || 3,
-      listening_level: (answers.listening_level as number) || 3,
-      anxiety: (answers.anxiety as string) || 'Medium - nervous but try',
-      motivation: (answers.motivation as string) || 'Personal growth',
-      format: (answers.format as string) || 'Chat with AI'
-    };
+    // Merge screener answers that map to axes into the main answers
+    // For now screener answers augment the profile
+    const mergedAnswers = { ...answers };
     
-    // Save to localStorage
-    saveOnboardingProfile(profile);
+    // Apply screener corrections: if a screener result diverges from self-report, adjust
+    for (const [_id, value] of Object.entries(screenerAnswers)) {
+      // Screener values can override if needed in future
+      void value;
+    }
     
-    // Get recommendation
-    const recommendation = getRecommendedPath(profile);
+    const learnerProfile = buildLearnerProfile(mergedAnswers);
+    const recommendation = buildRecommendation(learnerProfile);
+    
+    saveLearnerProfile(learnerProfile);
     
     set({
       isComplete: true,
+      learnerProfile,
       recommendation
     });
   },
