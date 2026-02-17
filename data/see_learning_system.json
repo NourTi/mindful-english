@@ -186,6 +186,28 @@
       { "labels": ["growth_seeker"], "primaryPath": "path-travel-english", "secondaryPath": "path-social-confidence" }
     ]
   },
+  "multiAgentConfig": {
+    "agents": [
+      {
+        "role": "diagnosis",
+        "name": "DiagnosisAgent",
+        "goals": ["Assess learner current state from profile and diagnosticEngine", "Identify anxiety level and speaking gaps", "Determine appropriate difficulty level"],
+        "uses": ["diagnosticEngine.axes", "diagnosticEngine.scoringRules", "learnerProfile"]
+      },
+      {
+        "role": "lesson_planner",
+        "name": "LessonPlannerAgent",
+        "goals": ["Select next exercise from lesson exercises", "Pick conversationPrompts matching the environment", "Recommend contextual videos for reinforcement"],
+        "uses": ["lessons", "exercises", "contentProviders"]
+      },
+      {
+        "role": "feedback",
+        "name": "FeedbackAgent",
+        "goals": ["Generate psy-aware feedback using learner anxiety/efficacy profile", "Insert emotionChecks at intervals", "Adapt encouragement based on emotion check responses"],
+        "uses": ["diagnosticEngine.axes", "lessons.emotionChecks", "learnerProfile"]
+      }
+    ]
+  },
   "lessons": [
     {
       "id": "see-airport-smalltalk",
@@ -198,6 +220,15 @@
         { "id": "mod-airport-prep", "type": "psy_prep", "title": "Breathing & Grounding", "instructions": "Before we begin, take 3 slow breaths. Remind yourself: nobody expects perfect English. The goal is connection, not perfection." },
         { "id": "mod-airport-dialogue", "type": "dialogue", "title": "Gate Conversation", "instructions": "You're waiting at gate B7. The person next to you comments on the delay. Practice responding naturally. Try openers like 'Yeah, it's been a while...' or 'Do you know what's going on?'" },
         { "id": "mod-airport-reflect", "type": "reflection", "title": "How Did That Feel?", "instructions": "Rate your comfort level during the conversation. What surprised you? What would you do differently?" }
+      ],
+      "conversationPrompts": [
+        "You're sitting at gate B7 and notice the flight is delayed by 45 minutes. The person next to you sighs and says: 'Looks like we're going to be here a while...'",
+        "The gate agent just made an announcement but you didn't catch everything. You turn to the person next to you and ask about it.",
+        "You notice the person next to you is reading a book about your favorite topic. You want to start a friendly conversation."
+      ],
+      "emotionChecks": [
+        { "question": "How are you feeling about this conversation so far?", "type": "anxiety", "options": ["Very relaxed", "A little nervous", "Quite anxious", "I want to stop"] },
+        { "question": "How confident do you feel about your English right now?", "type": "confidence", "options": ["Very confident", "Fairly confident", "Not very confident", "Not confident at all"] }
       ]
     },
     {
@@ -212,6 +243,15 @@
         { "id": "mod-cafe-dialogue", "type": "dialogue", "title": "Counter Conversation", "instructions": "You walk into a busy London café. The barista asks 'What can I get you, love?' Practice ordering, asking about options, and handling follow-up questions." },
         { "id": "mod-cafe-collocation", "type": "collocation_drill", "title": "Café Collocations", "instructions": "Match the natural pairings: black coffee, flat white, sparkling water. Avoid: 'I want to have a dark coffee.'" },
         { "id": "mod-cafe-reflect", "type": "reflection", "title": "Confidence Check", "instructions": "Did you feel the urge to over-prepare? Notice that and let it go. Progress over perfection." }
+      ],
+      "conversationPrompts": [
+        "You walk into a cozy London café. The barista greets you warmly: 'Morning! What can I get you, love?'",
+        "While waiting for your order, another customer asks you: 'Is this seat taken?' You notice they have an interesting laptop sticker about travel.",
+        "The barista calls out your order but says they're out of oat milk. They suggest an alternative."
+      ],
+      "emotionChecks": [
+        { "question": "Did you feel pressure to order 'perfectly'?", "type": "anxiety", "options": ["No, I felt relaxed", "A little bit", "Yes, quite a lot", "I froze up"] },
+        { "question": "How natural did your English feel in this situation?", "type": "confidence", "options": ["Very natural", "Mostly natural", "A bit forced", "Very unnatural"] }
       ]
     },
     {
@@ -225,6 +265,14 @@
         { "id": "mod-hotel-prep", "type": "psy_prep", "title": "Arrival Confidence", "instructions": "Visualize walking into the hotel lobby. You belong here. Take a moment to feel grounded before approaching the desk." },
         { "id": "mod-hotel-dialogue", "type": "dialogue", "title": "Reception Desk", "instructions": "Approach the virtual reception desk. The receptionist greets you. Practice: 'I have a reservation under [name]', handling ID requests, asking about Wi-Fi and breakfast." },
         { "id": "mod-hotel-task", "type": "confidence_task", "title": "Room Issue Challenge", "instructions": "Your room has no towels. Call reception and explain the issue politely. Practice: 'Excuse me, I noticed that...' and 'Would it be possible to...'" }
+      ],
+      "conversationPrompts": [
+        "You've just arrived at a hotel after a long flight. The receptionist smiles and says: 'Good evening! Welcome to The Grand. Do you have a reservation?'",
+        "The receptionist asks for your passport and mentions there's a room upgrade available for a small fee."
+      ],
+      "emotionChecks": [
+        { "question": "How comfortable are you speaking formally in English?", "type": "anxiety", "options": ["Very comfortable", "Somewhat comfortable", "Uncomfortable", "Very uncomfortable"] },
+        { "question": "Would you feel confident complaining about a room issue in real life?", "type": "confidence", "options": ["Definitely", "Probably", "Not sure", "Definitely not"] }
       ]
     },
     {
@@ -239,6 +287,14 @@
         { "id": "mod-rest-dialogue", "type": "dialogue", "title": "Full Dining Experience", "instructions": "You enter a restaurant. Practice: greeting the host, asking for a table, reading the menu, ordering, asking about specials, and requesting the bill." },
         { "id": "mod-rest-collocation", "type": "collocation_drill", "title": "Food Collocations", "instructions": "Learn natural pairings: 'rare steak' (not 'little-cooked steak'), 'sparkling water', 'side salad', 'house wine'." },
         { "id": "mod-rest-reflect", "type": "reflection", "title": "Social Comfort Rating", "instructions": "How comfortable were you? Rate yourself 1-5 and note one thing you'd try next time." }
+      ],
+      "conversationPrompts": [
+        "You walk into a nice Italian restaurant. The host greets you: 'Good evening! Table for one, or are you expecting someone?'",
+        "The waiter brings the menu and says: 'Can I get you started with some drinks? Our house wine is particularly good tonight.'"
+      ],
+      "emotionChecks": [
+        { "question": "How anxious do you feel about dining out in English?", "type": "anxiety", "options": ["Not at all", "Slightly", "Moderately", "Very anxious"] },
+        { "question": "Could you handle an unexpected question from a waiter?", "type": "confidence", "options": ["Yes, easily", "I think so", "I'd struggle", "I'd panic"] }
       ]
     },
     {
@@ -253,6 +309,15 @@
         { "id": "mod-job-dialogue", "type": "dialogue", "title": "Interview Questions", "instructions": "The interviewer asks: 'Tell me about yourself', 'Why do you want this position?', 'What's your biggest weakness?' Practice structured answers using the STAR method." },
         { "id": "mod-job-confidence", "type": "confidence_task", "title": "Unexpected Question", "instructions": "The interviewer asks something you didn't prepare for. Practice buying time: 'That's an interesting question, let me think about that for a moment...' Then improvise an answer." },
         { "id": "mod-job-reflect", "type": "reflection", "title": "Performance Review", "instructions": "How did you handle the pressure? What answers felt strong? What would you refine?" }
+      ],
+      "conversationPrompts": [
+        "You arrive at the office for your interview. The interviewer shakes your hand: 'Thanks for coming in today. Please, have a seat. So, tell me a bit about yourself.'",
+        "The interviewer looks at your CV and asks: 'Can you walk me through a challenging project you worked on?'",
+        "Near the end, the interviewer says: 'Do you have any questions for us?'"
+      ],
+      "emotionChecks": [
+        { "question": "How is your interview anxiety level right now?", "type": "anxiety", "options": ["Calm and focused", "Slightly nervous", "Quite anxious", "Overwhelmed"] },
+        { "question": "Do you feel you're presenting yourself well in English?", "type": "confidence", "options": ["Yes, very well", "Reasonably well", "Not great", "Poorly"] }
       ]
     },
     {
@@ -266,6 +331,14 @@
         { "id": "mod-flat-prep", "type": "psy_prep", "title": "Social Warm-Up", "instructions": "Meeting new people in a flat viewing is stressful in any language. Focus on being genuine rather than impressive." },
         { "id": "mod-flat-dialogue", "type": "dialogue", "title": "Flat Viewing Chat", "instructions": "You arrive at a flat viewing. The current tenant shows you around. Practice: asking about the neighborhood, discussing rent and bills, talking about daily routines." },
         { "id": "mod-flat-reflect", "type": "reflection", "title": "Social Energy Check", "instructions": "Did you feel drained or energized? Understanding your social battery helps plan real-world practice." }
+      ],
+      "conversationPrompts": [
+        "You ring the doorbell at a flat viewing. The current tenant opens the door: 'Hey! You must be here about the room. Come on in, I'll show you around.'",
+        "After seeing the room, the tenant asks: 'So, what do you do for work? And what's your typical day like?'"
+      ],
+      "emotionChecks": [
+        { "question": "How comfortable do you feel meeting new people in English?", "type": "anxiety", "options": ["Very comfortable", "OK", "Uncomfortable", "Very uncomfortable"] },
+        { "question": "Could you negotiate house rules naturally in English?", "type": "confidence", "options": ["Definitely", "Probably", "Not sure", "No way"] }
       ]
     },
     {
@@ -279,6 +352,14 @@
         { "id": "mod-podcast-prep", "type": "psy_prep", "title": "Imperfect Listening", "instructions": "You don't need to understand every word. Even native speakers miss things. Focus on the main message, not every detail." },
         { "id": "mod-podcast-exercise", "type": "dialogue", "title": "Listen & Respond", "instructions": "Read the transcript excerpt of a conversation between two friends planning a weekend trip. Then answer: What are they planning? When are they going? What's the disagreement about?" },
         { "id": "mod-podcast-collocation", "type": "collocation_drill", "title": "Spoken Collocations", "instructions": "From the conversation, identify natural pairings: 'catch a train', 'grab a bite', 'pop into a shop'. Practice using them in your own sentences." }
+      ],
+      "conversationPrompts": [
+        "Listen to this excerpt: 'Sarah: I was thinking we could catch the early train on Saturday. Mike: Saturday? I thought we said Sunday.' What are they discussing?",
+        "Now try to use the phrases you heard in your own sentence about weekend plans."
+      ],
+      "emotionChecks": [
+        { "question": "How frustrated do you feel when you don't understand everything?", "type": "anxiety", "options": ["Not at all", "A little", "Quite frustrated", "Very frustrated"] },
+        { "question": "Do you believe your listening will improve with practice?", "type": "confidence", "options": ["Absolutely", "I hope so", "I'm not sure", "I doubt it"] }
       ]
     },
     {
@@ -293,6 +374,14 @@
         { "id": "mod-pron-exercise", "type": "dialogue", "title": "Minimal Pairs Practice", "instructions": "Practice distinguishing and producing: ship/sheep, bat/bet, think/sink. Read each pair aloud and focus on the difference." },
         { "id": "mod-pron-confidence", "type": "confidence_task", "title": "Record & Compare", "instructions": "Record yourself saying: 'I'd like to book a table for two, please.' Listen back. Is the meaning clear? That's what matters." },
         { "id": "mod-pron-reflect", "type": "reflection", "title": "Voice Comfort", "instructions": "How did it feel hearing your own English? Rate your comfort 1-5. Remember: discomfort decreases with practice." }
+      ],
+      "conversationPrompts": [
+        "Let's practice together. Say this sentence out loud: 'I'd like to book a table for two, please.' Which sounds were hardest for you?",
+        "Try these minimal pairs: 'ship' vs 'sheep', 'bat' vs 'bet'. Which pair do you find most challenging?"
+      ],
+      "emotionChecks": [
+        { "question": "How do you feel about hearing your own voice in English?", "type": "anxiety", "options": ["Fine with it", "A bit self-conscious", "Quite uncomfortable", "I hate it"] },
+        { "question": "Do you think your pronunciation is clear enough to be understood?", "type": "confidence", "options": ["Yes, definitely", "Usually", "Sometimes", "Rarely"] }
       ]
     }
   ],
