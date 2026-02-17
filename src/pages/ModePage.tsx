@@ -66,7 +66,15 @@ const ModePage = () => {
               >
                 <Card
                   className="group cursor-pointer border-border hover:border-primary/50 transition-all h-full"
-                  onClick={() => navigate(`/lesson/${lesson.id}`)}
+                  onClick={() => {
+                    if (id === 'vr_immersive') {
+                      navigate(`/vr-sim/${lesson.id}`);
+                    } else if (id === 'chat_ai') {
+                      navigate(`/chat/${lesson.id}`);
+                    } else {
+                      navigate(`/see-lesson/${lesson.id}`);
+                    }
+                  }}
                 >
                   <CardContent className="p-5 h-full flex flex-col">
                     <div className="flex items-start justify-between mb-3">
