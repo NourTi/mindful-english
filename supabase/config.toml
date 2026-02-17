@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.kokoro-tts]
 verify_jwt = false
+
+[functions.search-videos]
+verify_jwt = false

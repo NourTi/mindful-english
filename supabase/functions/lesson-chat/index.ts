@@ -14,7 +14,8 @@ interface LessonModule {
   id: string;
   type: string;
   title: string;
-  content: string;
+  content?: string;
+  instructions?: string;
 }
 
 interface LessonChatRequest {
@@ -24,10 +25,32 @@ interface LessonChatRequest {
     title: string;
     environment: string;
     modules: LessonModule[];
-    difficulty: string;
-    psyProfileTarget: string[];
+    difficulty?: string;
+    psyProfileTarget?: string[];
+    psyTargets?: string[];
+    conversationPrompts?: string[];
+    emotionChecks?: Array<{ question: string; type: string; options: string[] }>;
   };
   evaluate?: boolean;
+  learnerProfile?: {
+    socialAnxiety: number;
+    speakingLevel: number;
+    selfEfficacy: number;
+    labels: string[];
+  };
+  agentContext?: {
+    diagnosis?: {
+      anxietyState: string;
+      recommendedDifficulty: string;
+      strengths: string[];
+      gaps: string[];
+    };
+    feedback?: {
+      encouragement: string;
+      adaptiveHint: string | null;
+      emotionCheck: { question: string; type: string; options: string[] } | null;
+    };
+  };
 }
 
 serve(async (req) => {
@@ -36,7 +59,7 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, lesson, evaluate } = await req.json() as LessonChatRequest;
+    const { messages, lesson, evaluate, learnerProfile, agentContext } = await req.json() as LessonChatRequest;
     
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) {
@@ -50,8 +73,12 @@ serve(async (req) => {
 LESSON CONTEXT:
 - Title: ${lesson.title}
 - Environment: ${lesson.environment}
-- Difficulty: ${lesson.difficulty}
+- Difficulty: ${lesson.difficulty || 'medium'}
 - Learning Focus: ${lesson.modules.map(m => m.title).join(', ')}
+${learnerProfile ? `\nLEARNER PROFILE:
+- Speaking Level: ${learnerProfile.speakingLevel}/5
+- Social Anxiety: ${learnerProfile.socialAnxiety}/5
+- Labels: ${learnerProfile.labels.join(', ')}` : ''}
 
 CONVERSATION TO EVALUATE:
 ${messages.filter(m => m.role !== 'system').map(m => `${m.role.toUpperCase()}: ${m.content}`).join('\n')}
@@ -135,7 +162,6 @@ Provide your assessment using the evaluate_conversation function.`;
 
       const data = await response.json();
       
-      // Extract the tool call result
       const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
       if (toolCall && toolCall.function?.arguments) {
         const evaluation = JSON.parse(toolCall.function.arguments);
@@ -147,28 +173,55 @@ Provide your assessment using the evaluate_conversation function.`;
       throw new Error('Failed to get evaluation from AI');
     }
 
-    // Build the lesson system prompt
+    // Build the lesson system prompt with multi-agent context
     const modulesContext = lesson.modules.map(m => 
-      `[${m.type.toUpperCase()}] ${m.title}: ${m.content}`
+      `[${m.type.toUpperCase()}] ${m.title}: ${m.instructions || m.content || ''}`
     ).join('\n');
+
+    const psyTargets = lesson.psyTargets || lesson.psyProfileTarget || [];
+    const difficulty = lesson.difficulty || agentContext?.diagnosis?.recommendedDifficulty || 'medium';
+
+    // Build agent-enhanced system prompt
+    let agentInstructions = '';
+    if (agentContext?.diagnosis) {
+      agentInstructions += `\n\nAGENT DIAGNOSIS:
+- Anxiety State: ${agentContext.diagnosis.anxietyState}
+- Recommended Difficulty: ${agentContext.diagnosis.recommendedDifficulty}
+- Strengths: ${agentContext.diagnosis.strengths.join(', ')}
+- Gaps: ${agentContext.diagnosis.gaps.join(', ')}`;
+    }
+    if (agentContext?.feedback) {
+      agentInstructions += `\n\nFEEDBACK AGENT GUIDANCE:
+- Encouragement style: ${agentContext.feedback.encouragement}
+${agentContext.feedback.adaptiveHint ? `- Adaptive hint: ${agentContext.feedback.adaptiveHint}` : ''}
+${agentContext.feedback.emotionCheck ? `- IMPORTANT: After this response, include an emotion check question: "${agentContext.feedback.emotionCheck.question}" with options: ${agentContext.feedback.emotionCheck.options.join(', ')}` : ''}`;
+    }
+
+    // Use conversation prompt as opening if this is the first message
+    let conversationContext = '';
+    if (lesson.conversationPrompts && lesson.conversationPrompts.length > 0) {
+      conversationContext = `\n\nSCENARIO OPENINGS (use the first one if this is the start of the conversation):
+${lesson.conversationPrompts.map((p, i) => `${i + 1}. ${p}`).join('\n')}`;
+    }
 
     const systemPrompt = `You are conducting an English learning conversation in the context of: "${lesson.title}".
 
 ENVIRONMENT: ${lesson.environment}
-DIFFICULTY: ${lesson.difficulty}
-LEARNER PROFILE: ${lesson.psyProfileTarget.join(', ')}
+DIFFICULTY: ${difficulty}
+LEARNER PROFILE: ${psyTargets.join(', ')}
 
 LESSON MODULES TO GUIDE THE CONVERSATION:
-${modulesContext}
+${modulesContext}${conversationContext}${agentInstructions}
 
 YOUR ROLE:
 - You are a friendly, patient conversation partner simulating real-world scenarios
 - Start with the psychological preparation context to help the learner feel comfortable
 - Guide them through realistic dialogue related to the lesson topic
-- Adjust your language complexity based on the difficulty level (${lesson.difficulty})
+- Adjust your language complexity based on the difficulty level (${difficulty})
 - Be encouraging and gently correct mistakes by modeling correct usage
 - Keep responses conversational and appropriate for the ${lesson.environment} setting
-- If the learner seems anxious (based on their profile: ${lesson.psyProfileTarget.join(', ')}), be extra supportive
+- If the learner seems anxious (based on their profile: ${psyTargets.join(', ')}), be extra supportive
+- When an emotion check is requested by the feedback agent, naturally weave the question into the conversation
 
 Start the conversation naturally, staying in character for the ${lesson.environment} scenario.`;
 
