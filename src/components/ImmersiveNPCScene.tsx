@@ -3,6 +3,14 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Text, Environment, Html } from '@react-three/drei';
 import type { NPCEmotion } from '@/lib/npcEngine';
 import { isSmplpixAvailable } from '@/lib/smplpixClient';
+import {
+  AirportProps,
+  CafeProps,
+  JobInterviewProps,
+  FlatshareProps,
+  HotelProps,
+  DefaultProps,
+} from '@/components/vr/EnvironmentProps';
 import * as THREE from 'three';
 
 const SmplAvatar3D = lazy(() => import('@/components/SmplAvatar3D'));
@@ -100,13 +108,25 @@ function NPCAvatar({ emotion }: { emotion: NPCEmotion }) {
 // ─── Environment scenes ───────────────────────────────────────────────
 
 function EnvironmentScene({ environment }: { environment: string }) {
-  const envColors: Record<string, { floor: string; wall: string }> = {
-    airport: { floor: '#2a2a35', wall: '#1a1a24' },
-    cafe: { floor: '#3d3228', wall: '#e8dcc8' },
-    job_interview: { floor: '#1e293b', wall: '#334155' },
-    flatshare: { floor: '#3d3228', wall: '#e8dcc8' },
+  const envColors: Record<string, { floor: string; wall: string; ambient: string }> = {
+    airport: { floor: '#2a2a35', wall: '#1a1a24', ambient: '#94a3b8' },
+    cafe: { floor: '#3d3228', wall: '#e8dcc8', ambient: '#d4a76a' },
+    job_interview: { floor: '#1e293b', wall: '#334155', ambient: '#94a3b8' },
+    flatshare: { floor: '#3d3228', wall: '#e8dcc8', ambient: '#d4a76a' },
+    hotel: { floor: '#1a1520', wall: '#2d1b0e', ambient: '#fbbf24' },
   };
-  const colors = envColors[environment] || { floor: '#2a3a4a', wall: '#334155' };
+  const colors = envColors[environment] || { floor: '#2a3a4a', wall: '#334155', ambient: '#94a3b8' };
+
+  const PropsComponent = useMemo(() => {
+    const map: Record<string, () => JSX.Element> = {
+      airport: AirportProps,
+      cafe: CafeProps,
+      job_interview: JobInterviewProps,
+      flatshare: FlatshareProps,
+      hotel: HotelProps,
+    };
+    return map[environment] || DefaultProps;
+  }, [environment]);
 
   return (
     <group>
@@ -138,6 +158,9 @@ function EnvironmentScene({ environment }: { environment: string }) {
       >
         {environment.toUpperCase().replace(/_/g, ' ')}
       </Text>
+
+      {/* Environment-specific furniture & props */}
+      <PropsComponent />
     </group>
   );
 }
