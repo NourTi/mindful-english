@@ -9,6 +9,7 @@ import {
   type NPCState,
 } from '@/lib/npcEngine';
 import { useVoiceChat } from '@/hooks/useVoiceChat';
+import { isSmplpixAvailable } from '@/lib/smplpixClient';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -48,6 +49,7 @@ export default function VRSimulation() {
   const [is3D, setIs3D] = useState(true);
   const [initialized, setInitialized] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [smplpixFallback, setSmplpixFallback] = useState(false);
   const lastSpokenRef = useRef('');
 
   // Voice chat integration (Kokoro TTS + Web Speech fallback)
@@ -256,8 +258,24 @@ export default function VRSimulation() {
               characterId={avatarCharacter?.characterId}
               lessonId={lessonId}
               turnCount={npcState.turnCount}
+              onSmplpixFallback={() => setSmplpixFallback(true)}
             />
           </Suspense>
+
+          {/* Debug panel (dev only) */}
+          {import.meta.env.DEV && (
+            <div className="absolute top-2 left-2 bg-background/90 backdrop-blur border border-border rounded-lg p-2.5 text-xs font-mono space-y-1 max-w-[220px] z-10">
+              <div className="font-semibold text-muted-foreground">🛠 Debug</div>
+              <div>SMPLpix: <span className={isSmplpixAvailable() ? 'text-green-500' : 'text-red-400'}>{isSmplpixAvailable() ? 'available' : 'unavailable'}</span></div>
+              <div>characterId: <span className="text-primary">{avatarCharacter?.characterId ?? 'none'}</span></div>
+              <div>emotion: <span className="text-primary">{npcState.npcEmotion}</span></div>
+              <div>phase: <span className="text-muted-foreground">{npcState.phase}</span></div>
+              <div>turn: <span className="text-muted-foreground">{npcState.turnCount}</span></div>
+              {(!isSmplpixAvailable() || smplpixFallback) && (
+                <div className="text-yellow-500 font-semibold">⚠ SMPLpix fallback active</div>
+              )}
+            </div>
+          )}
 
           {/* Phase progress */}
           <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
