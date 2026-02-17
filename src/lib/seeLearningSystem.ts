@@ -19,19 +19,24 @@ export interface SeeLearnerModel {
 
 export interface SeeModule {
   id: string;
-  type: 'psy_prep' | 'dialogue' | 'reflection';
+  type: string;
   title: string;
-  content: string;
+  instructions: string;
+  content?: string;
 }
 
 export interface SeeLesson {
   id: string;
   title: string;
+  mode: string;
   environment: string;
-  tags: string[];
-  psyProfileTarget: string[];
-  difficulty: 'easy' | 'medium' | 'hard';
+  psyTargets: string[];
+  learningGoals: string[];
   modules: SeeModule[];
+  // Backward compat optional fields
+  tags?: string[];
+  psyProfileTarget?: string[];
+  difficulty?: 'easy' | 'medium' | 'hard';
 }
 
 export interface SeeExercise {
@@ -50,6 +55,13 @@ export interface SeePath {
   label: string;
   forTraits: string[];
   sequence: string[];
+}
+
+export interface SeeMode {
+  id: string;
+  label: string;
+  description: string;
+  icon: string;
 }
 
 export interface SeeAdaptivityConditions {
@@ -73,35 +85,36 @@ export interface SeeAdaptivityRule {
 export interface SeeLearningSystem {
   meta: SeeMeta;
   learnerModel: SeeLearnerModel;
+  modes: SeeMode[];
   lessons: SeeLesson[];
   exercises: SeeExercise[];
   paths: SeePath[];
   adaptivityRules: SeeAdaptivityRule[];
+  diagnosticEngine: unknown;
 }
 
 // Import the JSON data
 import system from '../../data/see_learning_system.json';
 
-const typedSystem = system as SeeLearningSystem;
+const typedSystem = system as unknown as SeeLearningSystem;
 
 // Helper functions
 export function getLessons(): SeeLesson[] {
-  return typedSystem.lessons;
+  return typedSystem.lessons || [];
 }
 
 export function getExercisesByLesson(lessonId: string): SeeExercise[] {
-  return typedSystem.exercises.filter(ex => ex.lessonId === lessonId);
+  return (typedSystem.exercises || []).filter(ex => ex.lessonId === lessonId);
 }
 
 export function getPaths(): SeePath[] {
-  return typedSystem.paths;
+  return typedSystem.paths || [];
 }
 
 export function getAdaptivityRules(): SeeAdaptivityRule[] {
-  return typedSystem.adaptivityRules;
+  return typedSystem.adaptivityRules || [];
 }
 
-// Additional helper functions
 export function getMeta(): SeeMeta {
   return typedSystem.meta;
 }
@@ -111,9 +124,18 @@ export function getLearnerModel(): SeeLearnerModel {
 }
 
 export function getLessonById(lessonId: string): SeeLesson | undefined {
-  return typedSystem.lessons.find(lesson => lesson.id === lessonId);
+  return (typedSystem.lessons || []).find(lesson => lesson.id === lessonId);
 }
 
 export function getPathById(pathId: string): SeePath | undefined {
-  return typedSystem.paths.find(path => path.id === pathId);
+  return (typedSystem.paths || []).find(path => path.id === pathId);
+}
+
+// New helpers
+export function getModes(): SeeMode[] {
+  return typedSystem.modes || [];
+}
+
+export function getLessonsByMode(modeId: string): SeeLesson[] {
+  return (typedSystem.lessons || []).filter(lesson => lesson.mode === modeId);
 }

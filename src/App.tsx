@@ -2,12 +2,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import GDPRBanner from "@/components/GDPRBanner";
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
+import { hasLearnerProfile } from "@/lib/onboardingEngine";
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Assessment from "./pages/Assessment";
@@ -30,9 +31,20 @@ import CommunityBuilder from "./pages/CommunityBuilder";
 import Paths from "./pages/Paths";
 import SituationPicker from "./pages/SituationPicker";
 import ChatLesson from "./pages/ChatLesson";
+import ModePage from "./pages/ModePage";
+import SeeLessonPage from "./pages/SeeLessonPage";
+import Assessor from "./pages/Assessor";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
+
+// Root redirect component
+function RootRedirect() {
+  if (hasLearnerProfile()) {
+    return <Navigate to="/dashboard" replace />;
+  }
+  return <Landing />;
+}
 
 const App = () => (
   <ErrorBoundary>
@@ -45,7 +57,7 @@ const App = () => (
             <Sonner />
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Landing />} />
+                <Route path="/" element={<RootRedirect />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/complete-profile" element={<CompleteProfile />} />
                 <Route path="/assessment" element={<Assessment />} />
@@ -53,6 +65,9 @@ const App = () => (
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/lessons" element={<Lessons />} />
                 <Route path="/lesson/:lessonId" element={<Lesson />} />
+                <Route path="/see-lesson/:lessonId" element={<SeeLessonPage />} />
+                <Route path="/mode/:id" element={<ModePage />} />
+                <Route path="/assessor" element={<Assessor />} />
                 <Route path="/scenario" element={<Scenario />} />
                 <Route path="/immersive" element={<ImmersiveScenario />} />
                 <Route path="/structured-scenario" element={<StructuredScenario />} />
