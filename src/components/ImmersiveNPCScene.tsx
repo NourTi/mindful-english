@@ -9,6 +9,7 @@ import {
   JobInterviewProps,
   FlatshareProps,
   HotelProps,
+  MedicalClinicProps,
   DefaultProps,
 } from '@/components/vr/EnvironmentProps';
 import * as THREE from 'three';
@@ -114,6 +115,7 @@ function EnvironmentScene({ environment }: { environment: string }) {
     job_interview: { floor: '#1e293b', wall: '#334155', ambient: '#94a3b8' },
     flatshare: { floor: '#3d3228', wall: '#e8dcc8', ambient: '#d4a76a' },
     hotel: { floor: '#1a1520', wall: '#2d1b0e', ambient: '#fbbf24' },
+    medical_clinic: { floor: '#e8ecf0', wall: '#f0f4f8', ambient: '#e0f2fe' },
   };
   const colors = envColors[environment] || { floor: '#2a3a4a', wall: '#334155', ambient: '#94a3b8' };
 
@@ -124,6 +126,7 @@ function EnvironmentScene({ environment }: { environment: string }) {
       job_interview: JobInterviewProps,
       flatshare: FlatshareProps,
       hotel: HotelProps,
+      medical_clinic: MedicalClinicProps,
     };
     return map[environment] || DefaultProps;
   }, [environment]);
