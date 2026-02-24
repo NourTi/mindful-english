@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
+import TalkingAvatarPanel from '@/components/TalkingAvatarPanel';
 
 const ImmersiveNPCScene = lazy(() => import('@/components/ImmersiveNPCScene'));
 
@@ -294,6 +295,15 @@ export default function VRSimulation() {
 
         {/* Conversation panel */}
         <div className="border-l border-border flex flex-col min-h-0">
+          {/* Talking Avatar Panel */}
+          <div className="border-b border-border p-3">
+            <TalkingAvatarPanel
+              npcText={npcState.npcUtterance}
+              characterId={avatarCharacter?.characterId || lesson.environment}
+              emotion={npcState.npcEmotion}
+            />
+          </div>
+
           <div className="px-4 py-2 border-b border-border flex items-center gap-2">
             <MessageCircle className="h-4 w-4 text-muted-foreground" />
             <span className="text-sm font-medium">Conversation</span>

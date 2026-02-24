@@ -16,6 +16,7 @@ import {
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
+import TalkingAvatarPanel from "@/components/TalkingAvatarPanel";
 
 interface ChatMessage {
   role: 'user' | 'assistant' | 'system';
@@ -548,6 +549,14 @@ export default function ChatLesson() {
 
         {/* Chat Area */}
         <Card className="flex flex-col h-[calc(100vh-8rem)]">
+          {/* Talking Avatar Panel */}
+          <div className="border-b border-border p-3">
+            <TalkingAvatarPanel
+              npcText={messages.filter(m => m.role === 'assistant').at(-1)?.content || ''}
+              characterId={lesson.environment}
+              emotion="calm"
+            />
+          </div>
           <ScrollArea className="flex-1 p-4" ref={scrollRef}>
             {messages.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center p-8">
