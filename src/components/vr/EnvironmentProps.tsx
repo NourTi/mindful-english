@@ -532,6 +532,179 @@ export function HotelProps() {
   );
 }
 
+// ─── Medical Clinic ───────────────────────────────────────────────────
+
+export function MedicalClinicProps() {
+  const monitorRef = useRef<THREE.Mesh>(null);
+
+  useFrame(({ clock }) => {
+    if (monitorRef.current) {
+      const mat = monitorRef.current.material as THREE.MeshStandardMaterial;
+      mat.emissiveIntensity = 0.3 + Math.sin(clock.getElapsedTime() * 1.2) * 0.1;
+    }
+  });
+
+  return (
+    <group>
+      {/* Examination table */}
+      <group position={[-1, 0, -1.5]}>
+        {/* Base / frame */}
+        <mesh position={[0, 0.35, 0]}>
+          <boxGeometry args={[0.8, 0.08, 1.8]} />
+          <meshStandardMaterial color="#e2e8f0" />
+        </mesh>
+        {/* Padded top */}
+        <mesh position={[0, 0.42, 0]}>
+          <boxGeometry args={[0.75, 0.1, 1.7]} />
+          <meshStandardMaterial color="#bfdbfe" />
+        </mesh>
+        {/* Raised pillow end */}
+        <mesh position={[0, 0.52, -0.7]} rotation={[0.25, 0, 0]}>
+          <boxGeometry args={[0.6, 0.06, 0.4]} />
+          <meshStandardMaterial color="#93c5fd" />
+        </mesh>
+        {/* Legs */}
+        {[[-0.3, 0.16, -0.75], [0.3, 0.16, -0.75], [-0.3, 0.16, 0.75], [0.3, 0.16, 0.75]].map(
+          ([x, y, z], i) => (
+            <mesh key={i} position={[x, y, z]}>
+              <cylinderGeometry args={[0.03, 0.03, 0.32, 8]} />
+              <meshStandardMaterial color="#94a3b8" metalness={0.5} />
+            </mesh>
+          )
+        )}
+      </group>
+
+      {/* Curtain divider rail (curved) */}
+      <group position={[1.5, 0, -0.5]}>
+        {/* Ceiling rail */}
+        <mesh position={[0, 3.8, 0]}>
+          <boxGeometry args={[0.04, 0.04, 3.5]} />
+          <meshStandardMaterial color="#94a3b8" metalness={0.6} />
+        </mesh>
+        {/* Curtain panels */}
+        {[-1.2, -0.6, 0, 0.6, 1.2].map((z, i) => (
+          <mesh key={i} position={[0, 2, z]}>
+            <boxGeometry args={[0.03, 3.6, 0.5]} />
+            <meshStandardMaterial color="#dbeafe" transparent opacity={0.7} />
+          </mesh>
+        ))}
+      </group>
+
+      {/* Doctor's desk */}
+      <mesh position={[3, 0.38, -2.5]} castShadow>
+        <boxGeometry args={[1.6, 0.06, 0.7]} />
+        <meshStandardMaterial color="#f1f5f9" />
+      </mesh>
+      {[[-0.7, 0.17, -2.8], [0.7, 0.17, -2.8], [-0.7, 0.17, -2.2], [0.7, 0.17, -2.2]].map(
+        ([x, y, z], i) => (
+          <mesh key={i} position={[3 + x, y, z]}>
+            <boxGeometry args={[0.05, 0.35, 0.05]} />
+            <meshStandardMaterial color="#cbd5e1" />
+          </mesh>
+        )
+      )}
+
+      {/* Monitor on desk */}
+      <mesh ref={monitorRef} position={[3.4, 0.7, -2.7]}>
+        <boxGeometry args={[0.5, 0.35, 0.03]} />
+        <meshStandardMaterial color="#0f172a" emissive="#22d3ee" emissiveIntensity={0.3} />
+      </mesh>
+      <mesh position={[3.4, 0.45, -2.7]}>
+        <cylinderGeometry args={[0.03, 0.05, 0.12, 8]} />
+        <meshStandardMaterial color="#64748b" />
+      </mesh>
+
+      {/* Instrument tray / cart */}
+      <group position={[-2.8, 0, -0.5]}>
+        <mesh position={[0, 0.7, 0]}>
+          <boxGeometry args={[0.6, 0.03, 0.4]} />
+          <meshStandardMaterial color="#e2e8f0" metalness={0.3} />
+        </mesh>
+        <mesh position={[0, 0.35, 0]}>
+          <cylinderGeometry args={[0.03, 0.03, 0.7, 8]} />
+          <meshStandardMaterial color="#94a3b8" metalness={0.5} />
+        </mesh>
+        {/* Wheels */}
+        {[[-0.15, 0.03, -0.1], [0.15, 0.03, -0.1], [0, 0.03, 0.1]].map(([x, y, z], i) => (
+          <mesh key={i} position={[x, y, z]} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.03, 0.03, 0.02, 8]} />
+            <meshStandardMaterial color="#475569" />
+          </mesh>
+        ))}
+        {/* Instruments on tray */}
+        <mesh position={[-0.15, 0.75, 0]}>
+          <cylinderGeometry args={[0.01, 0.01, 0.2, 6]} />
+          <meshStandardMaterial color="#c0c0c0" metalness={0.8} roughness={0.2} />
+        </mesh>
+        <mesh position={[0.05, 0.75, 0.05]} rotation={[0, 0.5, Math.PI / 2]}>
+          <cylinderGeometry args={[0.008, 0.008, 0.15, 6]} />
+          <meshStandardMaterial color="#c0c0c0" metalness={0.8} roughness={0.2} />
+        </mesh>
+        <mesh position={[0.15, 0.74, -0.05]}>
+          <boxGeometry args={[0.08, 0.02, 0.12]} />
+          <meshStandardMaterial color="#c0c0c0" metalness={0.7} />
+        </mesh>
+      </group>
+
+      {/* Blood pressure monitor on wall */}
+      <group position={[-3, 1.5, -3.8]}>
+        <mesh>
+          <boxGeometry args={[0.25, 0.35, 0.08]} />
+          <meshStandardMaterial color="#f1f5f9" />
+        </mesh>
+        <mesh position={[0, 0, 0.05]}>
+          <boxGeometry args={[0.15, 0.2, 0.02]} />
+          <meshStandardMaterial color="#0f172a" emissive="#22c55e" emissiveIntensity={0.2} />
+        </mesh>
+      </group>
+
+      {/* Anatomical poster on wall */}
+      <mesh position={[0, 2.5, -3.85]}>
+        <boxGeometry args={[1.2, 1.6, 0.04]} />
+        <meshStandardMaterial color="#fefce8" />
+      </mesh>
+      <Text position={[0, 3.1, -3.82]} fontSize={0.1} color="#1e293b" anchorX="center">
+        ANATOMY REFERENCE
+      </Text>
+
+      {/* Stool for doctor */}
+      <group position={[3, 0, -1.8]}>
+        <mesh position={[0, 0.4, 0]}>
+          <cylinderGeometry args={[0.18, 0.18, 0.05, 16]} />
+          <meshStandardMaterial color="#475569" />
+        </mesh>
+        <mesh position={[0, 0.2, 0]}>
+          <cylinderGeometry args={[0.03, 0.04, 0.35, 8]} />
+          <meshStandardMaterial color="#94a3b8" metalness={0.6} />
+        </mesh>
+        {/* Wheels */}
+        {[0, 1.2, 2.4, 3.6, 4.8].map((a, i) => (
+          <mesh key={i} position={[Math.cos(a) * 0.15, 0.03, Math.sin(a) * 0.15]} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.025, 0.025, 0.02, 6]} />
+            <meshStandardMaterial color="#334155" />
+          </mesh>
+        ))}
+      </group>
+
+      {/* Hand sanitizer dispenser */}
+      <group position={[4.8, 1.3, -1]}>
+        <mesh>
+          <boxGeometry args={[0.1, 0.2, 0.08]} />
+          <meshStandardMaterial color="#e2e8f0" />
+        </mesh>
+        <mesh position={[0, -0.15, 0.02]}>
+          <boxGeometry args={[0.04, 0.08, 0.03]} />
+          <meshStandardMaterial color="#94a3b8" metalness={0.4} />
+        </mesh>
+      </group>
+
+      {/* Bright clinical lighting */}
+      <pointLight position={[0, 4, -1]} intensity={0.8} color="#f0f9ff" distance={10} />
+      <pointLight position={[-1, 3, -1.5]} intensity={0.3} color="#e0f2fe" distance={5} />
+    </group>
+  );
+}
+
 // ─── Default / Generic ────────────────────────────────────────────────
 
 export function DefaultProps() {
