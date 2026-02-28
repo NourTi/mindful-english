@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, X } from 'lucide-react';
+import { Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { hasGDPRConsent, setGDPRConsent, clearAllSEEData } from '@/lib/storage';
+import { useAuth } from '@/hooks/useAuth';
 
 const GDPRBanner = () => {
+  const { user } = useAuth();
   const [isVisible, setIsVisible] = useState(false);
   const [hasDecided, setHasDecided] = useState(true);
 
@@ -53,7 +55,15 @@ const GDPRBanner = () => {
                 <Shield className="w-5 h-5 text-primary" />
               </div>
               <p className="text-sm text-foreground">
-                We use <span className="font-semibold">localStorage</span> to save your learning profile and progress locally on your device. No data is sent to external servers.
+                {user ? (
+                  <>
+                    <span className="font-semibold">Logged in:</span> Your learning profile and progress are stored securely on our servers. We also use <span className="font-semibold">localStorage</span> on your device for session preferences.
+                  </>
+                ) : (
+                  <>
+                    <span className="font-semibold">Guest mode:</span> Your learning profile and progress are saved only in <span className="font-semibold">localStorage</span> on your device. No data is sent to external servers. Sign in to sync your data across devices.
+                  </>
+                )}
               </p>
             </div>
             
