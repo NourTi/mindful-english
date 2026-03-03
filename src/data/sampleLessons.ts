@@ -482,7 +482,7 @@ A well-written email makes you look professional and helps you get results.
     difficulty: 'beginner',
     estimatedMinutes: 6,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['Mouth position diagrams for /ɪ/ vs /iː/', 'Minimal pairs chart'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['ship /ɪ/ ↔ sheep /iː/ — short vs long vowel', 'bat /æ/ ↔ bet /e/ — open vs slightly open mouth', 'full /ʊ/ ↔ fool /uː/ — short rounded vs long rounded', '/ɪ/ → Short, relaxed mouth position', '/iː/ → Long, smile mouth position', 'Practice: "The ship carries sheep across the sea"'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/minimal-pairs.mp3',
