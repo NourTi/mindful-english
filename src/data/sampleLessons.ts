@@ -656,7 +656,7 @@ Idioms are phrases where the meaning is different from the literal words. Native
     difficulty: 'beginner',
     estimatedMinutes: 7,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['Active listening strategy flowchart', 'Connected speech patterns'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['"Want to" → "wanna"', '"Going to" → "gonna"', '"Got to" → "gotta"', '"Did you" → "didja"', '"Let me" → "lemme"', 'Strategy 1: Listen for KEY WORDS (nouns + verbs)', 'Strategy 2: Use CONTEXT to fill in gaps', 'Strategy 3: Listen MULTIPLE times — main idea → details → phrases'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/listening-strategies.mp3',
