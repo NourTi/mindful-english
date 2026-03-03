@@ -36,6 +36,7 @@ import SeeLessonPage from "./pages/SeeLessonPage";
 import Assessor from "./pages/Assessor";
 import VRSimulation from "./pages/VRSimulation";
 import Resources from "./pages/Resources";
+import Challenge from "./pages/Challenge";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
