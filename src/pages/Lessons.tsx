@@ -48,7 +48,7 @@ const lessonsData = sampleLessons.map((lesson, i) => ({
   xp: Math.round(lesson.estimatedMinutes * 10),
 }));
 
-const categories = ['All', 'Speaking', 'Vocabulary', 'Grammar'];
+const categories = ['All', 'Speaking', 'Vocabulary', 'Grammar', 'Listening'];
 const progressFilters = ['All', 'Not Started', 'In Progress', 'Completed', 'Bookmarked'];
 const difficultyFilters = ['All', 'Beginner', 'Intermediate', 'Advanced'];
 
