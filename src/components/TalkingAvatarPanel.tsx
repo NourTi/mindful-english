@@ -68,16 +68,14 @@ export default function TalkingAvatarPanel({
           body: JSON.stringify({ text: npcText, characterId, emotion }),
         });
 
-        if (resp.status === 501) {
-          // Backend not configured → text-only mode
+        if (resp.status === 501 || !resp.ok) {
+          // 501 = no backend configured (text-only mode) — not an error
           if (!cancelled) {
             setVideoUrl(null);
             setStatus('idle');
           }
           return;
         }
-
-        if (!resp.ok) throw new Error(`Avatar API ${resp.status}`);
 
         const data = await resp.json();
         if (!cancelled && data.videoUrl) {
