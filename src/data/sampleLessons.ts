@@ -572,7 +572,7 @@ Minimal pairs are two words that differ by only one sound. Mastering them improv
     difficulty: 'intermediate',
     estimatedMinutes: 8,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg'], infographics: ['Idiom illustrations with literal vs figurative meaning', 'Top 10 idioms infographic'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['"Break the ice" → Start a conversation in an awkward situation', '"Under the weather" → Feeling sick or unwell', '"A piece of cake" → Something very easy to do', '"Hit the books" → Study hard', '"Over the moon" → Extremely happy', '"Call it a day" → Stop working for today', '"Butterflies in my stomach" → Nervous excitement'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/idioms.mp3',
