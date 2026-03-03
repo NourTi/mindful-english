@@ -745,7 +745,7 @@ If someone says "wanna grab a coffee?" in an office, you know it's an invitation
     difficulty: 'intermediate',
     estimatedMinutes: 9,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['First vs Second Conditional diagram', 'Real vs Imaginary situations'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['1st Conditional: If + Present Simple → will + base verb', '2nd Conditional: If + Past Simple → would + base verb', '"If it rains, I will take an umbrella." → REAL possibility', '"If I won the lottery, I would travel." → IMAGINARY situation', '1st: "If I have time, I will help." → I might have time', '2nd: "If I had time, I would help." → I don\'t have time', 'Remember: "If I were you…" (not "was" in formal English)'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/conditionals.mp3',
