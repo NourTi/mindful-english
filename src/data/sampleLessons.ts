@@ -234,7 +234,7 @@ Signal words: now, right now, at the moment, currently, today, this week
     difficulty: 'intermediate',
     estimatedMinutes: 10,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['Past Simple vs Present Perfect timeline', 'Signal words comparison'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['Past Simple: finished action with a time → "I visited Paris last year"', 'Present Perfect: experience, no specific time → "I have visited Paris"', '"I ate breakfast" → finished, specific time (this morning)', '"I have eaten breakfast" → result matters now (I\'m not hungry)', 'Signal: yesterday, last week, in 2020 → Past Simple', 'Signal: ever, never, already, yet, just → Present Perfect', '"Did you see that movie?" → specific occasion', '"Have you ever seen that movie?" → any time in your life'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/past-tenses.mp3',
