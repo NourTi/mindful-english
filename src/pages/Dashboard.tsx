@@ -6,6 +6,7 @@ import {
   Eye, Headphones, Hand, Clock, Sparkles, 
   TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users, MessageCircle, GraduationCap, Compass, Route, Hammer, MapPin, Glasses, Theater
 } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 import Scene3D from '@/components/Scene3D';
 import SEELogo from '@/components/SEELogo';
 import { getModes, getLessonsByMode } from '@/lib/seeLearningSystem';
