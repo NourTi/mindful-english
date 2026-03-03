@@ -50,6 +50,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { calculateProfile, userName } = useAssessmentStore();
   const { isAdmin } = useAdmin();
+  const { signOut } = useAuth();
   const [profile, setProfile] = useState(calculateProfile());
   const [currentTime, setCurrentTime] = useState(new Date());
 
