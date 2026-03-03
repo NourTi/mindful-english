@@ -815,4 +815,386 @@ Use for: dreams, advice, impossible/unlikely situations.
       { id: 'cd3', question: 'Which is Second Conditional?', options: ['"If I study, I will pass."', '"If I studied, I would pass."', '"If I am studying, I pass."', '"If I will study, I pass."'], correctAnswer: 1, explanation: 'Second Conditional uses Past Simple + would: "If I studied, I would pass."', growthMindsetFeedback: { correct: 'You know the difference!', incorrect: 'Second Conditional = If + Past Simple, would + base verb.' } },
     ],
   },
+
+  // ── ADVANCED: REPORTED SPEECH ─────────────────
+  {
+    id: 'reported-speech',
+    title: 'Mastering Reported Speech',
+    description: 'Transform direct speech into reported speech confidently. Cover tense backshift, reporting verbs, and common pitfalls in academic and professional contexts.',
+    difficulty: 'advanced',
+    estimatedMinutes: 12,
+    contentVariants: {
+      visual: {
+        type: 'visual',
+        images: ['/placeholder.svg', '/placeholder.svg'],
+        infographics: ['Tense backshift chart', 'Reporting verbs spectrum: say → claim → insist → deny'],
+        videoUrl: undefined,
+        vrScenarioId: undefined,
+      },
+      auditory: {
+        type: 'auditory',
+        audioUrl: '/audio/reported-speech.mp3',
+        transcriptHighlights: [
+          'Direct: "I am leaving tomorrow." → Reported: She said she was leaving the next day.',
+          'Direct: "We have finished." → Reported: They said they had finished.',
+          'Direct: "I will help you." → Reported: He promised he would help me.',
+        ],
+        pronunciationGuide: [
+          'claimed /kleɪmd/',
+          'insisted /ɪnˈsɪstɪd/',
+          'denied /dɪˈnaɪd/',
+          'acknowledged /əkˈnɒlɪdʒd/',
+        ],
+      },
+      reading: {
+        type: 'reading',
+        mainText: `Reported speech (also called indirect speech) is used to tell someone what another person said without quoting them directly. It is essential for academic writing, journalism, and professional communication.
+
+**Tense Backshift Rules:**
+- Present Simple → Past Simple: "I work here" → He said he worked there.
+- Present Continuous → Past Continuous: "I am studying" → She said she was studying.
+- Present Perfect → Past Perfect: "I have seen it" → He said he had seen it.
+- Will → Would: "I will come" → She said she would come.
+- Can → Could: "I can help" → He said he could help.
+
+**Time & Place Changes:**
+- today → that day | tomorrow → the next day | yesterday → the day before
+- here → there | this → that | now → then
+
+**Advanced Reporting Verbs:**
+Instead of always using "said," academic English uses richer verbs:
+- **Argued** – presented a viewpoint with reasoning
+- **Claimed** – stated something possibly controversial
+- **Acknowledged** – admitted or recognized
+- **Denied** – said something was not true
+- **Insisted** – stated firmly`,
+        grammarRules: [
+          'Backshift tenses one step into the past when the reporting verb is past tense',
+          'No backshift needed when reporting general truths: She said the Earth revolves around the Sun',
+          'Questions become statements in reported speech: "Are you coming?" → She asked if I was coming',
+          'Commands use infinitive: "Sit down!" → He told me to sit down',
+        ],
+        exercises: [
+          'Convert: "I don\'t understand the homework." (she / complain)',
+          'Convert: "We will submit the report on Friday." (they / promise)',
+          'Convert: "Did you attend the meeting?" (he / ask)',
+          'Convert: "Don\'t open that file!" (she / warn)',
+        ],
+      },
+      kinesthetic: {
+        type: 'kinesthetic',
+        interactiveScenarioId: 'reported-speech-relay',
+        rolePlayPrompts: [
+          'Partner A whispers a sentence. Partner B reports it to Partner C using reported speech.',
+          'Read a short news article and rewrite all direct quotes as reported speech.',
+          'Role-play a meeting: one person takes notes and reports what each person said.',
+        ],
+        physicalActivities: [
+          'Telephone game: pass a message through 4 people using reported speech',
+          'Write a diary entry reporting conversations you had today',
+          'Watch a 2-minute interview clip and report what was said',
+        ],
+      },
+    },
+    semanticAnchors: [
+      { newWord: 'backshift', definition: 'Moving a tense one step further into the past when reporting speech', relatedConcepts: ['tense change', 'indirect speech', 'reporting'], personalizedExample: '"I am happy" becomes "She said she was happy" — present shifts to past.' },
+      { newWord: 'reporting verb', definition: 'A verb used to introduce reported speech, such as said, claimed, argued, or denied', relatedConcepts: ['direct speech', 'quote', 'paraphrase'], personalizedExample: 'Instead of "He said," try "He insisted" or "He acknowledged" for more precise writing.' },
+      { newWord: 'indirect question', definition: 'A question reported as a statement, without question mark or inversion', relatedConcepts: ['embedded question', 'if/whether', 'word order'], personalizedExample: '"Where is the station?" → She asked where the station was.' },
+    ],
+    assessmentQuestions: [
+      { id: 'rs1', question: 'She said: "I am tired." → She said she _____ tired.', options: ['is', 'was', 'has been', 'will be'], correctAnswer: 1, explanation: 'Present Simple backshifts to Past Simple in reported speech.', growthMindsetFeedback: { correct: 'Perfect backshift!', incorrect: 'Remember: "am/is" → "was" when the reporting verb is past tense.' } },
+      { id: 'rs2', question: 'He asked: "Will you come?" → He asked _____ I would come.', options: ['that', 'if', 'what', 'do'], correctAnswer: 1, explanation: 'Yes/No questions use "if" or "whether" in reported speech.', growthMindsetFeedback: { correct: 'Great — you handled reported questions!', incorrect: 'Yes/No questions → "if/whether" + statement word order.' } },
+      { id: 'rs3', question: 'Which reporting verb means "stated something firmly"?', options: ['mentioned', 'insisted', 'suggested', 'whispered'], correctAnswer: 1, explanation: '"Insisted" conveys firmness and determination in reporting.', growthMindsetFeedback: { correct: 'You know your reporting verbs!', incorrect: '"Insisted" = said with force/determination. Build your reporting verb vocabulary!' } },
+    ],
+  },
+
+  // ── ADVANCED: PASSIVE VOICE ───────────────────
+  {
+    id: 'passive-voice',
+    title: 'The Passive Voice in Depth',
+    description: 'Master all passive constructions from basic to advanced. Learn when and why to use the passive in academic, scientific, and journalistic writing.',
+    difficulty: 'advanced',
+    estimatedMinutes: 14,
+    contentVariants: {
+      visual: {
+        type: 'visual',
+        images: ['/placeholder.svg', '/placeholder.svg'],
+        infographics: ['Active vs Passive transformation diagram', 'Passive tense timeline across all 8 forms'],
+        videoUrl: undefined,
+        vrScenarioId: undefined,
+      },
+      auditory: {
+        type: 'auditory',
+        audioUrl: '/audio/passive-voice.mp3',
+        transcriptHighlights: [
+          'Active: "Scientists discovered the vaccine." → Passive: "The vaccine was discovered by scientists."',
+          '"The report has been submitted." (Present Perfect Passive)',
+          '"The bridge is being repaired." (Present Continuous Passive)',
+          '"The results will be published next week." (Future Passive)',
+        ],
+        pronunciationGuide: [
+          'discovered /dɪˈskʌvərd/',
+          'manufactured /ˌmænjʊˈfæktʃərd/',
+          'established /ɪˈstæblɪʃt/',
+          'administered /ədˈmɪnɪstərd/',
+        ],
+      },
+      reading: {
+        type: 'reading',
+        mainText: `The passive voice shifts focus from WHO did something to WHAT was done. It is heavily used in academic papers, news reports, and formal writing.
+
+**Formation: Subject + be (conjugated) + past participle**
+
+**All Passive Tenses:**
+| Tense | Active | Passive |
+|-------|--------|---------|
+| Present Simple | They make cars | Cars are made |
+| Past Simple | They built the bridge | The bridge was built |
+| Present Perfect | They have completed it | It has been completed |
+| Past Perfect | They had signed it | It had been signed |
+| Future Simple | They will announce it | It will be announced |
+| Present Continuous | They are painting it | It is being painted |
+| Past Continuous | They were repairing it | It was being repaired |
+| Modal | They must finish it | It must be finished |
+
+**When to Use Passive:**
+1. The agent is unknown: "My car was stolen."
+2. The agent is obvious: "The suspect was arrested." (by police — obvious)
+3. Academic/scientific writing: "The experiment was conducted…"
+4. To emphasize the action or result over the doer
+
+**Causative Passive (Advanced):**
+- "I had my car repaired." = I arranged for someone to repair it.
+- "She got her hair cut." = Someone cut her hair (she arranged it).`,
+        grammarRules: [
+          'Passive = subject + BE (correct tense) + past participle',
+          'Only transitive verbs (verbs with objects) can be made passive',
+          'Use "by + agent" only when the agent adds important information',
+          'Causative: have/get + object + past participle',
+        ],
+        exercises: [
+          'Rewrite: "The committee approved the budget." (passive)',
+          'Rewrite: "Someone is cleaning the office." (passive)',
+          'Rewrite: "They had already sent the invitations." (passive)',
+          'Causative: "I need someone to fix my laptop." → "I need to get…"',
+        ],
+      },
+      kinesthetic: {
+        type: 'kinesthetic',
+        interactiveScenarioId: 'passive-transformations',
+        rolePlayPrompts: [
+          'Describe a manufacturing process using only passive voice: "First, the materials are selected…"',
+          'Report a crime scene: use passive to describe what happened without knowing who did it.',
+          'Rewrite a recipe in passive voice: "The onions are chopped. The butter is melted…"',
+        ],
+        physicalActivities: [
+          'Write a short news report about a local event using at least 5 passive sentences',
+          'Find 10 passive sentences in a real news article and identify the tense of each',
+          'Transform an active paragraph into passive and compare the tone',
+        ],
+      },
+    },
+    semanticAnchors: [
+      { newWord: 'passive voice', definition: 'A grammatical construction where the subject receives the action instead of performing it', relatedConcepts: ['active voice', 'be + past participle', 'agent'], personalizedExample: '"The email was sent" focuses on the email, not who sent it.' },
+      { newWord: 'past participle', definition: 'The third form of a verb (e.g., written, eaten, discovered), used in passive and perfect tenses', relatedConcepts: ['irregular verbs', 'verb forms', '-ed endings'], personalizedExample: '"The book was written by Orwell." Written is the past participle of write.' },
+      { newWord: 'causative', definition: 'A structure showing you arranged for someone else to do something for you', relatedConcepts: ['have something done', 'get something done', 'service'], personalizedExample: '"I had my teeth cleaned" = The dentist cleaned them; I arranged it.' },
+    ],
+    assessmentQuestions: [
+      { id: 'pv1', question: '"The results _____ next Monday." (announce — Future Passive)', options: ['will announce', 'will be announced', 'are announcing', 'announced'], correctAnswer: 1, explanation: 'Future Passive = will + be + past participle.', growthMindsetFeedback: { correct: 'Excellent passive formation!', incorrect: 'Future Passive: will + be + past participle → "will be announced."' } },
+      { id: 'pv2', question: '"The bridge _____ when we arrived." (repair — Past Continuous Passive)', options: ['was repairing', 'was being repaired', 'had repaired', 'repaired'], correctAnswer: 1, explanation: 'Past Continuous Passive = was/were + being + past participle.', growthMindsetFeedback: { correct: 'You nailed the continuous passive!', incorrect: 'Past Continuous Passive: was/were + being + past participle.' } },
+      { id: 'pv3', question: '"I _____ my car serviced last week." (causative)', options: ['have', 'had', 'was', 'got being'], correctAnswer: 1, explanation: 'Causative past: "had + object + past participle."', growthMindsetFeedback: { correct: 'Causative mastered!', incorrect: 'Past causative = had + object + past participle: "I had my car serviced."' } },
+    ],
+  },
+
+  // ── ADVANCED: ACADEMIC VOCABULARY ─────────────
+  {
+    id: 'academic-vocabulary',
+    title: 'Academic Vocabulary Essentials',
+    description: 'Build a strong academic word bank drawn from the Academic Word List (AWL). Learn high-frequency words used in essays, research papers, and university lectures.',
+    difficulty: 'advanced',
+    estimatedMinutes: 13,
+    contentVariants: {
+      visual: {
+        type: 'visual',
+        images: ['/placeholder.svg', '/placeholder.svg'],
+        infographics: ['Academic Word List top-50 frequency chart', 'Word family map: analyze → analysis → analytical → analytically'],
+        videoUrl: undefined,
+        vrScenarioId: undefined,
+      },
+      auditory: {
+        type: 'auditory',
+        audioUrl: '/audio/academic-vocab.mp3',
+        transcriptHighlights: [
+          '"The study demonstrates a significant correlation between sleep and academic performance."',
+          '"Several factors contribute to climate change, including deforestation and industrial emissions."',
+          '"The findings indicate that further research is required."',
+        ],
+        pronunciationGuide: [
+          'analysis /əˈnæləsɪs/',
+          'hypothesis /haɪˈpɒθəsɪs/',
+          'phenomenon /fɪˈnɒmɪnən/',
+          'significant /sɪɡˈnɪfɪkənt/',
+          'subsequently /ˈsʌbsɪkwəntli/',
+        ],
+      },
+      reading: {
+        type: 'reading',
+        mainText: `Academic vocabulary consists of words that appear frequently across all academic disciplines. The Academic Word List (AWL) by Averil Coxhead identifies 570 word families essential for university-level English.
+
+**Core Academic Verbs:**
+- **Analyze** – examine in detail: "The researchers analyzed the data."
+- **Demonstrate** – show clearly: "The experiment demonstrates the effect."
+- **Indicate** – point to / suggest: "The results indicate a trend."
+- **Contribute** – add to / help cause: "Several factors contribute to…"
+- **Establish** – set up or prove: "The theory was established in 1995."
+
+**Core Academic Nouns:**
+- **Hypothesis** – an educated guess to be tested
+- **Methodology** – the system of methods used in research
+- **Phenomenon** – an observable event or occurrence
+- **Correlation** – a relationship between two variables
+- **Implication** – a possible effect or consequence
+
+**Core Academic Adjectives & Adverbs:**
+- **Significant** – important or large enough to matter
+- **Subsequently** – after that; as a result
+- **Predominantly** – mainly; for the most part
+- **Inherent** – existing as a natural part of something
+
+**Hedging Language (Critical for Academic Writing):**
+- "It appears that…" / "The evidence suggests…" / "It could be argued that…"
+- Hedging shows caution and avoids overgeneralization.`,
+        grammarRules: [
+          'Learn words in families: analyze → analysis → analytical → analytically',
+          'Use collocations: "conduct research" not "do research" (formal)',
+          'Academic writing prefers nominal style: "The analysis of data" over "We analyzed data"',
+          'Hedging is expected: avoid absolute claims in academic writing',
+        ],
+        exercises: [
+          'Fill in: "The study _____ that regular exercise improves cognition." (demonstrate)',
+          'Replace informal words: "This shows that…" → "This _____ that…"',
+          'Write 3 sentences using hedging language about a topic you know',
+          'Create word families for: establish, contribute, significant',
+        ],
+      },
+      kinesthetic: {
+        type: 'kinesthetic',
+        interactiveScenarioId: 'academic-writing-lab',
+        rolePlayPrompts: [
+          'Present a research finding to a class using at least 5 academic words from this lesson.',
+          'Debate a topic with your partner using formal academic language and hedging.',
+          'Summarize a Wikipedia article using only academic vocabulary.',
+        ],
+        physicalActivities: [
+          'Create flashcards for 20 AWL words with example sentences',
+          'Read an academic abstract and highlight every AWL word you find',
+          'Rewrite a casual blog post in formal academic style',
+        ],
+      },
+    },
+    semanticAnchors: [
+      { newWord: 'hypothesis', definition: 'A proposed explanation or prediction that can be tested through research', relatedConcepts: ['theory', 'prediction', 'experiment'], personalizedExample: '"Our hypothesis is that sleep duration affects test scores" — this is what you plan to prove.' },
+      { newWord: 'methodology', definition: 'The system of methods and principles used in a particular discipline or study', relatedConcepts: ['approach', 'procedure', 'framework'], personalizedExample: '"The methodology involved surveys and interviews" — it describes HOW the research was done.' },
+      { newWord: 'correlation', definition: 'A mutual relationship or connection between two or more things', relatedConcepts: ['relationship', 'connection', 'variable'], personalizedExample: '"There is a correlation between exercise and mental health" — they are connected but one doesn\'t necessarily cause the other.' },
+      { newWord: 'hedging', definition: 'Using cautious language to avoid making absolute claims in academic writing', relatedConcepts: ['may', 'suggests', 'appears', 'could'], personalizedExample: '"It appears that…" is safer than "It is obvious that…" in academic writing.' },
+    ],
+    assessmentQuestions: [
+      { id: 'av1', question: '"The results _____ a strong link between diet and health."', options: ['show', 'indicate', 'tell', 'say'], correctAnswer: 1, explanation: '"Indicate" is the preferred academic verb for presenting evidence.', growthMindsetFeedback: { correct: 'Perfect academic register!', incorrect: 'In academic writing, "indicate" is more precise than "show" or "tell."' } },
+      { id: 'av2', question: 'What is a hypothesis?', options: ['A proven fact', 'A testable prediction', 'A research method', 'A final conclusion'], correctAnswer: 1, explanation: 'A hypothesis is a prediction you test — it is not yet proven.', growthMindsetFeedback: { correct: 'You understand the scientific process!', incorrect: 'A hypothesis is proposed BEFORE research — it\'s what you aim to test.' } },
+      { id: 'av3', question: 'Which sentence uses correct hedging?', options: ['"This proves that…"', '"It is obvious that…"', '"The evidence suggests that…"', '"Everyone knows that…"'], correctAnswer: 2, explanation: '"The evidence suggests" is appropriately cautious for academic writing.', growthMindsetFeedback: { correct: 'Excellent hedging awareness!', incorrect: 'Academic writing avoids absolute claims. "Suggests" is cautious and appropriate.' } },
+    ],
+  },
+
+  // ── ADVANCED: RELATIVE CLAUSES ────────────────
+  {
+    id: 'relative-clauses',
+    title: 'Defining & Non-Defining Relative Clauses',
+    description: 'Distinguish between defining and non-defining relative clauses. Master who, which, that, whose, and where in complex sentence construction.',
+    difficulty: 'advanced',
+    estimatedMinutes: 11,
+    contentVariants: {
+      visual: {
+        type: 'visual',
+        images: ['/placeholder.svg', '/placeholder.svg'],
+        infographics: ['Defining vs Non-defining comparison table', 'Relative pronoun decision tree'],
+        videoUrl: undefined,
+        vrScenarioId: undefined,
+      },
+      auditory: {
+        type: 'auditory',
+        audioUrl: '/audio/relative-clauses.mp3',
+        transcriptHighlights: [
+          'Defining: "The woman who called you is my manager." (which woman? → essential info)',
+          'Non-defining: "My sister, who lives in London, is visiting us." (extra info, commas needed)',
+          '"The report, which was published yesterday, contains errors."',
+        ],
+        pronunciationGuide: [
+          'whose /huːz/',
+          'whom /huːm/',
+          'clause /klɔːz/',
+          'essential /ɪˈsenʃəl/',
+        ],
+      },
+      reading: {
+        type: 'reading',
+        mainText: `Relative clauses add information about a noun. They are introduced by relative pronouns: who, which, that, whose, where, when.
+
+**Defining Relative Clauses (No commas):**
+These identify WHICH person/thing we mean. Without them, the sentence is incomplete.
+- "The students **who passed** the exam will graduate." (which students?)
+- "The book **that I borrowed** was excellent." (which book?)
+- "That" can replace "who/which" in defining clauses.
+
+**Non-Defining Relative Clauses (With commas):**
+These add EXTRA information. The sentence is complete without them.
+- "Dr. Smith, **who is 60**, plans to retire." (we already know who Dr. Smith is)
+- "The Eiffel Tower, **which is in Paris**, attracts millions of visitors."
+- "That" CANNOT be used in non-defining clauses.
+
+**Reduced Relative Clauses (Advanced):**
+- "The man **(who is) standing** at the door is my uncle." → participle clause
+- "The report **(that was) submitted** yesterday had errors." → past participle
+
+**Whose, Where, When:**
+- **Whose** = possession: "The author whose book won the prize…"
+- **Where** = place: "The café where we met…"
+- **When** = time: "The year when everything changed…"`,
+        grammarRules: [
+          'Defining = essential info, no commas, "that" is allowed',
+          'Non-defining = extra info, commas required, "that" is NOT allowed',
+          'Reduced clauses drop the relative pronoun + be verb',
+          '"Whose" replaces possessive pronouns (his/her/their) in relative clauses',
+        ],
+        exercises: [
+          'Combine: "The hotel was expensive. We stayed there." (where)',
+          'Add commas if needed: "My brother who is a doctor lives in Berlin."',
+          'Reduce: "The woman who is wearing the red dress is the CEO."',
+          'Fill in: "The company _____ products we use is based in Japan." (whose/which)',
+        ],
+      },
+      kinesthetic: {
+        type: 'kinesthetic',
+        interactiveScenarioId: 'clause-builder',
+        rolePlayPrompts: [
+          'Describe 5 people in the room using defining relative clauses.',
+          'Tell a story about your family adding non-defining clauses for extra detail.',
+          'Play "Guess Who" using only relative clauses: "I\'m thinking of a person who…"',
+        ],
+        physicalActivities: [
+          'Write 5 defining and 5 non-defining relative clauses about your city',
+          'Find and correct 5 relative clause errors in a provided text',
+          'Combine pairs of simple sentences using appropriate relative pronouns',
+        ],
+      },
+    },
+    semanticAnchors: [
+      { newWord: 'defining clause', definition: 'A relative clause that identifies which person or thing is being talked about — essential to the meaning', relatedConcepts: ['restrictive', 'no commas', 'that/who/which'], personalizedExample: '"The car that I bought is red" — without the clause, we don\'t know which car.' },
+      { newWord: 'non-defining clause', definition: 'A relative clause that adds extra information — not essential, set off by commas', relatedConcepts: ['non-restrictive', 'commas', 'extra info'], personalizedExample: '"My car, which is red, needs a wash" — we already know which car; the clause just adds detail.' },
+    ],
+    assessmentQuestions: [
+      { id: 'rc1', question: 'Which sentence has a NON-defining relative clause?', options: ['"The man who called is here."', '"London, which is the capital, is busy."', '"Students that study hard pass."', '"The food that I ordered was cold."'], correctAnswer: 1, explanation: 'Non-defining clauses have commas and add extra (non-essential) info.', growthMindsetFeedback: { correct: 'You spotted the commas — key indicator!', incorrect: 'Look for commas! Non-defining = extra info = commas.' } },
+      { id: 'rc2', question: '"The scientist _____ research changed medicine won a Nobel Prize."', options: ['who', 'which', 'whose', 'where'], correctAnswer: 2, explanation: '"Whose" shows possession: the scientist\'s research.', growthMindsetFeedback: { correct: 'Perfect use of "whose"!', incorrect: '"Whose" = belonging to. The research belongs to the scientist.' } },
+      { id: 'rc3', question: 'Can you use "that" in a non-defining relative clause?', options: ['Yes, always', 'No, never', 'Only with people', 'Only in formal writing'], correctAnswer: 1, explanation: '"That" is NEVER used in non-defining (comma) clauses. Use "who" or "which."', growthMindsetFeedback: { correct: 'Important rule — well remembered!', incorrect: 'Key rule: Non-defining clauses → who/which only. Never "that."' } },
+    ],
+  },
 ];
