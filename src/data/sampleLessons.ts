@@ -312,7 +312,7 @@ Signal words: ever, never, already, yet, just, so far, recently, since, for
     difficulty: 'intermediate',
     estimatedMinutes: 8,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg'], infographics: ['Phrasal verbs with GET', 'Phrasal verbs with TAKE', 'Separable vs inseparable'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['"Pick up" → collect / lift → "I\'ll pick up the kids at 3"', '"Give up" → stop trying → "Don\'t give up!"', '"Look forward to" → anticipate with pleasure → "I look forward to meeting you"', '"Turn down" → refuse → "She turned down the offer"', '"Figure out" → solve / understand → "I can\'t figure out this puzzle"', 'Separable: "Turn the TV off" or "Turn off the TV" ✅', 'Inseparable: "Look after the baby" ✅ but NOT "Look the baby after" ❌'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/phrasal-verbs.mp3',
