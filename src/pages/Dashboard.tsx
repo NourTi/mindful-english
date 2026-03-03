@@ -6,6 +6,7 @@ import {
   Eye, Headphones, Hand, Clock, Sparkles, 
   TrendingUp, Target, BarChart3, Settings, LogOut, RotateCcw, Home, LayoutDashboard, Users, MessageCircle, GraduationCap, Compass, Route, Hammer, MapPin, Glasses, Theater
 } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 import Scene3D from '@/components/Scene3D';
 import SEELogo from '@/components/SEELogo';
 import { getModes, getLessonsByMode } from '@/lib/seeLearningSystem';
@@ -49,6 +50,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { calculateProfile, userName } = useAssessmentStore();
   const { isAdmin } = useAdmin();
+  const { signOut } = useAuth();
   const [profile, setProfile] = useState(calculateProfile());
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -161,8 +163,11 @@ const Dashboard = () => {
                   Retake Assessment
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => {
+                <DropdownMenuItem onClick={async (e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
                   useAssessmentStore.getState().reset();
+                  await signOut();
                   navigate('/');
                 }}>
                   <LogOut className="w-4 h-4 mr-2" />
