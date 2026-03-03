@@ -1146,8 +1146,16 @@ Instead of always using "said," academic English uses richer verbs:
     contentVariants: {
       visual: {
         type: 'visual',
-        images: ['/placeholder.svg', '/placeholder.svg'],
-        infographics: ['Defining vs Non-defining comparison table', 'Relative pronoun decision tree'],
+        images: [],
+        infographics: [
+          'Defining: "The woman who called is my manager" → identifies WHICH woman (no commas)',
+          'Non-defining: "My sister, who lives in London, is visiting" → adds EXTRA info (commas)',
+          '"that" → OK in defining clauses only',
+          '"that" → NEVER in non-defining clauses',
+          '"whose" → possession: "The author whose book won…"',
+          '"where" → place: "The café where we met…"',
+          'Reduced: "The man (who is) standing…" → drop pronoun + be verb',
+        ],
         videoUrl: undefined,
         vrScenarioId: undefined,
       },
