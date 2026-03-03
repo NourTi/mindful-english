@@ -73,6 +73,7 @@ const Dashboard = () => {
     { label: 'Immergo', path: '/immergo', icon: Compass },
     { label: 'Paths', path: '/paths', icon: Route },
     { label: 'Lessons', path: '/lessons', icon: BookOpen },
+    { label: 'Resources', path: '/resources', icon: GraduationCap },
     { label: 'Builder', path: '/community-builder', icon: Hammer },
     { label: 'Community', path: '/community', icon: Users },
   ];

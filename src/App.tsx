@@ -35,6 +35,7 @@ import ModePage from "./pages/ModePage";
 import SeeLessonPage from "./pages/SeeLessonPage";
 import Assessor from "./pages/Assessor";
 import VRSimulation from "./pages/VRSimulation";
+import Resources from "./pages/Resources";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -84,6 +85,7 @@ const App = () => (
                 <Route path="/situations" element={<SituationPicker />} />
                 <Route path="/chat/:lessonId" element={<ChatLesson />} />
                 <Route path="/vr-sim/:lessonId" element={<VRSimulation />} />
+                <Route path="/resources" element={<Resources />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
