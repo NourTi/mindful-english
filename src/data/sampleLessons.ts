@@ -11,8 +11,14 @@ export const sampleLessons: LessonContent[] = [
     contentVariants: {
       visual: {
         type: 'visual',
-        images: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
-        infographics: ['Common restaurant phrases infographic', 'Menu vocabulary breakdown'],
+        images: [],
+        infographics: [
+          '"Could I have the menu, please?" → Polite request pattern',
+          '"I would like the pasta" → Polite ordering',
+          'Appetizer → Main Course → Dessert → Bill',
+          '"What do you recommend?" → Asking for suggestions',
+          'Formal: "I\'d like a table for two" → Informal: "Table for two, please"',
+        ],
         videoUrl: undefined,
         vrScenarioId: undefined,
       },
@@ -98,7 +104,7 @@ In English-speaking countries, it's polite to wait to be seated and to say "plea
     difficulty: 'beginner',
     estimatedMinutes: 5,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['Greeting flowchart', 'Formal vs informal greetings'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['Formal → "Good morning, how do you do?"', 'Informal → "Hey! What\'s up?"', '"My name is…" → "I\'m…" → "Call me…"', 'Response: "Nice to meet you!" → "Pleased to meet you" → "Great to meet you!"'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: { type: 'auditory', audioUrl: '/audio/greetings.mp3', transcriptHighlights: ['"Hello, my name is Sarah. Nice to meet you!"', '"Good morning! How are you today?"', '"Hi there! I\'m John. What\'s your name?"'], pronunciationGuide: ['hello /həˈloʊ/', 'nice /naɪs/', 'pleased /pliːzd/'] },
       reading: {
         type: 'reading',
@@ -146,7 +152,7 @@ Meeting new people is an essential part of life. Let's learn how to do it confid
     difficulty: 'beginner',
     estimatedMinutes: 8,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['Present Simple vs Continuous timeline', 'Signal words chart'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['Present Simple: habits & routines → "I work every day"', 'Present Continuous: happening NOW → "I am working right now"', '"She plays tennis" → habit (every Saturday)', '"She is playing tennis" → right now (at this moment)', 'Signal words: always, usually, never → Present Simple', 'Signal words: now, currently, at the moment → Present Continuous', '❌ "I am liking this" → ✅ "I like this" (state verbs = no continuous)'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/present-tenses.mp3',
@@ -228,7 +234,7 @@ Signal words: now, right now, at the moment, currently, today, this week
     difficulty: 'intermediate',
     estimatedMinutes: 10,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['Past Simple vs Present Perfect timeline', 'Signal words comparison'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['Past Simple: finished action with a time → "I visited Paris last year"', 'Present Perfect: experience, no specific time → "I have visited Paris"', '"I ate breakfast" → finished, specific time (this morning)', '"I have eaten breakfast" → result matters now (I\'m not hungry)', 'Signal: yesterday, last week, in 2020 → Past Simple', 'Signal: ever, never, already, yet, just → Present Perfect', '"Did you see that movie?" → specific occasion', '"Have you ever seen that movie?" → any time in your life'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/past-tenses.mp3',
@@ -306,7 +312,7 @@ Signal words: ever, never, already, yet, just, so far, recently, since, for
     difficulty: 'intermediate',
     estimatedMinutes: 8,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg'], infographics: ['Phrasal verbs with GET', 'Phrasal verbs with TAKE', 'Separable vs inseparable'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['"Pick up" → collect / lift → "I\'ll pick up the kids at 3"', '"Give up" → stop trying → "Don\'t give up!"', '"Look forward to" → anticipate with pleasure → "I look forward to meeting you"', '"Turn down" → refuse → "She turned down the offer"', '"Figure out" → solve / understand → "I can\'t figure out this puzzle"', 'Separable: "Turn the TV off" or "Turn off the TV" ✅', 'Inseparable: "Look after the baby" ✅ but NOT "Look the baby after" ❌'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/phrasal-verbs.mp3',
@@ -393,7 +399,7 @@ Phrasal verbs are combinations of a verb + preposition/adverb that create a new 
     difficulty: 'intermediate',
     estimatedMinutes: 10,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['Email structure diagram', 'Formal vs informal email comparison'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['Subject Line → Greeting → Opening → Body → Closing → Sign-off', '"Dear Mr. Smith," → Formal | "Hi Sarah," → Semi-formal', '"I am writing to inquire about…" → Professional opening', '"Could you please send me…?" → Polite request', '"Please find attached…" → Sharing files', '"Best regards," → Safe professional sign-off', '❌ "URGENT!!!" → ✅ "Meeting rescheduled to Friday 3 PM"'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/email-writing.mp3',
@@ -476,7 +482,7 @@ A well-written email makes you look professional and helps you get results.
     difficulty: 'beginner',
     estimatedMinutes: 6,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['Mouth position diagrams for /ɪ/ vs /iː/', 'Minimal pairs chart'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['ship /ɪ/ ↔ sheep /iː/ — short vs long vowel', 'bat /æ/ ↔ bet /e/ — open vs slightly open mouth', 'full /ʊ/ ↔ fool /uː/ — short rounded vs long rounded', '/ɪ/ → Short, relaxed mouth position', '/iː/ → Long, smile mouth position', 'Practice: "The ship carries sheep across the sea"'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/minimal-pairs.mp3',
@@ -566,7 +572,7 @@ Minimal pairs are two words that differ by only one sound. Mastering them improv
     difficulty: 'intermediate',
     estimatedMinutes: 8,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg'], infographics: ['Idiom illustrations with literal vs figurative meaning', 'Top 10 idioms infographic'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['"Break the ice" → Start a conversation in an awkward situation', '"Under the weather" → Feeling sick or unwell', '"A piece of cake" → Something very easy to do', '"Hit the books" → Study hard', '"Over the moon" → Extremely happy', '"Call it a day" → Stop working for today', '"Butterflies in my stomach" → Nervous excitement'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/idioms.mp3',
@@ -650,7 +656,7 @@ Idioms are phrases where the meaning is different from the literal words. Native
     difficulty: 'beginner',
     estimatedMinutes: 7,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['Active listening strategy flowchart', 'Connected speech patterns'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['"Want to" → "wanna"', '"Going to" → "gonna"', '"Got to" → "gotta"', '"Did you" → "didja"', '"Let me" → "lemme"', 'Strategy 1: Listen for KEY WORDS (nouns + verbs)', 'Strategy 2: Use CONTEXT to fill in gaps', 'Strategy 3: Listen MULTIPLE times — main idea → details → phrases'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/listening-strategies.mp3',
@@ -739,7 +745,7 @@ If someone says "wanna grab a coffee?" in an office, you know it's an invitation
     difficulty: 'intermediate',
     estimatedMinutes: 9,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['First vs Second Conditional diagram', 'Real vs Imaginary situations'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['1st Conditional: If + Present Simple → will + base verb', '2nd Conditional: If + Past Simple → would + base verb', '"If it rains, I will take an umbrella." → REAL possibility', '"If I won the lottery, I would travel." → IMAGINARY situation', '1st: "If I have time, I will help." → I might have time', '2nd: "If I had time, I would help." → I don\'t have time', 'Remember: "If I were you…" (not "was" in formal English)'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/conditionals.mp3',
@@ -826,8 +832,16 @@ Use for: dreams, advice, impossible/unlikely situations.
     contentVariants: {
       visual: {
         type: 'visual',
-        images: ['/placeholder.svg', '/placeholder.svg'],
-        infographics: ['Tense backshift chart', 'Reporting verbs spectrum: say → claim → insist → deny'],
+        images: [],
+        infographics: [
+          '"I am leaving" → She said she was leaving (Present → Past)',
+          '"We have finished" → They said they had finished (Perfect → Past Perfect)',
+          '"I will help" → He said he would help (will → would)',
+          'today → that day | tomorrow → the next day | yesterday → the day before',
+          'here → there | this → that | now → then',
+          '"Are you coming?" → She asked if I was coming (Question → Statement)',
+          '"Sit down!" → He told me to sit down (Command → Infinitive)',
+        ],
         videoUrl: undefined,
         vrScenarioId: undefined,
       },
@@ -918,8 +932,17 @@ Instead of always using "said," academic English uses richer verbs:
     contentVariants: {
       visual: {
         type: 'visual',
-        images: ['/placeholder.svg', '/placeholder.svg'],
-        infographics: ['Active vs Passive transformation diagram', 'Passive tense timeline across all 8 forms'],
+        images: [],
+        infographics: [
+          'Active: "Scientists discovered the vaccine" → Passive: "The vaccine was discovered"',
+          'Present: "Cars are made in Japan"',
+          'Past: "The bridge was built in 1990"',
+          'Perfect: "The report has been submitted"',
+          'Continuous: "The road is being repaired"',
+          'Modal: "It must be finished by Friday"',
+          'Causative: "I had my car repaired" → arranged for someone to do it',
+          'Use passive when: agent unknown, agent obvious, or to emphasize the result',
+        ],
         videoUrl: undefined,
         vrScenarioId: undefined,
       },
@@ -1016,8 +1039,16 @@ Instead of always using "said," academic English uses richer verbs:
     contentVariants: {
       visual: {
         type: 'visual',
-        images: ['/placeholder.svg', '/placeholder.svg'],
-        infographics: ['Academic Word List top-50 frequency chart', 'Word family map: analyze → analysis → analytical → analytically'],
+        images: [],
+        infographics: [
+          'analyze → analysis → analytical → analytically (Word Family)',
+          '"The study demonstrates…" → shows clearly with evidence',
+          '"The results indicate…" → points to / suggests',
+          '"Several factors contribute to…" → add to / help cause',
+          'Hedging: "It appears that…" → cautious, academic tone',
+          'Hedging: "The evidence suggests…" → avoids absolute claims',
+          '❌ "This proves that…" → ✅ "This suggests that…"',
+        ],
         videoUrl: undefined,
         vrScenarioId: undefined,
       },
@@ -1115,8 +1146,16 @@ Instead of always using "said," academic English uses richer verbs:
     contentVariants: {
       visual: {
         type: 'visual',
-        images: ['/placeholder.svg', '/placeholder.svg'],
-        infographics: ['Defining vs Non-defining comparison table', 'Relative pronoun decision tree'],
+        images: [],
+        infographics: [
+          'Defining: "The woman who called is my manager" → identifies WHICH woman (no commas)',
+          'Non-defining: "My sister, who lives in London, is visiting" → adds EXTRA info (commas)',
+          '"that" → OK in defining clauses only',
+          '"that" → NEVER in non-defining clauses',
+          '"whose" → possession: "The author whose book won…"',
+          '"where" → place: "The café where we met…"',
+          'Reduced: "The man (who is) standing…" → drop pronoun + be verb',
+        ],
         videoUrl: undefined,
         vrScenarioId: undefined,
       },
