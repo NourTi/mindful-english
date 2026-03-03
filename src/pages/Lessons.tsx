@@ -27,101 +27,28 @@ import { sampleLessons } from '@/data/sampleLessons';
 import { useAssessmentStore } from '@/stores/assessmentStore';
 import { LearningStyle } from '@/types/learning';
 
-// Extended lessons with category and progress data
-const lessonsData = [
-  { 
-    ...sampleLessons.find(l => l.id === 'greetings-intro')!,
-    category: 'Speaking',
-    progress: 100,
-    xp: 50 
-  },
-  { 
-    ...sampleLessons.find(l => l.id === 'restaurant-basics')!,
-    category: 'Vocabulary',
-    progress: 75,
-    xp: 75 
-  },
-  { 
-    id: 'making-plans',
-    title: 'Making Plans',
-    description: 'Learn how to make appointments and schedule activities.',
-    difficulty: 'beginner' as const,
-    estimatedMinutes: 6,
-    category: 'Grammar',
-    progress: 30,
-    xp: 60,
-    contentVariants: sampleLessons[0].contentVariants,
-    semanticAnchors: [],
-    assessmentQuestions: []
-  },
-  { 
-    id: 'shopping-convo',
-    title: 'Shopping Conversation',
-    description: 'Master vocabulary for shopping and transactions.',
-    difficulty: 'intermediate' as const,
-    estimatedMinutes: 8,
-    category: 'Speaking',
-    progress: 0,
-    xp: 80,
-    contentVariants: sampleLessons[0].contentVariants,
-    semanticAnchors: [],
-    assessmentQuestions: []
-  },
-  { 
-    id: 'describing-people',
-    title: 'Describing People',
-    description: 'Learn adjectives and phrases to describe appearance and personality.',
-    difficulty: 'beginner' as const,
-    estimatedMinutes: 5,
-    category: 'Vocabulary',
-    progress: 0,
-    xp: 50,
-    contentVariants: sampleLessons[0].contentVariants,
-    semanticAnchors: [],
-    assessmentQuestions: []
-  },
-  { 
-    id: 'giving-directions',
-    title: 'Giving Directions',
-    description: 'Learn to give and understand directions in English.',
-    difficulty: 'intermediate' as const,
-    estimatedMinutes: 7,
-    category: 'Speaking',
-    progress: 0,
-    xp: 70,
-    contentVariants: sampleLessons[0].contentVariants,
-    semanticAnchors: [],
-    assessmentQuestions: []
-  },
-  { 
-    id: 'past-tense',
-    title: 'Past Tense Basics',
-    description: 'Master regular and irregular past tense verbs.',
-    difficulty: 'intermediate' as const,
-    estimatedMinutes: 10,
-    category: 'Grammar',
-    progress: 0,
-    xp: 100,
-    contentVariants: sampleLessons[0].contentVariants,
-    semanticAnchors: [],
-    assessmentQuestions: []
-  },
-  { 
-    id: 'business-english',
-    title: 'Business English Basics',
-    description: 'Essential vocabulary for the workplace.',
-    difficulty: 'advanced' as const,
-    estimatedMinutes: 12,
-    category: 'Vocabulary',
-    progress: 0,
-    xp: 120,
-    contentVariants: sampleLessons[0].contentVariants,
-    semanticAnchors: [],
-    assessmentQuestions: []
-  },
-];
+// Automatically derive category from lesson content
+const getCategoryFromLesson = (lesson: typeof sampleLessons[0]): string => {
+  const title = lesson.title.toLowerCase();
+  const desc = lesson.description.toLowerCase();
+  if (title.includes('grammar') || title.includes('tense') || title.includes('conditional') || title.includes('simple vs') || title.includes('perfect')) return 'Grammar';
+  if (title.includes('vocabulary') || title.includes('idiom') || title.includes('phrasal') || title.includes('describing') || title.includes('restaurant') || title.includes('business') || title.includes('email')) return 'Vocabulary';
+  if (title.includes('pronunciation') || title.includes('minimal pair') || title.includes('listening')) return 'Listening';
+  if (title.includes('speaking') || title.includes('greeting') || title.includes('direction') || title.includes('shopping') || title.includes('conversation') || title.includes('introduction')) return 'Speaking';
+  if (desc.includes('grammar')) return 'Grammar';
+  if (desc.includes('vocab') || desc.includes('idiom') || desc.includes('phrasal')) return 'Vocabulary';
+  return 'Speaking';
+};
 
-const categories = ['All', 'Speaking', 'Vocabulary', 'Grammar'];
+// Build lessons data dynamically from all sampleLessons
+const lessonsData = sampleLessons.map((lesson, i) => ({
+  ...lesson,
+  category: getCategoryFromLesson(lesson),
+  progress: i === 0 ? 75 : i === 1 ? 100 : 0, // demo progress for first two
+  xp: Math.round(lesson.estimatedMinutes * 10),
+}));
+
+const categories = ['All', 'Speaking', 'Vocabulary', 'Grammar', 'Listening'];
 const progressFilters = ['All', 'Not Started', 'In Progress', 'Completed', 'Bookmarked'];
 const difficultyFilters = ['All', 'Beginner', 'Intermediate', 'Advanced'];
 
