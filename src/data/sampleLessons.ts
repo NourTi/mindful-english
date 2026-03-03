@@ -399,7 +399,7 @@ Phrasal verbs are combinations of a verb + preposition/adverb that create a new 
     difficulty: 'intermediate',
     estimatedMinutes: 10,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['Email structure diagram', 'Formal vs informal email comparison'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['Subject Line → Greeting → Opening → Body → Closing → Sign-off', '"Dear Mr. Smith," → Formal | "Hi Sarah," → Semi-formal', '"I am writing to inquire about…" → Professional opening', '"Could you please send me…?" → Polite request', '"Please find attached…" → Sharing files', '"Best regards," → Safe professional sign-off', '❌ "URGENT!!!" → ✅ "Meeting rescheduled to Friday 3 PM"'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/email-writing.mp3',
