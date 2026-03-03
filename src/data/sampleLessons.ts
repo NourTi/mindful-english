@@ -11,8 +11,14 @@ export const sampleLessons: LessonContent[] = [
     contentVariants: {
       visual: {
         type: 'visual',
-        images: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
-        infographics: ['Common restaurant phrases infographic', 'Menu vocabulary breakdown'],
+        images: [],
+        infographics: [
+          '"Could I have the menu, please?" → Polite request pattern',
+          '"I would like the pasta" → Polite ordering',
+          'Appetizer → Main Course → Dessert → Bill',
+          '"What do you recommend?" → Asking for suggestions',
+          'Formal: "I\'d like a table for two" → Informal: "Table for two, please"',
+        ],
         videoUrl: undefined,
         vrScenarioId: undefined,
       },
