@@ -128,7 +128,7 @@ export const awesomeEnglishResources: EnglishResource[] = [
   // Tech Shows
   { id: 'mkbhd', title: 'MKBHD', description: 'In-depth tech reviews in clear English, great for tech vocabulary.', url: 'https://www.youtube.com/user/marquesbrownlee', category: 'watching', subcategory: 'Tech Shows', level: 'intermediate', icon: '📱' },
   { id: 'linus-tech', title: 'Linus Tech Tips', description: 'Tech reviews and build guides in straightforward language.', url: 'https://www.youtube.com/user/LinusTechTips', category: 'watching', subcategory: 'Tech Shows', level: 'intermediate', icon: '💻' },
-  { id: 'bbc-click', title: 'BBC Click', description: "The BBC's flagship technology program.', url: 'https://www.youtube.com/user/ClickBBC", category: 'watching', subcategory: 'Tech Shows', level: 'intermediate', icon: '💻' },
+  { id: 'bbc-click', title: 'BBC Click', description: "The BBC's flagship technology program.", url: 'https://www.youtube.com/user/ClickBBC', category: 'watching', subcategory: 'Tech Shows', level: 'intermediate', icon: '💻' },
 
   // ═══════════════════════════════════════════
   //  READING
