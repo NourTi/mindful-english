@@ -146,7 +146,7 @@ Meeting new people is an essential part of life. Let's learn how to do it confid
     difficulty: 'beginner',
     estimatedMinutes: 8,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['Present Simple vs Continuous timeline', 'Signal words chart'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['Present Simple: habits & routines → "I work every day"', 'Present Continuous: happening NOW → "I am working right now"', '"She plays tennis" → habit (every Saturday)', '"She is playing tennis" → right now (at this moment)', 'Signal words: always, usually, never → Present Simple', 'Signal words: now, currently, at the moment → Present Continuous', '❌ "I am liking this" → ✅ "I like this" (state verbs = no continuous)'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: {
         type: 'auditory',
         audioUrl: '/audio/present-tenses.mp3',
