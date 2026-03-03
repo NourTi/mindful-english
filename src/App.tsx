@@ -35,6 +35,7 @@ import ModePage from "./pages/ModePage";
 import SeeLessonPage from "./pages/SeeLessonPage";
 import Assessor from "./pages/Assessor";
 import VRSimulation from "./pages/VRSimulation";
+import Resources from "./pages/Resources";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
