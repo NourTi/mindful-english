@@ -832,8 +832,16 @@ Use for: dreams, advice, impossible/unlikely situations.
     contentVariants: {
       visual: {
         type: 'visual',
-        images: ['/placeholder.svg', '/placeholder.svg'],
-        infographics: ['Tense backshift chart', 'Reporting verbs spectrum: say → claim → insist → deny'],
+        images: [],
+        infographics: [
+          '"I am leaving" → She said she was leaving (Present → Past)',
+          '"We have finished" → They said they had finished (Perfect → Past Perfect)',
+          '"I will help" → He said he would help (will → would)',
+          'today → that day | tomorrow → the next day | yesterday → the day before',
+          'here → there | this → that | now → then',
+          '"Are you coming?" → She asked if I was coming (Question → Statement)',
+          '"Sit down!" → He told me to sit down (Command → Infinitive)',
+        ],
         videoUrl: undefined,
         vrScenarioId: undefined,
       },
