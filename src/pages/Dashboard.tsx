@@ -134,7 +134,7 @@ const Dashboard = () => {
               <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuLabel>Settings</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigate('/')}>
+                <DropdownMenuItem onClick={() => navigate('/dashboard')}>
                   <Home className="w-4 h-4 mr-2" />
                   Home
                 </DropdownMenuItem>

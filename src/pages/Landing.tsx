@@ -104,13 +104,7 @@ const Landing = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isDemoOpen, setIsDemoOpen] = useState(false);
 
-  // Redirect first-time users to onboarding
-  useEffect(() => {
-    if (!loading && !user && !isOnboardingComplete()) {
-      // First-time visitor - send to onboarding
-      navigate('/onboarding');
-    }
-  }, [loading, user, navigate]);
+  // No longer auto-redirect - let Landing be the proper landing page
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {

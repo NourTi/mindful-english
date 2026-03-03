@@ -12,11 +12,6 @@ const Lesson = () => {
   const { calculateProfile, userName } = useAssessmentStore();
 
   useEffect(() => {
-    if (!userName) {
-      navigate('/');
-      return;
-    }
-
     // If no current lesson, find and start the requested lesson
     if (!currentLesson && lessonId) {
       const lesson = sampleLessons.find(l => l.id === lessonId);
@@ -27,7 +22,7 @@ const Lesson = () => {
         navigate('/dashboard');
       }
     }
-  }, [lessonId, currentLesson, userName, navigate, startLesson, calculateProfile]);
+  }, [lessonId, currentLesson, navigate, startLesson, calculateProfile]);
 
   if (!currentLesson) {
     return (
