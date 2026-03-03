@@ -1039,8 +1039,16 @@ Instead of always using "said," academic English uses richer verbs:
     contentVariants: {
       visual: {
         type: 'visual',
-        images: ['/placeholder.svg', '/placeholder.svg'],
-        infographics: ['Academic Word List top-50 frequency chart', 'Word family map: analyze → analysis → analytical → analytically'],
+        images: [],
+        infographics: [
+          'analyze → analysis → analytical → analytically (Word Family)',
+          '"The study demonstrates…" → shows clearly with evidence',
+          '"The results indicate…" → points to / suggests',
+          '"Several factors contribute to…" → add to / help cause',
+          'Hedging: "It appears that…" → cautious, academic tone',
+          'Hedging: "The evidence suggests…" → avoids absolute claims',
+          '❌ "This proves that…" → ✅ "This suggests that…"',
+        ],
         videoUrl: undefined,
         vrScenarioId: undefined,
       },
