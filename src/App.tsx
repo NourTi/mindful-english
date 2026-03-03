@@ -87,6 +87,7 @@ const App = () => (
                 <Route path="/chat/:lessonId" element={<ChatLesson />} />
                 <Route path="/vr-sim/:lessonId" element={<VRSimulation />} />
                 <Route path="/resources" element={<Resources />} />
+                <Route path="/challenge/:challengeId" element={<Challenge />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

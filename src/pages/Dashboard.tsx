@@ -163,8 +163,11 @@ const Dashboard = () => {
                   Retake Assessment
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => {
+                <DropdownMenuItem onClick={async (e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
                   useAssessmentStore.getState().reset();
+                  await signOut();
                   navigate('/');
                 }}>
                   <LogOut className="w-4 h-4 mr-2" />
