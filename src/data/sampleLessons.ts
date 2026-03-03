@@ -932,8 +932,17 @@ Instead of always using "said," academic English uses richer verbs:
     contentVariants: {
       visual: {
         type: 'visual',
-        images: ['/placeholder.svg', '/placeholder.svg'],
-        infographics: ['Active vs Passive transformation diagram', 'Passive tense timeline across all 8 forms'],
+        images: [],
+        infographics: [
+          'Active: "Scientists discovered the vaccine" → Passive: "The vaccine was discovered"',
+          'Present: "Cars are made in Japan"',
+          'Past: "The bridge was built in 1990"',
+          'Perfect: "The report has been submitted"',
+          'Continuous: "The road is being repaired"',
+          'Modal: "It must be finished by Friday"',
+          'Causative: "I had my car repaired" → arranged for someone to do it',
+          'Use passive when: agent unknown, agent obvious, or to emphasize the result',
+        ],
         videoUrl: undefined,
         vrScenarioId: undefined,
       },
