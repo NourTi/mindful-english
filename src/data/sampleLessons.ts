@@ -98,7 +98,7 @@ In English-speaking countries, it's polite to wait to be seated and to say "plea
     difficulty: 'beginner',
     estimatedMinutes: 5,
     contentVariants: {
-      visual: { type: 'visual', images: ['/placeholder.svg', '/placeholder.svg'], infographics: ['Greeting flowchart', 'Formal vs informal greetings'], videoUrl: undefined, vrScenarioId: undefined },
+      visual: { type: 'visual', images: [], infographics: ['Formal → "Good morning, how do you do?"', 'Informal → "Hey! What\'s up?"', '"My name is…" → "I\'m…" → "Call me…"', 'Response: "Nice to meet you!" → "Pleased to meet you" → "Great to meet you!"'], videoUrl: undefined, vrScenarioId: undefined },
       auditory: { type: 'auditory', audioUrl: '/audio/greetings.mp3', transcriptHighlights: ['"Hello, my name is Sarah. Nice to meet you!"', '"Good morning! How are you today?"', '"Hi there! I\'m John. What\'s your name?"'], pronunciationGuide: ['hello /həˈloʊ/', 'nice /naɪs/', 'pleased /pliːzd/'] },
       reading: {
         type: 'reading',
