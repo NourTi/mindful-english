@@ -1,10 +1,11 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, Search, ArrowLeft, Brain, Clock, 
   Sparkles, Filter, ChevronDown, RotateCcw, 
-  CheckCircle, AlertCircle, Star, Calendar
+  CheckCircle, AlertCircle, Star, Calendar,
+  Mic, MicOff, Volume2, Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
