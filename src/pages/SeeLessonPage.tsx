@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { getLessonById, getExercisesByLesson } from '@/lib/seeLearningSystem';
 import { getActiveTTSProvider, playAudioBuffer, preloadModel, onModelStateChange } from '@/lib/tts';
-import TTSLoadingIndicator from '@/components/immergo/TTSLoadingIndicator';
+import { TTSLoadingIndicator } from '@/components/immergo/TTSLoadingIndicator';
 
 type PlayState = 'idle' | 'loading' | 'playing';
 
@@ -22,10 +22,8 @@ const SeeLessonPage = () => {
   const audioCtxRef = useRef<AudioContext | null>(null);
   const sourceRef = useRef<AudioBufferSourceNode | null>(null);
 
-  if (!lessonId) return null;
-
-  const lesson = getLessonById(lessonId);
-  const exercises = getExercisesByLesson(lessonId);
+  const lesson = lessonId ? getLessonById(lessonId) : undefined;
+  const exercises = lessonId ? getExercisesByLesson(lessonId) : [];
   const isAudioMode = lesson?.mode === 'audio_exercises';
 
   // Preload TTS model for audio exercises
