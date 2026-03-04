@@ -65,53 +65,7 @@ const ImmergoChat = () => {
     return lang?.name || code;
   }, []);
 
-  // Audio element ref for TTS
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  // Helper: play audio blob
-  const playAudioBlob = useCallback((audioBlob: Blob): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      const audioUrl = URL.createObjectURL(audioBlob);
-      const audio = new Audio(audioUrl);
-      audioRef.current = audio;
-      
-      audio.onended = () => {
-        setIsAISpeaking(false);
-        URL.revokeObjectURL(audioUrl);
-        audioRef.current = null;
-        resolve();
-      };
-      
-      audio.onerror = () => {
-        setIsAISpeaking(false);
-        URL.revokeObjectURL(audioUrl);
-        audioRef.current = null;
-        reject(new Error('Audio playback failed'));
-      };
-
-      audio.play().catch(reject);
-    });
-  }, []);
-
-  // Fallback: Web Speech API
-  const speakWithWebSpeech = useCallback((cleanText: string) => {
-    if (!('speechSynthesis' in window)) {
-      setIsAISpeaking(false);
-      return;
-    }
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.rate = 0.9;
-    utterance.pitch = 1.0;
-    const voices = window.speechSynthesis.getVoices();
-    const enVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Microsoft'))) || voices.find(v => v.lang.startsWith('en'));
-    if (enVoice) utterance.voice = enVoice;
-    utterance.onend = () => setIsAISpeaking(false);
-    utterance.onerror = () => setIsAISpeaking(false);
-    window.speechSynthesis.speak(utterance);
-  }, []);
-
-  // TTS: Try Kokoro first, then ElevenLabs, then Web Speech
+  // TTS via kokoro-js (client-side) with Web Speech fallback
   const speakText = useCallback(async (text: string) => {
     if (!voiceEnabled || !text.trim()) return;
 
@@ -124,69 +78,42 @@ const ImmergoChat = () => {
       .trim();
 
     if (!cleanText) return;
-
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current = null;
-    }
-
     setIsAISpeaking(true);
 
-    // Try Kokoro TTS first
+    // Try kokoro-js
     try {
-      const kokoroRes = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/kokoro-tts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-        },
-        body: JSON.stringify({ text: cleanText, voice: 'af_bella', speed: 0.9 }),
-      });
-
-      if (kokoroRes.ok) {
-        const blob = await kokoroRes.blob();
-        if (blob.size > 100) {
-          await playAudioBlob(blob);
-          return;
-        }
+      const { getActiveTTSProvider, playAudioBuffer } = await import('@/lib/tts');
+      const provider = getActiveTTSProvider();
+      const buffer = await provider.synthesize(cleanText);
+      if (buffer) {
+        await playAudioBuffer(buffer);
+        setIsAISpeaking(false);
+        return;
       }
     } catch (e) {
-      console.warn('Kokoro TTS failed:', e);
+      console.warn('kokoro-js TTS failed:', e);
     }
 
-    // Try ElevenLabs TTS
-    try {
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-tts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-        },
-        body: JSON.stringify({ text: cleanText }),
-      });
-
-      if (response.ok) {
-        const audioBlob = await response.blob();
-        if (audioBlob.size > 100) {
-          await playAudioBlob(audioBlob);
-          return;
-        }
-      }
-    } catch (e) {
-      console.warn('ElevenLabs TTS failed:', e);
+    // Fallback: Web Speech API
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utterance.rate = 0.9;
+      utterance.pitch = 1.0;
+      const voices = window.speechSynthesis.getVoices();
+      const enVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Microsoft'))) || voices.find(v => v.lang.startsWith('en'));
+      if (enVoice) utterance.voice = enVoice;
+      utterance.onend = () => setIsAISpeaking(false);
+      utterance.onerror = () => setIsAISpeaking(false);
+      window.speechSynthesis.speak(utterance);
+    } else {
+      setIsAISpeaking(false);
     }
-
-    // Fallback to Web Speech API
-    speakWithWebSpeech(cleanText);
-  }, [voiceEnabled, playAudioBlob, speakWithWebSpeech]);
+  }, [voiceEnabled]);
 
   // Stop speaking
   const stopSpeaking = useCallback(() => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current = null;
-    }
+    window.speechSynthesis.cancel();
     setIsAISpeaking(false);
   }, []);
 
