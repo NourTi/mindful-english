@@ -9,19 +9,423 @@
     "skills": ["listening", "speaking", "confidence"],
     "xpReward": 10,
     "steps": [
-      {
-        "kind": "psyground",
-        "text": "You arrive at the gate. Notice your breath and count 3 slow inhales and exhales."
-      },
-      {
-        "kind": "dialogue",
-        "text": "Say hello to the person next to you and ask one simple question about their trip."
-      },
-      {
-        "kind": "reflection",
-        "text": "How did that feel? Choose: 'easier', 'same', or 'harder than expected'."
-      }
+      { "kind": "psyground", "text": "You arrive at the gate. Notice your breath and count 3 slow inhales and exhales." },
+      { "kind": "dialogue", "text": "Say hello to the person next to you and ask one simple question about their trip." },
+      { "kind": "reflection", "text": "How did that feel? Choose: 'easier', 'same', or 'harder than expected'." }
+    ]
+  },
+  {
+    "id": "see-airport-2",
+    "label": "Airport Check-In",
+    "type": "challenge",
+    "environment": "airport",
+    "difficulty": "easy",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "vocabulary", "confidence"],
+    "xpReward": 15,
+    "steps": [
+      { "kind": "psyground", "text": "You're approaching the check-in counter. Take a deep breath and remind yourself you know the key phrases." },
+      { "kind": "dialogue", "text": "Greet the agent and say: 'I'd like to check in for my flight to London, please.' Then hand over your passport." },
+      { "kind": "dialogue", "text": "The agent asks 'Window or aisle?' — answer with your preference and ask about baggage allowance." },
+      { "kind": "reflection", "text": "Rate your confidence: 1 (shaky) to 5 (smooth and natural)." }
+    ]
+  },
+  {
+    "id": "see-airport-3",
+    "label": "Going Through Security",
+    "type": "challenge",
+    "environment": "airport",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety", "introvert"],
+    "skills": ["listening", "comprehension", "following-instructions"],
+    "xpReward": 20,
+    "steps": [
+      { "kind": "psyground", "text": "Security can feel stressful. Ground yourself: name 3 things you can see, 2 you can hear, 1 you can touch." },
+      { "kind": "dialogue", "text": "The officer says: 'Please remove your laptop and liquids.' Respond politely and ask if you need to remove your belt." },
+      { "kind": "dialogue", "text": "The alarm beeps. The officer asks you to step aside. Say: 'Of course, is there a problem?' Stay calm." },
+      { "kind": "reflection", "text": "Did you understand the instructions the first time? What words were tricky?" }
+    ]
+  },
+  {
+    "id": "see-airport-4",
+    "label": "Boarding the Plane",
+    "type": "challenge",
+    "environment": "airport",
+    "difficulty": "medium",
+    "psyProfile": ["introvert"],
+    "skills": ["speaking", "politeness", "problem-solving"],
+    "xpReward": 20,
+    "steps": [
+      { "kind": "psyground", "text": "You're in the boarding queue. Relax your shoulders and practice your boarding phrases silently." },
+      { "kind": "dialogue", "text": "Someone is sitting in your seat. Politely say: 'Excuse me, I think that's my seat — 14A. Could you check your boarding pass?'" },
+      { "kind": "dialogue", "text": "A flight attendant offers you a drink. Order something and say thank you." },
+      { "kind": "reflection", "text": "How did you handle the seat mix-up? Was it easier than you expected?" }
+    ]
+  },
+  {
+    "id": "see-cafe-1",
+    "label": "Ordering Coffee",
+    "type": "challenge",
+    "environment": "cafe",
+    "difficulty": "easy",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "vocabulary", "social"],
+    "xpReward": 10,
+    "steps": [
+      { "kind": "psyground", "text": "You walk into a cozy café. Take a moment to enjoy the smell of coffee. You've got this." },
+      { "kind": "dialogue", "text": "The barista smiles: 'Hi, what can I get you?' Order a latte and ask about their pastries." },
+      { "kind": "dialogue", "text": "They ask: 'For here or to go?' Answer and ask for the Wi-Fi password." },
+      { "kind": "reflection", "text": "Did you feel natural? What phrase would you like to practice more?" }
+    ]
+  },
+  {
+    "id": "see-cafe-2",
+    "label": "Café Conversation",
+    "type": "challenge",
+    "environment": "cafe",
+    "difficulty": "medium",
+    "psyProfile": ["introvert", "mild_anxiety"],
+    "skills": ["speaking", "listening", "social"],
+    "xpReward": 20,
+    "steps": [
+      { "kind": "psyground", "text": "Someone at the next table smiles at you. Remember: small talk is just practice. No pressure." },
+      { "kind": "dialogue", "text": "They say: 'Great weather today, isn't it?' Respond and ask if they come here often." },
+      { "kind": "dialogue", "text": "Continue the chat: ask what they do for work and share something about yourself." },
+      { "kind": "dialogue", "text": "Wrap up naturally: 'It was nice chatting with you. Enjoy your day!'" },
+      { "kind": "reflection", "text": "How many turns did the conversation last? Did you feel engaged or anxious?" }
+    ]
+  },
+  {
+    "id": "see-restaurant-1",
+    "label": "Restaurant Reservation",
+    "type": "challenge",
+    "environment": "restaurant",
+    "difficulty": "easy",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "telephone", "vocabulary"],
+    "xpReward": 15,
+    "steps": [
+      { "kind": "psyground", "text": "You need to call a restaurant. Write down key phrases before dialing: name, time, number of guests." },
+      { "kind": "dialogue", "text": "Call and say: 'Hello, I'd like to make a reservation for two tonight at 7pm, please.'" },
+      { "kind": "dialogue", "text": "They ask: 'Any dietary requirements?' Answer: 'Yes, one person is vegetarian.'" },
+      { "kind": "reflection", "text": "Phone calls can be harder than face-to-face. How did you feel?" }
+    ]
+  },
+  {
+    "id": "see-restaurant-2",
+    "label": "Ordering a Meal",
+    "type": "challenge",
+    "environment": "restaurant",
+    "difficulty": "easy",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "vocabulary", "politeness"],
+    "xpReward": 15,
+    "steps": [
+      { "kind": "psyground", "text": "You're seated at the restaurant. Look at the menu — don't worry about unknown words, focus on what you can understand." },
+      { "kind": "dialogue", "text": "The waiter asks: 'Are you ready to order?' Say: 'I'll have the grilled salmon, please. And could I get a glass of water?'" },
+      { "kind": "dialogue", "text": "Ask the waiter: 'What do you recommend for dessert?'" },
+      { "kind": "dialogue", "text": "When finished, say: 'Could I have the bill, please? And do you accept card?'" },
+      { "kind": "reflection", "text": "Which phrases felt most natural? Which ones do you want to practice?" }
+    ]
+  },
+  {
+    "id": "see-restaurant-3",
+    "label": "Handling a Problem",
+    "type": "challenge",
+    "environment": "restaurant",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety", "introvert"],
+    "skills": ["speaking", "assertiveness", "problem-solving"],
+    "xpReward": 25,
+    "steps": [
+      { "kind": "psyground", "text": "Something's wrong with your order. It's okay to speak up — being polite and clear is a valuable skill." },
+      { "kind": "dialogue", "text": "Your food arrives cold. Say: 'Excuse me, I'm sorry but this seems to be cold. Would you mind heating it up?'" },
+      { "kind": "dialogue", "text": "The waiter apologizes and offers a free dessert. Accept graciously: 'That's very kind, thank you.'" },
+      { "kind": "reflection", "text": "Was it hard to complain politely? How would you improve next time?" }
+    ]
+  },
+  {
+    "id": "see-shopping-1",
+    "label": "Clothes Shopping",
+    "type": "challenge",
+    "environment": "shopping",
+    "difficulty": "easy",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "vocabulary", "asking-for-help"],
+    "xpReward": 15,
+    "steps": [
+      { "kind": "psyground", "text": "You enter a clothing store. Remind yourself: shop assistants are there to help. It's okay to ask questions." },
+      { "kind": "dialogue", "text": "A shop assistant approaches: 'Can I help you?' Say: 'Yes, I'm looking for a jacket in size medium.'" },
+      { "kind": "dialogue", "text": "Ask: 'Do you have this in a different colour? And where are the fitting rooms?'" },
+      { "kind": "dialogue", "text": "At the till: 'I'll take this one. Can I pay by card?'" },
+      { "kind": "reflection", "text": "Did you feel comfortable asking for help? What new words did you learn?" }
+    ]
+  },
+  {
+    "id": "see-shopping-2",
+    "label": "Returning an Item",
+    "type": "challenge",
+    "environment": "shopping",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety", "introvert"],
+    "skills": ["speaking", "assertiveness", "negotiation"],
+    "xpReward": 25,
+    "steps": [
+      { "kind": "psyground", "text": "Returns can feel awkward. Prepare: have your receipt ready and know your reason." },
+      { "kind": "dialogue", "text": "Say: 'Hi, I'd like to return this shirt. It doesn't fit properly. I have the receipt here.'" },
+      { "kind": "dialogue", "text": "They offer an exchange instead. Say: 'Actually, I'd prefer a refund if that's possible.'" },
+      { "kind": "reflection", "text": "How assertive were you? Did you get what you wanted?" }
+    ]
+  },
+  {
+    "id": "see-doctor-1",
+    "label": "Doctor's Visit",
+    "type": "challenge",
+    "environment": "medical",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "vocabulary", "describing-symptoms"],
+    "xpReward": 25,
+    "steps": [
+      { "kind": "psyground", "text": "Medical visits can be stressful in any language. Write down your symptoms beforehand." },
+      { "kind": "dialogue", "text": "The receptionist asks: 'Do you have an appointment?' Say: 'Yes, it's under [your name], at 10:30.'" },
+      { "kind": "dialogue", "text": "The doctor asks: 'What seems to be the problem?' Describe: 'I've had a headache for three days and I feel dizzy sometimes.'" },
+      { "kind": "dialogue", "text": "Ask: 'Do I need any tests? And can I get a prescription?'" },
+      { "kind": "reflection", "text": "Could you describe your symptoms clearly? What medical vocabulary do you want to learn?" }
+    ]
+  },
+  {
+    "id": "see-doctor-2",
+    "label": "Pharmacy Visit",
+    "type": "challenge",
+    "environment": "medical",
+    "difficulty": "easy",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "vocabulary", "reading-labels"],
+    "xpReward": 15,
+    "steps": [
+      { "kind": "psyground", "text": "You have a prescription. Take a breath — pharmacists are used to helping non-native speakers." },
+      { "kind": "dialogue", "text": "Say: 'Hello, I have a prescription from my doctor. Here it is.'" },
+      { "kind": "dialogue", "text": "Ask: 'How often should I take this? And are there any side effects I should know about?'" },
+      { "kind": "reflection", "text": "Did you understand the pharmacist's instructions? What words were new?" }
+    ]
+  },
+  {
+    "id": "see-hotel-1",
+    "label": "Hotel Check-In",
+    "type": "challenge",
+    "environment": "hotel",
+    "difficulty": "easy",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "vocabulary", "politeness"],
+    "xpReward": 15,
+    "steps": [
+      { "kind": "psyground", "text": "You arrive at the hotel after a long journey. You're tired but prepared. You know the key phrases." },
+      { "kind": "dialogue", "text": "Say: 'Good evening, I have a reservation under [name]. It's for three nights.'" },
+      { "kind": "dialogue", "text": "Ask: 'What time is breakfast? And is there Wi-Fi in the rooms?'" },
+      { "kind": "dialogue", "text": "The receptionist gives you the key. Say: 'Thank you. Which floor is room 405?'" },
+      { "kind": "reflection", "text": "How smooth was the check-in? Rate yourself 1–5." }
+    ]
+  },
+  {
+    "id": "see-hotel-2",
+    "label": "Hotel Complaint",
+    "type": "challenge",
+    "environment": "hotel",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety", "introvert"],
+    "skills": ["speaking", "assertiveness", "problem-solving"],
+    "xpReward": 25,
+    "steps": [
+      { "kind": "psyground", "text": "Your room has a problem. It's okay to speak up — you're paying for a service." },
+      { "kind": "dialogue", "text": "Call reception: 'Hello, I'm in room 405. The air conditioning isn't working and it's very hot.'" },
+      { "kind": "dialogue", "text": "They say they'll send someone in an hour. Ask: 'Is it possible to move to a different room instead?'" },
+      { "kind": "reflection", "text": "Were you polite but firm? How would you handle this differently next time?" }
+    ]
+  },
+  {
+    "id": "see-bank-1",
+    "label": "Opening a Bank Account",
+    "type": "challenge",
+    "environment": "bank",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "vocabulary", "formal-language"],
+    "xpReward": 25,
+    "steps": [
+      { "kind": "psyground", "text": "Banking involves formal language. Prepare your documents and key questions before going in." },
+      { "kind": "dialogue", "text": "Say: 'Good morning, I'd like to open a current account, please. What documents do I need?'" },
+      { "kind": "dialogue", "text": "Ask: 'Is there a monthly fee? And can I set up online banking?'" },
+      { "kind": "dialogue", "text": "Say: 'Thank you for explaining everything. When will my card arrive?'" },
+      { "kind": "reflection", "text": "How well did you understand the financial terms? List 3 new words you learned." }
+    ]
+  },
+  {
+    "id": "see-interview-1",
+    "label": "Job Interview Basics",
+    "type": "challenge",
+    "environment": "office",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety", "introvert"],
+    "skills": ["speaking", "confidence", "formal-language"],
+    "xpReward": 30,
+    "steps": [
+      { "kind": "psyground", "text": "Interviews are nerve-wracking for everyone. Take 5 deep breaths. You've prepared for this." },
+      { "kind": "dialogue", "text": "The interviewer says: 'Tell me about yourself.' Give a 30-second summary of your background and skills." },
+      { "kind": "dialogue", "text": "They ask: 'What's your biggest strength?' Answer confidently with a specific example." },
+      { "kind": "dialogue", "text": "Ask a question: 'What does a typical day look like in this role?'" },
+      { "kind": "reflection", "text": "Did you maintain eye contact and speak clearly? What would you improve?" }
+    ]
+  },
+  {
+    "id": "see-interview-2",
+    "label": "Tricky Interview Questions",
+    "type": "challenge",
+    "environment": "office",
+    "difficulty": "hard",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "critical-thinking", "vocabulary"],
+    "xpReward": 35,
+    "steps": [
+      { "kind": "psyground", "text": "Difficult questions test your thinking, not just your English. Pause before answering — it shows confidence." },
+      { "kind": "dialogue", "text": "'What's your biggest weakness?' Answer honestly but frame it positively: 'I used to struggle with time management, but I've learned to use planners and deadlines.'" },
+      { "kind": "dialogue", "text": "'Where do you see yourself in 5 years?' Share your career goals and tie them to the company." },
+      { "kind": "dialogue", "text": "'Why should we hire you?' Summarize your unique value in 2–3 sentences." },
+      { "kind": "reflection", "text": "Which question was hardest? Practice answering it 3 more times." }
+    ]
+  },
+  {
+    "id": "see-flatshare-1",
+    "label": "Viewing a Flat",
+    "type": "challenge",
+    "environment": "housing",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "vocabulary", "negotiation"],
+    "xpReward": 20,
+    "steps": [
+      { "kind": "psyground", "text": "Viewing a flat is exciting! Prepare questions about rent, bills, and the neighbourhood." },
+      { "kind": "dialogue", "text": "Say: 'Hi, I'm here about the room. It looks great! How much is the rent including bills?'" },
+      { "kind": "dialogue", "text": "Ask: 'How are the housemates? And is the area safe at night?'" },
+      { "kind": "dialogue", "text": "Say: 'I'm very interested. When would I be able to move in?'" },
+      { "kind": "reflection", "text": "Did you ask all the important questions? What else would you want to know?" }
+    ]
+  },
+  {
+    "id": "see-transport-1",
+    "label": "Taking Public Transport",
+    "type": "challenge",
+    "environment": "transport",
+    "difficulty": "easy",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "listening", "navigation"],
+    "xpReward": 15,
+    "steps": [
+      { "kind": "psyground", "text": "Public transport can be confusing. Look at the map first and identify your stop." },
+      { "kind": "dialogue", "text": "Ask someone: 'Excuse me, does this bus go to the city centre?'" },
+      { "kind": "dialogue", "text": "Ask the driver: 'Could you tell me when we reach Oxford Street, please?'" },
+      { "kind": "reflection", "text": "Did you feel confident asking for directions? What transport words do you know now?" }
+    ]
+  },
+  {
+    "id": "see-emergency-1",
+    "label": "Emergency Phone Call",
+    "type": "challenge",
+    "environment": "emergency",
+    "difficulty": "hard",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "clarity", "vocabulary"],
+    "xpReward": 30,
+    "steps": [
+      { "kind": "psyground", "text": "Emergencies are stressful but staying calm saves lives. Focus on key information: who, what, where." },
+      { "kind": "dialogue", "text": "Call 999: 'Hello, I need an ambulance. My friend has fallen and can't move their leg. We're at 42 Park Road.'" },
+      { "kind": "dialogue", "text": "Answer: 'They're conscious and breathing, but in a lot of pain.'" },
+      { "kind": "reflection", "text": "Could you communicate the key details clearly? Practice the address and symptoms." }
+    ]
+  },
+  {
+    "id": "see-meetup-1",
+    "label": "Social Meetup",
+    "type": "challenge",
+    "environment": "social",
+    "difficulty": "easy",
+    "psyProfile": ["introvert", "mild_anxiety"],
+    "skills": ["speaking", "social", "confidence"],
+    "xpReward": 15,
+    "steps": [
+      { "kind": "psyground", "text": "You're joining a language exchange meetup. Everyone is friendly and also learning. You belong here." },
+      { "kind": "dialogue", "text": "Introduce yourself: 'Hi, I'm [name]. I'm learning English. What language are you practising?'" },
+      { "kind": "dialogue", "text": "Ask: 'How long have you been learning? What's the hardest part for you?'" },
+      { "kind": "dialogue", "text": "Share a fun fact about your country or culture." },
+      { "kind": "reflection", "text": "Did you enjoy the conversation? What topics were easiest to talk about?" }
+    ]
+  },
+  {
+    "id": "see-meetup-2",
+    "label": "Making Plans with Friends",
+    "type": "challenge",
+    "environment": "social",
+    "difficulty": "medium",
+    "psyProfile": ["introvert"],
+    "skills": ["speaking", "planning", "social"],
+    "xpReward": 20,
+    "steps": [
+      { "kind": "psyground", "text": "Making plans requires future tense and suggestions. Think of activities you enjoy." },
+      { "kind": "dialogue", "text": "Suggest: 'Hey, shall we go to the cinema this weekend? There's a new film I'd like to see.'" },
+      { "kind": "dialogue", "text": "Your friend suggests Saturday. Negotiate: 'Saturday works, but could we go in the evening instead? I'm busy during the day.'" },
+      { "kind": "dialogue", "text": "Confirm: 'Great, so Saturday at 7pm at the Odeon. See you there!'" },
+      { "kind": "reflection", "text": "How natural did the planning feel? Did you use future tense correctly?" }
+    ]
+  },
+  {
+    "id": "see-supermarket-1",
+    "label": "Grocery Shopping",
+    "type": "challenge",
+    "environment": "supermarket",
+    "difficulty": "easy",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "vocabulary", "asking-for-help"],
+    "xpReward": 10,
+    "steps": [
+      { "kind": "psyground", "text": "You're in a supermarket looking for specific items. It's okay to ask staff for help." },
+      { "kind": "dialogue", "text": "Ask a staff member: 'Excuse me, where can I find the olive oil?'" },
+      { "kind": "dialogue", "text": "At the deli counter: 'Could I have 200 grams of cheddar cheese, please?'" },
+      { "kind": "dialogue", "text": "At checkout: 'Do you have any bags? And can I pay contactless?'" },
+      { "kind": "reflection", "text": "How many food items can you name in English now? List 10." }
+    ]
+  },
+  {
+    "id": "see-phone-1",
+    "label": "Phone Call to a Service",
+    "type": "challenge",
+    "environment": "telephone",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety", "introvert"],
+    "skills": ["speaking", "listening", "telephone-english"],
+    "xpReward": 25,
+    "steps": [
+      { "kind": "psyground", "text": "Phone calls without body language are harder. Write key phrases before calling." },
+      { "kind": "dialogue", "text": "Call your internet provider: 'Hello, I'm calling about my broadband connection. It's been very slow for the past week.'" },
+      { "kind": "dialogue", "text": "They ask for your account number. Say: 'Let me check... it's A-B-1-2-3-4-5-6.'" },
+      { "kind": "dialogue", "text": "Ask: 'When can a technician come? And is this covered under my contract?'" },
+      { "kind": "reflection", "text": "Phone calls are one of the hardest skills. How did you manage? What would help next time?" }
+    ]
+  },
+  {
+    "id": "see-classroom-1",
+    "label": "Classroom Participation",
+    "type": "challenge",
+    "environment": "classroom",
+    "difficulty": "medium",
+    "psyProfile": ["introvert", "mild_anxiety"],
+    "skills": ["speaking", "academic-english", "confidence"],
+    "xpReward": 25,
+    "steps": [
+      { "kind": "psyground", "text": "Speaking up in class is brave. Your contribution matters, even if your English isn't perfect." },
+      { "kind": "dialogue", "text": "Raise your hand and say: 'I'd like to add something. I think the author is trying to show that...'" },
+      { "kind": "dialogue", "text": "Disagree politely: 'That's an interesting point, but I see it differently because...'" },
+      { "kind": "dialogue", "text": "Ask for clarification: 'Sorry, could you explain that last point again? I didn't quite follow.'" },
+      { "kind": "reflection", "text": "How did it feel to speak in front of the class? What academic phrases did you use?" }
     ]
   }
 ]
-

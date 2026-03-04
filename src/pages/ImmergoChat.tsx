@@ -371,27 +371,29 @@ const ImmergoChat = () => {
         }
 
         try {
-          // Use browser speech recognition if available, else skip transcription
-          if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            // For now, use a simple approach - just send audio to STT endpoint
-            const formData = new FormData();
-            formData.append('audio', audioBlob, 'recording.webm');
+          // Send audio to STT endpoint for transcription
+          const formData = new FormData();
+          formData.append('audio', audioBlob, 'recording.webm');
 
-            const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-stt`, {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-              },
-              body: formData,
-            });
+          const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-stt`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            },
+            body: formData,
+          });
 
-            if (response.ok) {
-              const result = await response.json();
-              const transcription = result.text || '';
-              if (transcription.trim()) {
-                streamChat(transcription);
-              }
+          if (response.ok) {
+            const result = await response.json();
+            const transcription = result.text || '';
+            if (transcription.trim()) {
+              streamChat(transcription);
+            } else {
+              toast.info('No speech detected. Try speaking louder.');
             }
+          } else {
+            // Fallback: use Web Speech API for recognition
+            toast.error('Transcription service unavailable. Try typing instead.');
           }
         } catch (error) {
           console.error('STT error:', error);
