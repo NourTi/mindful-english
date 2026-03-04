@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Mic, Square, Volume2, VolumeX } from 'lucide-react';
+import { ArrowLeft, Mic, Square, Volume2, VolumeX, Send } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { AudioVisualizer } from '@/components/immergo/AudioVisualizer';
 import { LiveTranscript, type TranscriptEntry } from '@/components/immergo/LiveTranscript';
