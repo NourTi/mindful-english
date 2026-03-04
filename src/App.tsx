@@ -41,11 +41,8 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Root redirect component
+// Always show landing page first — user navigates from there
 function RootRedirect() {
-  if (hasLearnerProfile()) {
-    return <Navigate to="/dashboard" replace />;
-  }
   return <Landing />;
 }
 
