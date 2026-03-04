@@ -91,7 +91,7 @@ const SeeLessonPage = () => {
     return () => { stopAudio(); };
   }, [stopAudio]);
 
-  if (!lesson) {
+  if (!lessonId || !lesson) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Card className="max-w-md mx-4">
