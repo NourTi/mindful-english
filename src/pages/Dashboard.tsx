@@ -263,41 +263,79 @@ const Dashboard = () => {
             {getModes().map((mode, i) => {
               const lessonCount = getLessonsByMode(mode.id).length;
               const iconMap: Record<string, React.ReactNode> = {
-                'message-circle': <MessageCircle className="w-7 h-7" />,
-                'glasses': <Glasses className="w-7 h-7" />,
-                'theater': <Theater className="w-7 h-7" />,
-                'headphones': <Headphones className="w-7 h-7" />,
+                'message-circle': <MessageCircle className="w-8 h-8" />,
+                'glasses': <Glasses className="w-8 h-8" />,
+                'theater': <Theater className="w-8 h-8" />,
+                'headphones': <Headphones className="w-8 h-8" />,
               };
-              const colorMap: Record<string, string> = {
-                'chat_ai': 'from-primary to-primary-glow',
-                'vr_immersive': 'from-accent to-accent/60',
-                'role_play': 'from-warning to-warning/60',
-                'audio_exercises': 'from-success to-success/60',
+              const neonConfig: Record<string, { gradient: string; border: string; glow: string; text: string }> = {
+                'chat_ai': {
+                  gradient: 'from-primary via-primary-glow to-primary',
+                  border: 'border-primary/40 hover:border-primary',
+                  glow: 'shadow-primary/30 hover:shadow-primary/60',
+                  text: 'text-primary',
+                },
+                'vr_immersive': {
+                  gradient: 'from-accent via-accent/80 to-accent',
+                  border: 'border-accent/40 hover:border-accent',
+                  glow: 'shadow-accent/30 hover:shadow-accent/60',
+                  text: 'text-accent',
+                },
+                'role_play': {
+                  gradient: 'from-warning via-warning/80 to-warning',
+                  border: 'border-warning/40 hover:border-warning',
+                  glow: 'shadow-warning/30 hover:shadow-warning/60',
+                  text: 'text-warning',
+                },
+                'audio_exercises': {
+                  gradient: 'from-success via-success/80 to-success',
+                  border: 'border-success/40 hover:border-success',
+                  glow: 'shadow-success/30 hover:shadow-success/60',
+                  text: 'text-success',
+                },
               };
+              const neon = neonConfig[mode.id] || neonConfig['chat_ai'];
               return (
                 <motion.div
                   key={mode.id}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.05 }}
-                  whileHover={{ scale: 1.05, y: -4 }}
-                  whileTap={{ scale: 0.97 }}
+                  transition={{ delay: 0.1 + i * 0.07 }}
+                  whileHover={{ scale: 1.06, y: -6 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <Card
-                    className="group cursor-pointer h-full border-2 border-border hover:border-primary bg-card hover:bg-primary/5 shadow-sm hover:shadow-lg hover:shadow-primary/20 transition-all duration-200 overflow-hidden relative"
+                    className={`group cursor-pointer h-full border-2 ${neon.border} bg-card/60 backdrop-blur-sm shadow-lg ${neon.glow} hover:shadow-xl transition-all duration-300 overflow-hidden relative`}
                     onClick={() => navigate(`/mode/${mode.id}`)}
                   >
-                    {/* Active gradient bar at top */}
-                    <div className={`h-1.5 w-full bg-gradient-to-r ${colorMap[mode.id] || 'from-primary to-primary-glow'}`} />
-                    <CardContent className="p-5 text-center">
-                      <div className={`mx-auto mb-3 p-3.5 rounded-xl bg-gradient-to-br ${colorMap[mode.id] || 'from-primary to-primary-glow'} text-white w-fit shadow-md`}>
-                        {iconMap[mode.icon] || <BookOpen className="w-7 h-7" />}
+                    {/* Neon gradient bar */}
+                    <div className={`h-1 w-full bg-gradient-to-r ${neon.gradient}`} />
+                    
+                    {/* Animated scan line */}
+                    <motion.div
+                      className={`absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-current to-transparent ${neon.text} opacity-20`}
+                      animate={{ top: ['10%', '90%', '10%'] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                    />
+                    
+                    {/* Corner accents */}
+                    <div className={`absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 ${neon.border} rounded-tl-sm opacity-60`} />
+                    <div className={`absolute top-0 right-0 w-5 h-5 border-t-2 border-r-2 ${neon.border} rounded-tr-sm opacity-60`} />
+                    <div className={`absolute bottom-0 left-0 w-5 h-5 border-b-2 border-l-2 ${neon.border} rounded-bl-sm opacity-60`} />
+                    <div className={`absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 ${neon.border} rounded-br-sm opacity-60`} />
+
+                    <CardContent className="p-5 text-center relative z-10">
+                      {/* Glowing icon container */}
+                      <div className={`mx-auto mb-4 p-4 rounded-2xl bg-gradient-to-br ${neon.gradient} text-white w-fit shadow-lg ${neon.glow} group-hover:shadow-xl transition-shadow duration-300`}>
+                        {iconMap[mode.icon] || <BookOpen className="w-8 h-8" />}
                       </div>
-                      <h3 className="font-bold text-sm mb-1 group-hover:text-primary transition-colors">{mode.label}</h3>
-                      <p className="text-xs text-muted-foreground mb-3">{lessonCount} lesson{lessonCount !== 1 ? 's' : ''}</p>
-                      <div className="flex items-center justify-center gap-1 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Play className="w-3.5 h-3.5" />
-                        Start Now
+                      <h3 className={`font-display font-bold text-base mb-1 ${neon.text} drop-shadow-sm`}>{mode.label}</h3>
+                      <p className="text-xs text-muted-foreground mb-4">{lessonCount} lesson{lessonCount !== 1 ? 's' : ''}</p>
+                      
+                      {/* CTA button */}
+                      <div className={`flex items-center justify-center gap-1.5 text-xs font-bold ${neon.text} opacity-60 group-hover:opacity-100 transition-all duration-300 bg-background/50 rounded-full py-1.5 px-3 mx-auto w-fit border ${neon.border}`}>
+                        <Play className="w-3.5 h-3.5 fill-current" />
+                        Enter
                       </div>
                     </CardContent>
                   </Card>
