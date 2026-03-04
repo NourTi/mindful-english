@@ -65,7 +65,7 @@ export async function synthesizeToAudioBuffer(
   if (!tts) return null;
 
   try {
-    const result = await tts.generate(text, { voice });
+    const result = await tts.generate(text, { voice: voice as any });
     const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
     const audioData = result.audio;
     const sampleRate = result.sampling_rate ?? 24000;
