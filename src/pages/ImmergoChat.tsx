@@ -95,7 +95,10 @@ const ImmergoChat = () => {
 
   // Fallback: Web Speech API
   const speakWithWebSpeech = useCallback((cleanText: string) => {
-    if (!('speechSynthesis' in window)) return;
+    if (!('speechSynthesis' in window)) {
+      setIsAISpeaking(false);
+      return;
+    }
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.rate = 0.9;
