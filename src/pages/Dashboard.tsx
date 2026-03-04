@@ -274,14 +274,16 @@ const Dashboard = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + i * 0.05 }}
+                  whileHover={{ scale: 1.05, y: -4 }}
+                  whileTap={{ scale: 0.97 }}
                 >
                   <Card
                     variant="cognitive"
-                    className="group cursor-pointer h-full border-border hover:border-primary/50 transition-all"
+                    className="group cursor-pointer h-full border-border hover:border-primary hover:shadow-lg hover:shadow-primary/20 transition-all duration-200"
                     onClick={() => navigate(`/mode/${mode.id}`)}
                   >
                     <CardContent className="p-5 text-center">
-                      <div className="mx-auto mb-3 p-3 rounded-xl bg-primary/10 text-primary w-fit">
+                      <div className="mx-auto mb-3 p-3 rounded-xl bg-primary/10 text-primary w-fit group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-200">
                         {iconMap[mode.icon] || <BookOpen className="w-6 h-6" />}
                       </div>
                       <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{mode.label}</h3>
