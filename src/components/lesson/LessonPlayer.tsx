@@ -126,7 +126,7 @@ const LessonPlayer = () => {
           <p className="text-muted-foreground max-w-md mx-auto mb-6">
             Great work! You've completed this lesson. Here's your summary:
           </p>
-          <Card className="max-w-sm mx-auto">
+          <Card className="max-w-sm mx-auto mb-8">
             <CardContent className="p-6 space-y-4">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Correct Answers</span>
@@ -144,6 +144,26 @@ const LessonPlayer = () => {
               </div>
             </CardContent>
           </Card>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-sm mx-auto">
+            <Button
+              variant="outline"
+              size="lg"
+              className="gap-2 flex-1"
+              onClick={() => { resetLesson(); navigate('/lessons'); }}
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Lessons
+            </Button>
+            <Button
+              variant="hero"
+              size="lg"
+              className="gap-2 flex-1"
+              onClick={() => { completeLesson(); navigate('/dashboard'); }}
+            >
+              <Sparkles className="w-4 h-4" />
+              Finish & Earn XP
+            </Button>
+          </div>
         </motion.div>
       );
     }

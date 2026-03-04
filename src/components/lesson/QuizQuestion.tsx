@@ -187,15 +187,21 @@ const QuizQuestion = ({ questions, currentIndex, onNext, onComplete }: QuizQuest
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
+                className="space-y-2"
               >
                 <Button
                   size="lg"
                   className="w-full gap-2"
                   onClick={handleContinue}
                 >
-                  {isLastQuestion ? 'Complete Quiz' : 'Next Question'}
+                  {isLastQuestion ? 'See Results' : 'Next Question'}
                   <ArrowRight className="w-4 h-4" />
                 </Button>
+                {isLastQuestion && (
+                  <p className="text-xs text-center text-muted-foreground">
+                    You'll see your score summary next
+                  </p>
+                )}
               </motion.div>
             )}
           </AnimatePresence>

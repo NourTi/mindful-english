@@ -141,6 +141,9 @@ Meeting new people is an essential part of life. Let's learn how to do it confid
     ],
     assessmentQuestions: [
       { id: 'g1', question: 'Which is a formal greeting?', options: ['Hey!', 'What\'s up?', 'Good morning', 'Yo!'], correctAnswer: 2, explanation: '"Good morning" is appropriate in formal settings like offices or meetings.', growthMindsetFeedback: { correct: 'Excellent! You understand the difference between formal and informal.', incorrect: 'Think about what you\'d say to your boss vs. your friend.' } },
+      { id: 'g2', question: 'How do you respond to "Nice to meet you"?', options: ['I\'m fine', 'Nice to meet you too!', 'Goodbye', 'See you later'], correctAnswer: 1, explanation: 'The natural response to "Nice to meet you" is "Nice to meet you too!" or "Pleased to meet you."', growthMindsetFeedback: { correct: 'Perfect — you sound natural!', incorrect: 'When someone says "Nice to meet you," simply mirror it back with "too!" at the end.' } },
+      { id: 'g3', question: 'Which is the correct short form of "I am John"?', options: ['I John', 'I\'m John', 'I is John', 'Me John'], correctAnswer: 1, explanation: '"I\'m" is the contraction of "I am" — it\'s the most common way to introduce yourself.', growthMindsetFeedback: { correct: 'You\'ve got contractions down!', incorrect: 'Remember: I + am = I\'m. "I\'m John" is the natural way to say it.' } },
+      { id: 'g4', question: 'What would you say when meeting your new manager for the first time?', options: ['Yo, what\'s up?', 'Hey dude!', 'Good morning, it\'s a pleasure to meet you.', 'Hi buddy!'], correctAnswer: 2, explanation: 'With a manager, use formal language: "Good morning" + "It\'s a pleasure to meet you."', growthMindsetFeedback: { correct: 'Great choice — professional and polite!', incorrect: 'In professional settings, use formal greetings. Save casual ones for friends!' } },
     ],
   },
 
