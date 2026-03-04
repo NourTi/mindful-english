@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import GDPRBanner from "@/components/GDPRBanner";
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
-import { hasLearnerProfile } from "@/lib/onboardingEngine";
+
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Assessment from "./pages/Assessment";
