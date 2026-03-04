@@ -23,6 +23,7 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
+import VoiceAssessment from '@/components/VoiceAssessment';
 import { formatDistanceToNow, differenceInHours, addHours } from 'date-fns';
 
 interface VocabularyWord {
