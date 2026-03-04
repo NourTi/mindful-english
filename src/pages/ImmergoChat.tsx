@@ -629,9 +629,39 @@ const ImmergoChat = () => {
           </motion.button>
 
           {isMissionStarted && (
-            <p className="mt-3 text-xs text-muted-foreground">
-              {isStreaming ? 'AI is responding...' : 'Tap to speak'}
-            </p>
+            <>
+              {/* Text input fallback */}
+              <div className="flex gap-2 mt-4 max-w-xs mx-auto">
+                <Input
+                  value={textInput}
+                  onChange={(e) => setTextInput(e.target.value)}
+                  placeholder={isStreaming ? 'AI is responding…' : 'Or type here…'}
+                  disabled={isStreaming || isRecording}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && textInput.trim() && !isStreaming) {
+                      streamChat(textInput.trim());
+                      setTextInput('');
+                    }
+                  }}
+                  className="flex-1"
+                />
+                <Button
+                  size="icon"
+                  disabled={!textInput.trim() || isStreaming}
+                  onClick={() => {
+                    if (textInput.trim()) {
+                      streamChat(textInput.trim());
+                      setTextInput('');
+                    }
+                  }}
+                >
+                  <Send className="w-4 h-4" />
+                </Button>
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {isStreaming ? 'AI is responding...' : 'Tap mic to speak or type below'}
+              </p>
+            </>
           )}
         </div>
       </div>
