@@ -3,9 +3,6 @@ project_id = "zefmtbhmhgusxhqqddbr"
 [functions.scenario-chat]
 verify_jwt = false
 
-[functions.elevenlabs-tts]
-verify_jwt = false
-
 [functions.elevenlabs-stt]
 verify_jwt = false
 
@@ -13,9 +10,6 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.lesson-chat]
-verify_jwt = false
-
-[functions.kokoro-tts]
 verify_jwt = false
 
 [functions.search-videos]
