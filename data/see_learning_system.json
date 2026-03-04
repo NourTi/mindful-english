@@ -342,6 +342,202 @@
       ]
     },
     {
+      "id": "see-doctor-visit",
+      "title": "Doctor's Appointment",
+      "mode": "role_play",
+      "environment": "medical_clinic",
+      "psyTargets": ["high_anxiety", "low_confidence"],
+      "learningGoals": ["Describe symptoms clearly", "Understand medical instructions", "Ask questions about treatment"],
+      "modules": [
+        { "id": "mod-doc-prep", "type": "psy_prep", "title": "Health Anxiety Reset", "instructions": "Talking about health in another language is stressful. Write down key words before you start: headache, stomach, dizzy, pain. You've got this." },
+        { "id": "mod-doc-dialogue", "type": "dialogue", "title": "Consultation", "instructions": "The doctor asks: 'What seems to be the problem?' Describe your symptoms. Practice: 'I've been feeling...', 'It started about...', 'It gets worse when...'" },
+        { "id": "mod-doc-task", "type": "confidence_task", "title": "Pharmacy Follow-Up", "instructions": "The doctor gives you a prescription. Go to the pharmacy and ask about dosage, side effects, and alternatives." },
+        { "id": "mod-doc-reflect", "type": "reflection", "title": "Medical Vocab Check", "instructions": "How confident do you feel explaining health issues in English now? What words do you still need?" }
+      ],
+      "conversationPrompts": [
+        "You walk into the GP's office. The doctor smiles: 'Hello, take a seat. What brings you in today?'",
+        "The doctor examines you and says: 'I'd like to run a couple of tests. Have you experienced this before?'",
+        "The doctor writes a prescription: 'Take these twice a day with food. Any questions?'"
+      ],
+      "emotionChecks": [
+        { "question": "How anxious do you feel discussing health in English?", "type": "anxiety", "options": ["Not at all", "A little", "Quite anxious", "Very anxious"] },
+        { "question": "Could you describe your symptoms clearly enough?", "type": "confidence", "options": ["Yes, clearly", "Mostly", "Not really", "Not at all"] }
+      ]
+    },
+    {
+      "id": "see-bank-account",
+      "title": "Opening a Bank Account",
+      "mode": "role_play",
+      "environment": "bank",
+      "psyTargets": ["mild_social_anxiety", "perfectionism"],
+      "learningGoals": ["Navigate formal financial conversations", "Understand banking terminology", "Ask about account options and fees"],
+      "modules": [
+        { "id": "mod-bank-prep", "type": "psy_prep", "title": "Financial Confidence", "instructions": "Banking conversations have specific vocabulary. Key words: current account, savings account, direct debit, standing order, overdraft. Knowing these puts you ahead." },
+        { "id": "mod-bank-dialogue", "type": "dialogue", "title": "Account Opening", "instructions": "The bank advisor asks about your needs. Practice: 'I'd like to open a current account', 'Could you explain the fees?', 'What documents do I need?'" },
+        { "id": "mod-bank-task", "type": "confidence_task", "title": "Problem Resolution", "instructions": "You notice an unexpected charge on your statement. Call the bank and query it politely." },
+        { "id": "mod-bank-reflect", "type": "reflection", "title": "Formal Register Check", "instructions": "Did you use appropriately formal language? Rate your comfort with financial English." }
+      ],
+      "conversationPrompts": [
+        "You enter the bank and approach the desk: 'Good morning, I'd like some information about opening an account, please.'",
+        "The advisor asks: 'Are you looking for a current account or a savings account? Do you need online banking?'"
+      ],
+      "emotionChecks": [
+        { "question": "How comfortable are you with formal financial conversations?", "type": "anxiety", "options": ["Very comfortable", "OK", "Uncomfortable", "Very uncomfortable"] },
+        { "question": "Could you handle an unexpected banking problem in English?", "type": "confidence", "options": ["Definitely", "Probably", "Not sure", "No"] }
+      ]
+    },
+    {
+      "id": "see-landlord-call",
+      "title": "Calling Your Landlord",
+      "mode": "role_play",
+      "environment": "home",
+      "psyTargets": ["high_anxiety", "conflict_avoidance"],
+      "learningGoals": ["Report maintenance issues by phone", "Use assertive but polite language", "Negotiate timelines for repairs"],
+      "modules": [
+        { "id": "mod-land-prep", "type": "psy_prep", "title": "Assertiveness Warm-Up", "instructions": "Asking for things you're entitled to isn't rude—it's necessary. Practice: 'I need to report...', 'When can I expect...', 'This is quite urgent because...'" },
+        { "id": "mod-land-dialogue", "type": "dialogue", "title": "Phone Call", "instructions": "Your boiler has broken in winter. Call the landlord. Explain the problem, express urgency, and negotiate a repair time." },
+        { "id": "mod-land-task", "type": "confidence_task", "title": "Follow-Up Email", "instructions": "Write a follow-up email summarizing the phone call and confirming the repair date. Practice formal written English." },
+        { "id": "mod-land-reflect", "type": "reflection", "title": "Assertiveness Check", "instructions": "Were you firm enough? Too aggressive? Reflect on finding the balance between polite and assertive." }
+      ],
+      "conversationPrompts": [
+        "You dial your landlord's number. They answer: 'Hello?' You need to explain that the heating has stopped working.",
+        "The landlord says: 'I'll try to send someone next week.' You need the repair sooner because it's freezing."
+      ],
+      "emotionChecks": [
+        { "question": "How anxious do you feel about making complaints in English?", "type": "anxiety", "options": ["Not at all", "Slightly", "Quite anxious", "Very anxious"] },
+        { "question": "Can you be assertive without feeling rude?", "type": "confidence", "options": ["Yes", "Usually", "I struggle", "I can't"] }
+      ]
+    },
+    {
+      "id": "see-shop-return",
+      "title": "Returning an Item",
+      "mode": "role_play",
+      "environment": "shop",
+      "psyTargets": ["mild_social_anxiety", "conflict_avoidance"],
+      "learningGoals": ["Explain a problem with a purchase", "Request a refund or exchange", "Handle pushback politely"],
+      "modules": [
+        { "id": "mod-return-prep", "type": "psy_prep", "title": "Consumer Rights Confidence", "instructions": "Returning items is completely normal. You have the right to a refund if something is faulty. Key phrases: 'I'd like to return this', 'It's faulty', 'I have the receipt.'" },
+        { "id": "mod-return-dialogue", "type": "dialogue", "title": "Customer Service Desk", "instructions": "You bought a jacket online and it arrived damaged. Take it to the shop. Explain the issue and request a refund." },
+        { "id": "mod-return-task", "type": "confidence_task", "title": "Manager Escalation", "instructions": "The staff member says they can only offer store credit. Politely ask to speak to a manager for a full refund." },
+        { "id": "mod-return-reflect", "type": "reflection", "title": "Negotiation Review", "instructions": "Did you stand your ground? How did it feel navigating a minor conflict in English?" }
+      ],
+      "conversationPrompts": [
+        "You approach the returns desk with a damaged jacket: 'Hi, I'd like to return this. I bought it online and it arrived with a tear.'",
+        "The staff member says: 'I'm sorry about that. Do you have your receipt or order confirmation?'"
+      ],
+      "emotionChecks": [
+        { "question": "How comfortable are you making returns/complaints?", "type": "anxiety", "options": ["Very comfortable", "OK", "Uncomfortable", "Very uncomfortable"] },
+        { "question": "Could you escalate politely if needed?", "type": "confidence", "options": ["Definitely", "Probably", "I'd struggle", "No way"] }
+      ]
+    },
+    {
+      "id": "see-parent-evening",
+      "title": "Parent-Teacher Evening",
+      "mode": "role_play",
+      "environment": "school",
+      "psyTargets": ["high_anxiety", "impostor_syndrome"],
+      "learningGoals": ["Discuss your child's progress", "Ask about curriculum and behaviour", "Navigate educational vocabulary"],
+      "modules": [
+        { "id": "mod-parent-prep", "type": "psy_prep", "title": "Parent Confidence", "instructions": "You are your child's best advocate. Even with imperfect English, your care and attention shine through. The teacher wants to help too." },
+        { "id": "mod-parent-dialogue", "type": "dialogue", "title": "Meeting the Teacher", "instructions": "The teacher says: 'Your child is doing well overall, but I have some concerns about...' Practice asking follow-up questions and discussing support strategies." },
+        { "id": "mod-parent-reflect", "type": "reflection", "title": "Parenting in English", "instructions": "How did it feel navigating educational English? What vocabulary do you want to strengthen?" }
+      ],
+      "conversationPrompts": [
+        "You sit down with the teacher. They say: 'Thanks for coming in. Overall, your child is making good progress, especially in reading.'",
+        "The teacher mentions: 'I've noticed some difficulty with maths. Have you noticed anything at home?'"
+      ],
+      "emotionChecks": [
+        { "question": "How anxious do you feel about school meetings in English?", "type": "anxiety", "options": ["Not at all", "A little", "Quite a lot", "Extremely"] },
+        { "question": "Can you discuss your child's education confidently?", "type": "confidence", "options": ["Yes", "Mostly", "Not really", "Not at all"] }
+      ]
+    },
+    {
+      "id": "see-police-report",
+      "title": "Reporting to the Police",
+      "mode": "role_play",
+      "environment": "police_station",
+      "psyTargets": ["high_anxiety", "low_confidence"],
+      "learningGoals": ["Report an incident clearly", "Provide descriptions and details", "Understand police procedures"],
+      "modules": [
+        { "id": "mod-police-prep", "type": "psy_prep", "title": "Staying Calm Under Pressure", "instructions": "Dealing with authorities in another language is stressful. Take your time. It's OK to ask them to repeat or slow down." },
+        { "id": "mod-police-dialogue", "type": "dialogue", "title": "Filing a Report", "instructions": "Your bike was stolen. Go to the police station and report it. Describe: when it happened, where, what the bike looks like, any witnesses." },
+        { "id": "mod-police-task", "type": "confidence_task", "title": "Written Statement", "instructions": "The officer asks you to write a short statement. Practice writing a clear, factual account of what happened." },
+        { "id": "mod-police-reflect", "type": "reflection", "title": "Authority Interaction", "instructions": "How comfortable were you speaking to an authority figure in English? What would help you feel more confident?" }
+      ],
+      "conversationPrompts": [
+        "You enter the police station. The officer at the desk says: 'Good afternoon. How can I help you?'",
+        "The officer asks: 'Can you describe the item? When and where did this happen?'"
+      ],
+      "emotionChecks": [
+        { "question": "How anxious do you feel dealing with authorities in English?", "type": "anxiety", "options": ["Not at all", "Slightly", "Quite anxious", "Extremely anxious"] },
+        { "question": "Can you provide clear descriptions under pressure?", "type": "confidence", "options": ["Yes", "Usually", "I struggle", "I freeze up"] }
+      ]
+    },
+    {
+      "id": "see-networking-event",
+      "title": "Professional Networking",
+      "mode": "role_play",
+      "environment": "conference",
+      "psyTargets": ["high_anxiety", "impostor_syndrome", "perfectionism"],
+      "learningGoals": ["Introduce yourself professionally", "Make small talk at events", "Exchange contact details naturally"],
+      "modules": [
+        { "id": "mod-net-prep", "type": "psy_prep", "title": "Networking Mindset", "instructions": "Everyone at networking events feels awkward—even native speakers. The trick is to ask questions. People love talking about themselves." },
+        { "id": "mod-net-dialogue", "type": "dialogue", "title": "The Drinks Reception", "instructions": "You're at a conference drinks reception. Approach someone standing alone. Practice: openers, your elevator pitch, asking about their work, exchanging LinkedIn details." },
+        { "id": "mod-net-task", "type": "confidence_task", "title": "Group Conversation", "instructions": "Join a group of three people mid-conversation. Practice entering gracefully: 'Sorry to jump in—that sounds really interesting. What are you discussing?'" },
+        { "id": "mod-net-reflect", "type": "reflection", "title": "Social Battery", "instructions": "Networking is exhausting in any language. How did you manage? What strategies worked?" }
+      ],
+      "conversationPrompts": [
+        "You're at a tech conference. Someone near the coffee stand catches your eye: 'These events are always so packed! Have you been before?'",
+        "You strike up a conversation: 'So what brings you to the conference? Are you presenting?'"
+      ],
+      "emotionChecks": [
+        { "question": "How anxious do you feel about networking in English?", "type": "anxiety", "options": ["Not at all", "A bit", "Very anxious", "I avoid them entirely"] },
+        { "question": "Can you pitch yourself confidently in 30 seconds?", "type": "confidence", "options": ["Yes", "Sort of", "I struggle", "Not at all"] }
+      ]
+    },
+    {
+      "id": "see-emergency-call",
+      "title": "Emergency Phone Call",
+      "mode": "role_play",
+      "environment": "emergency",
+      "psyTargets": ["high_anxiety", "panic"],
+      "learningGoals": ["Communicate clearly in emergencies", "Provide location and details quickly", "Stay calm under extreme pressure"],
+      "modules": [
+        { "id": "mod-emer-prep", "type": "psy_prep", "title": "Emergency Readiness", "instructions": "In an emergency, short clear sentences save lives. Practice: 'I need an ambulance', 'The address is...', 'Someone has fallen'. You don't need perfect grammar." },
+        { "id": "mod-emer-dialogue", "type": "dialogue", "title": "The 999 Call", "instructions": "Someone has collapsed in the street. Call 999. The operator asks: 'Which service do you need?' Practice giving your location, describing the situation, and following instructions." },
+        { "id": "mod-emer-reflect", "type": "reflection", "title": "Crisis Communication", "instructions": "How did you handle the pressure? Being able to communicate in an emergency is one of the most important language skills." }
+      ],
+      "conversationPrompts": [
+        "You dial 999. The operator answers: 'Emergency. Which service do you require—fire, police, or ambulance?'",
+        "The operator says: 'An ambulance is on its way. Can you tell me exactly where you are? Is the person breathing?'"
+      ],
+      "emotionChecks": [
+        { "question": "How confident are you about calling emergency services in English?", "type": "anxiety", "options": ["Very confident", "Somewhat", "Not confident", "Terrified"] },
+        { "question": "Could you give clear directions under stress?", "type": "confidence", "options": ["Yes", "I think so", "Probably not", "Definitely not"] }
+      ]
+    },
+    {
+      "id": "see-neighbours-dispute",
+      "title": "Talking to Neighbours",
+      "mode": "role_play",
+      "environment": "home",
+      "psyTargets": ["conflict_avoidance", "mild_social_anxiety"],
+      "learningGoals": ["Address noise or boundary issues", "Be diplomatic and firm", "Build community relationships"],
+      "modules": [
+        { "id": "mod-neigh-prep", "type": "psy_prep", "title": "Diplomatic Assertiveness", "instructions": "Good fences make good neighbours—but so does honest communication. Practice: 'I hope you don't mind me mentioning...', 'I wondered if we could...'" },
+        { "id": "mod-neigh-dialogue", "type": "dialogue", "title": "The Knock on the Door", "instructions": "Your upstairs neighbour has been playing loud music late at night. Knock on their door and address it calmly." },
+        { "id": "mod-neigh-reflect", "type": "reflection", "title": "Conflict Resolution", "instructions": "Did you find the right tone? Reflect on how you balanced being polite with being heard." }
+      ],
+      "conversationPrompts": [
+        "You knock on your neighbour's door. They open it: 'Oh, hello! Everything alright?'",
+        "Your neighbour says: 'Oh, I'm so sorry! I didn't realise the music was that loud. I'll keep it down.'"
+      ],
+      "emotionChecks": [
+        { "question": "How comfortable are you raising issues with neighbours?", "type": "anxiety", "options": ["Very comfortable", "A bit awkward", "Uncomfortable", "I'd avoid it entirely"] },
+        { "question": "Can you be assertive without creating conflict?", "type": "confidence", "options": ["Yes", "Usually", "I struggle", "Not at all"] }
+      ]
+    },
+    {
       "id": "see-listening-podcast",
       "title": "Podcast Comprehension Drill",
       "mode": "audio_exercises",
@@ -383,6 +579,94 @@
         { "question": "How do you feel about hearing your own voice in English?", "type": "anxiety", "options": ["Fine with it", "A bit self-conscious", "Quite uncomfortable", "I hate it"] },
         { "question": "Do you think your pronunciation is clear enough to be understood?", "type": "confidence", "options": ["Yes, definitely", "Usually", "Sometimes", "Rarely"] }
       ]
+    },
+    {
+      "id": "see-dictation-challenge",
+      "title": "Dictation & Spelling Bee",
+      "mode": "audio_exercises",
+      "environment": "home_study",
+      "psyTargets": ["perfectionism", "low_confidence"],
+      "learningGoals": ["Transcribe spoken English accurately", "Improve spelling of common words", "Connect spoken and written forms"],
+      "modules": [
+        { "id": "mod-dict-prep", "type": "psy_prep", "title": "Spelling Anxiety", "instructions": "English spelling is notoriously difficult—even for native speakers. 'Necessary', 'accommodate', 'definitely'—everyone struggles. Be patient with yourself." },
+        { "id": "mod-dict-exercise", "type": "dialogue", "title": "Dictation Round", "instructions": "Read each sentence aloud, then write it down from memory: 'The weather forecast said it would be sunny, but I brought my umbrella just in case.' Check your spelling carefully." },
+        { "id": "mod-dict-task", "type": "confidence_task", "title": "Tricky Words", "instructions": "Spell these commonly misspelled words: 'separate', 'occurred', 'recommend', 'occasionally', 'embarrassed'. Check yourself and note patterns." },
+        { "id": "mod-dict-reflect", "type": "reflection", "title": "Spelling Patterns", "instructions": "Did you notice any patterns in the words you misspelled? Double letters? Silent letters? This awareness speeds up improvement." }
+      ],
+      "conversationPrompts": [
+        "Let's try a dictation exercise. Read this and then write it from memory: 'I've been meaning to ask you something.'",
+        "Now try a harder one: 'The restaurant we went to last Wednesday was absolutely brilliant.'"
+      ],
+      "emotionChecks": [
+        { "question": "How do you feel about your English spelling?", "type": "anxiety", "options": ["Confident", "OK", "Insecure", "Terrible"] },
+        { "question": "Do you avoid writing in English because of spelling?", "type": "confidence", "options": ["No, never", "Sometimes", "Often", "Always"] }
+      ]
+    },
+    {
+      "id": "see-rhythm-stress",
+      "title": "Rhythm & Word Stress",
+      "mode": "audio_exercises",
+      "environment": "home_study",
+      "psyTargets": ["low_confidence", "perfectionism"],
+      "learningGoals": ["Identify stressed syllables in words", "Practice English rhythm patterns", "Improve natural flow of speech"],
+      "modules": [
+        { "id": "mod-rhythm-prep", "type": "psy_prep", "title": "Rhythm Matters", "instructions": "English is a stress-timed language—some syllables are loud and long, others are quick and quiet. Getting the rhythm right often matters more than individual sounds." },
+        { "id": "mod-rhythm-exercise", "type": "dialogue", "title": "Stress Pattern Drill", "instructions": "Mark the stressed syllable: phoTOgrapher, photoGRAPHic, PHOtograph. Notice how stress shifts. Say each word aloud emphasizing the stressed syllable." },
+        { "id": "mod-rhythm-task", "type": "confidence_task", "title": "Sentence Stress", "instructions": "Say: 'I didn't say HE stole the money.' Now shift emphasis: 'I didn't say he STOLE the money.' How does meaning change? Practice with 3 more sentences." },
+        { "id": "mod-rhythm-reflect", "type": "reflection", "title": "Rhythm Awareness", "instructions": "Can you hear the 'music' of English now? Rate your awareness 1-5. This is one of the most powerful improvements you can make." }
+      ],
+      "conversationPrompts": [
+        "Let's play with word stress. Say these three: PHOtograph, phoTOgrapher, photoGRAPHic. Can you feel the stress moving?",
+        "Now try sentence stress: 'I NEVER said that' vs 'I never SAID that'. What changes?"
+      ],
+      "emotionChecks": [
+        { "question": "How aware are you of English rhythm and stress?", "type": "anxiety", "options": ["Very aware", "Somewhat", "Not very", "Not at all"] },
+        { "question": "Do you think improving rhythm will help your speaking?", "type": "confidence", "options": ["Definitely", "Probably", "Maybe", "I doubt it"] }
+      ]
+    },
+    {
+      "id": "see-connected-speech",
+      "title": "Connected Speech & Linking",
+      "mode": "audio_exercises",
+      "environment": "home_study",
+      "psyTargets": ["low_confidence", "mild_social_anxiety"],
+      "learningGoals": ["Understand how words blend together", "Practice linking sounds naturally", "Decode fast native speech"],
+      "modules": [
+        { "id": "mod-conn-prep", "type": "psy_prep", "title": "Why Can't I Understand Fast English?", "instructions": "Native speakers don't say 'What do you want to do?' — they say 'Whaddya wanna do?' This isn't lazy—it's natural connected speech. Learning to decode it is a superpower." },
+        { "id": "mod-conn-exercise", "type": "dialogue", "title": "Decoding Drill", "instructions": "Decode these connected speech examples: 'Djeet yet?' = 'Did you eat yet?', 'Wanna cuppa?' = 'Do you want a cup of tea?', 'Gonna head out' = 'Going to go outside.'" },
+        { "id": "mod-conn-task", "type": "confidence_task", "title": "Natural Speed Practice", "instructions": "Say these at natural speed, linking the words: 'turn_it_off', 'pick_it_up', 'look_at_it'. The underscore shows where words connect." },
+        { "id": "mod-conn-reflect", "type": "reflection", "title": "Comprehension Shift", "instructions": "Has understanding connected speech changed how you hear English? Rate the difference before and after this exercise." }
+      ],
+      "conversationPrompts": [
+        "Can you decode this? 'Aye dunno, whatcha reckon?' Hint: 'I don't know, what do you reckon?'",
+        "Try saying these naturally: 'Not at all' → 'Notatall'. 'Would you like a cup of tea?' → 'Wudja likeacuppatea?'"
+      ],
+      "emotionChecks": [
+        { "question": "How frustrated do you get when native speakers talk fast?", "type": "anxiety", "options": ["Not at all", "A little", "Quite frustrated", "Extremely frustrated"] },
+        { "question": "Do you feel you're improving at decoding fast speech?", "type": "confidence", "options": ["Yes!", "A bit", "Not sure", "No"] }
+      ]
+    },
+    {
+      "id": "see-song-listening",
+      "title": "Learn Through Songs",
+      "mode": "audio_exercises",
+      "environment": "home_study",
+      "psyTargets": ["low_confidence", "low_motivation"],
+      "learningGoals": ["Use music to improve vocabulary", "Practice listening for specific words", "Connect emotional memory with language"],
+      "modules": [
+        { "id": "mod-song-prep", "type": "psy_prep", "title": "Music & Memory", "instructions": "Songs activate emotional memory—one of the most powerful ways to remember vocabulary. When you sing along, you're training pronunciation, rhythm, and vocabulary simultaneously." },
+        { "id": "mod-song-exercise", "type": "dialogue", "title": "Gap-Fill Challenge", "instructions": "Read this lyric excerpt with blanks: 'Is this the real life? Is this just ___? Caught in a ___, no escape from ___.' Fill in the missing words. (Queen - Bohemian Rhapsody)" },
+        { "id": "mod-song-task", "type": "confidence_task", "title": "Sing & Learn", "instructions": "Pick a song you love. Find the lyrics online. Read them first, then try to sing along. Note 3 new words or phrases you discovered." },
+        { "id": "mod-song-reflect", "type": "reflection", "title": "Emotional Connection", "instructions": "How does learning through music feel compared to textbook exercises? Does it make vocabulary more memorable?" }
+      ],
+      "conversationPrompts": [
+        "Let's use music! Can you complete this lyric: 'Yesterday, all my ___ seemed so far away...' (The Beatles)",
+        "What's your favourite English song? Can you share a lyric and explain what it means to you?"
+      ],
+      "emotionChecks": [
+        { "question": "Do you enjoy learning English through music?", "type": "anxiety", "options": ["Love it!", "It's good", "It's OK", "I prefer other methods"] },
+        { "question": "Has a song ever helped you remember a word or phrase?", "type": "confidence", "options": ["Yes, many times", "A few times", "Maybe once", "Never"] }
+      ]
     }
   ],
   "exercises": [
@@ -398,10 +682,29 @@
     { "id": "ex-job-weakness", "lessonId": "see-job-interview", "skill": "speaking", "knowledgeComponent": "interview_strategies", "prompt": "'What's your biggest weakness?' Answer using the growth framing technique.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 35 },
     { "id": "ex-flat-intro", "lessonId": "see-flatshare-roleplay", "skill": "speaking", "knowledgeComponent": "informal_introductions", "prompt": "Introduce yourself to your potential new flatmate. Mention your job, hobbies, and daily routine.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 25 },
     { "id": "ex-flat-rules", "lessonId": "see-flatshare-roleplay", "skill": "speaking", "knowledgeComponent": "negotiation_basics", "prompt": "Your flatmate suggests a 'no guests after 10pm' rule. Negotiate politely.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 25 },
+    { "id": "ex-doc-symptoms", "lessonId": "see-doctor-visit", "skill": "speaking", "knowledgeComponent": "medical_vocabulary", "prompt": "Describe these symptoms to a doctor: headache for 3 days, feeling dizzy, no appetite.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 30 },
+    { "id": "ex-doc-pharmacy", "lessonId": "see-doctor-visit", "skill": "speaking", "knowledgeComponent": "pharmacy_interaction", "prompt": "Ask the pharmacist about side effects and how often to take the medication.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 25 },
+    { "id": "ex-bank-open", "lessonId": "see-bank-account", "skill": "speaking", "knowledgeComponent": "banking_terminology", "prompt": "Ask the bank advisor about the difference between a current account and a savings account.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 25 },
+    { "id": "ex-bank-charge", "lessonId": "see-bank-account", "skill": "speaking", "knowledgeComponent": "financial_complaints", "prompt": "You notice a £25 charge you don't recognise. Call and query it politely.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 30 },
+    { "id": "ex-landlord-repair", "lessonId": "see-landlord-call", "skill": "speaking", "knowledgeComponent": "assertive_requests", "prompt": "Your boiler is broken. Call the landlord and explain you need it fixed urgently.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 30 },
+    { "id": "ex-return-refund", "lessonId": "see-shop-return", "skill": "speaking", "knowledgeComponent": "consumer_rights", "prompt": "Return a faulty item and request a full refund. The staff offers store credit instead.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 25 },
+    { "id": "ex-parent-teacher", "lessonId": "see-parent-evening", "skill": "speaking", "knowledgeComponent": "educational_vocabulary", "prompt": "Ask the teacher how your child is doing in reading and what you can do to help at home.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 25 },
+    { "id": "ex-police-report", "lessonId": "see-police-report", "skill": "speaking", "knowledgeComponent": "incident_reporting", "prompt": "Report a stolen bicycle. Describe: colour, make, where and when it was taken.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 30 },
+    { "id": "ex-networking-pitch", "lessonId": "see-networking-event", "skill": "speaking", "knowledgeComponent": "elevator_pitch", "prompt": "Introduce yourself and your work in 30 seconds at a professional networking event.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 30 },
+    { "id": "ex-emergency-call", "lessonId": "see-emergency-call", "skill": "speaking", "knowledgeComponent": "emergency_communication", "prompt": "Call 999 and report that someone has collapsed in the street. Give your location clearly.", "expectedResponseType": "text", "maxAttempts": 2, "xpReward": 35 },
+    { "id": "ex-neighbour-noise", "lessonId": "see-neighbours-dispute", "skill": "speaking", "knowledgeComponent": "diplomatic_complaints", "prompt": "Tell your neighbour about the noise problem without creating conflict.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 25 },
     { "id": "ex-podcast-main", "lessonId": "see-listening-podcast", "skill": "listening", "knowledgeComponent": "gist_comprehension", "prompt": "After reading the transcript, summarize the main topic in one sentence.", "expectedResponseType": "text", "maxAttempts": 2, "xpReward": 20 },
     { "id": "ex-podcast-vocab", "lessonId": "see-listening-podcast", "skill": "collocation", "knowledgeComponent": "spoken_collocations", "prompt": "Use 'catch a train' and 'grab a bite' in your own sentences about weekend plans.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 20 },
     { "id": "ex-pron-minimal", "lessonId": "see-pronunciation-drills", "skill": "speaking", "knowledgeComponent": "minimal_pairs", "prompt": "Say aloud and distinguish: 'ship' vs 'sheep', 'bat' vs 'bet'. Type which pair you find hardest.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 15 },
-    { "id": "ex-pron-sentence", "lessonId": "see-pronunciation-drills", "skill": "speaking", "knowledgeComponent": "sentence_intonation", "prompt": "Read aloud: 'I'd like to book a table for two, please.' Focus on rising intonation for politeness.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 20 }
+    { "id": "ex-pron-sentence", "lessonId": "see-pronunciation-drills", "skill": "speaking", "knowledgeComponent": "sentence_intonation", "prompt": "Read aloud: 'I'd like to book a table for two, please.' Focus on rising intonation for politeness.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 20 },
+    { "id": "ex-dictation-write", "lessonId": "see-dictation-challenge", "skill": "writing", "knowledgeComponent": "transcription_accuracy", "prompt": "Write this from memory: 'The weather forecast said it would be sunny, but I brought my umbrella just in case.'", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 20 },
+    { "id": "ex-dictation-spell", "lessonId": "see-dictation-challenge", "skill": "writing", "knowledgeComponent": "tricky_spelling", "prompt": "Spell correctly: separate, occurred, recommend, occasionally, embarrassed.", "expectedResponseType": "text", "maxAttempts": 2, "xpReward": 25 },
+    { "id": "ex-rhythm-word", "lessonId": "see-rhythm-stress", "skill": "speaking", "knowledgeComponent": "word_stress", "prompt": "Mark the stressed syllable: photograph, photographer, photographic. Say each aloud.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 20 },
+    { "id": "ex-rhythm-sentence", "lessonId": "see-rhythm-stress", "skill": "speaking", "knowledgeComponent": "sentence_stress", "prompt": "Say 'I didn't say HE stole the money' with different stress. How does meaning change?", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 20 },
+    { "id": "ex-connected-decode", "lessonId": "see-connected-speech", "skill": "listening", "knowledgeComponent": "connected_speech_decoding", "prompt": "Decode: 'Djeet yet?' What does this mean in full English?", "expectedResponseType": "text", "maxAttempts": 2, "xpReward": 20 },
+    { "id": "ex-connected-produce", "lessonId": "see-connected-speech", "skill": "speaking", "knowledgeComponent": "natural_linking", "prompt": "Say these naturally at speed: 'turn it off', 'pick it up', 'look at it'. Link the words together.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 20 },
+    { "id": "ex-song-gap", "lessonId": "see-song-listening", "skill": "listening", "knowledgeComponent": "lyric_comprehension", "prompt": "Fill the gaps: 'Is this the real life? Is this just ___? Caught in a ___, no escape from ___.'", "expectedResponseType": "text", "maxAttempts": 2, "xpReward": 15 },
+    { "id": "ex-song-vocab", "lessonId": "see-song-listening", "skill": "vocabulary", "knowledgeComponent": "song_vocabulary", "prompt": "Pick your favourite English song. List 3 new words or phrases you learned from the lyrics.", "expectedResponseType": "text", "maxAttempts": 3, "xpReward": 20 }
   ],
   "paths": [
     {
