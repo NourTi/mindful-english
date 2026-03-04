@@ -36,6 +36,7 @@ const ImmergoChat = () => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [isMissionStarted, setIsMissionStarted] = useState(false);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
+  const [textInput, setTextInput] = useState('');
   const [result, setResult] = useState<SessionResult | null>(null);
   const [audioStream, setAudioStream] = useState<MediaStream | undefined>();
   
