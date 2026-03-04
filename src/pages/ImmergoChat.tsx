@@ -6,6 +6,9 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { AudioVisualizer } from '@/components/immergo/AudioVisualizer';
 import { LiveTranscript, type TranscriptEntry } from '@/components/immergo/LiveTranscript';
+import { TTSLoadingIndicator } from '@/components/immergo/TTSLoadingIndicator';
+import { VoicePicker } from '@/components/immergo/VoicePicker';
+import { StarterPrompts } from '@/components/immergo/StarterPrompts';
 import { 
   type ImmergoMission, 
   type LearningMode,
@@ -14,6 +17,7 @@ import {
 } from '@/data/immergoMissions';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { suggestVoiceForMission, preloadModel } from '@/lib/tts';
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/immergo-chat`;
 
@@ -39,6 +43,7 @@ const ImmergoChat = () => {
   const [textInput, setTextInput] = useState('');
   const [result, setResult] = useState<SessionResult | null>(null);
   const [audioStream, setAudioStream] = useState<MediaStream | undefined>();
+  const [selectedVoice, setSelectedVoice] = useState('af_bella');
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -54,6 +59,11 @@ const ImmergoChat = () => {
     try {
       const parsed = JSON.parse(sessionData);
       setSession(parsed);
+      // Set default voice based on mission context
+      const suggested = suggestVoiceForMission(parsed.mission.target_role);
+      setSelectedVoice(suggested);
+      // Preload TTS model early
+      preloadModel();
     } catch {
       navigate('/immergo');
     }
@@ -80,11 +90,11 @@ const ImmergoChat = () => {
     if (!cleanText) return;
     setIsAISpeaking(true);
 
-    // Try kokoro-js
+    // Try kokoro-js with selected voice
     try {
       const { getActiveTTSProvider, playAudioBuffer } = await import('@/lib/tts');
       const provider = getActiveTTSProvider();
-      const buffer = await provider.synthesize(cleanText);
+      const buffer = await provider.synthesize(cleanText, selectedVoice);
       if (buffer) {
         await playAudioBuffer(buffer);
         setIsAISpeaking(false);
@@ -109,7 +119,7 @@ const ImmergoChat = () => {
     } else {
       setIsAISpeaking(false);
     }
-  }, [voiceEnabled]);
+  }, [voiceEnabled, selectedVoice]);
 
   // Stop speaking
   const stopSpeaking = useCallback(() => {
@@ -121,7 +131,6 @@ const ImmergoChat = () => {
   const streamChat = useCallback(async (userMessage: string) => {
     if (!session) return;
 
-    // Add user message to transcript
     const userEntry: TranscriptEntry = {
       id: crypto.randomUUID(),
       role: 'user',
@@ -167,7 +176,6 @@ const ImmergoChat = () => {
       let textBuffer = '';
       let assistantEntryId = crypto.randomUUID();
 
-      // Add initial assistant entry
       setTranscript(prev => [...prev, {
         id: assistantEntryId,
         role: 'assistant',
@@ -207,7 +215,6 @@ const ImmergoChat = () => {
               ));
             }
 
-            // Check for tool call (mission complete)
             if (toolCalls) {
               for (const call of toolCalls) {
                 if (call.function?.name === 'complete_mission') {
@@ -232,10 +239,8 @@ const ImmergoChat = () => {
         }
       }
 
-      // Update messages state
       setMessages(prev => [...prev, { role: 'assistant', content: assistantContent }]);
 
-      // Speak the response
       if (assistantContent) {
         speakText(assistantContent);
       }
@@ -290,7 +295,6 @@ const ImmergoChat = () => {
       const mediaRecorder = mediaRecorderRef.current!;
       
       mediaRecorder.onstop = async () => {
-        // Stop audio stream
         mediaRecorder.stream.getTracks().forEach(track => track.stop());
         setAudioStream(undefined);
         
@@ -303,7 +307,6 @@ const ImmergoChat = () => {
         }
 
         try {
-          // Send audio to STT endpoint for transcription
           const formData = new FormData();
           formData.append('audio', audioBlob, 'recording.webm');
 
@@ -324,7 +327,6 @@ const ImmergoChat = () => {
               toast.info('No speech detected. Try speaking louder.');
             }
           } else {
-            // Fallback: use Web Speech API for recognition
             toast.error('Transcription service unavailable. Try typing instead.');
           }
         } catch (error) {
@@ -340,10 +342,9 @@ const ImmergoChat = () => {
     });
   }, [streamChat]);
 
-  // Start mission - send initial greeting
+  // Start mission
   const handleStartMission = useCallback(async () => {
     setIsMissionStarted(true);
-    // In immersive mode, AI starts. In teacher mode, user starts.
     if (session?.mode === 'immersive') {
       await streamChat("Hello, I'm here to " + session.mission.desc.toLowerCase());
     }
@@ -469,7 +470,7 @@ const ImmergoChat = () => {
             Exit
           </Button>
           
-          <div className="text-center">
+          <div className="text-center flex-1">
             <div className="font-semibold text-sm">{session.mission.target_role}</div>
             <div className="text-xs text-muted-foreground flex items-center gap-2 justify-center">
               <span>{supportedLanguages.find(l => l.code === session.nativeLang)?.flag}</span>
@@ -480,14 +481,24 @@ const ImmergoChat = () => {
             </div>
           </div>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setVoiceEnabled(!voiceEnabled)}
-          >
-            {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-          </Button>
+          <div className="flex items-center gap-1">
+            <TTSLoadingIndicator />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setVoiceEnabled(!voiceEnabled)}
+            >
+              {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+            </Button>
+          </div>
         </div>
+
+        {/* Voice picker row */}
+        {voiceEnabled && (
+          <div className="max-w-2xl mx-auto px-4 pb-2 flex justify-end">
+            <VoicePicker selectedVoiceId={selectedVoice} onSelect={setSelectedVoice} />
+          </div>
+        )}
       </header>
 
       {/* Mission Info */}
@@ -525,6 +536,19 @@ const ImmergoChat = () => {
       {/* CTA Button */}
       <div className="pb-8 px-4">
         <div className="max-w-2xl mx-auto text-center">
+          {/* Arabic starter prompts for novice users - show before mission starts or when no messages sent */}
+          {isMissionStarted && messages.length === 0 && (
+            <div className="mb-4">
+              <StarterPrompts
+                missionTitle={session.mission.title}
+                missionDesc={session.mission.desc}
+                targetRole={session.mission.target_role}
+                onSelect={(text) => streamChat(text)}
+                disabled={isStreaming}
+              />
+            </div>
+          )}
+
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -560,7 +584,6 @@ const ImmergoChat = () => {
 
           {isMissionStarted && (
             <>
-              {/* Text input fallback */}
               <div className="flex gap-2 mt-4 max-w-xs mx-auto">
                 <Input
                   value={textInput}
