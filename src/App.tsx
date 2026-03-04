@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import GDPRBanner from "@/components/GDPRBanner";
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
-import { hasLearnerProfile } from "@/lib/onboardingEngine";
+
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Assessment from "./pages/Assessment";
@@ -41,11 +41,8 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Root redirect component
+// Always show landing page first — user navigates from there
 function RootRedirect() {
-  if (hasLearnerProfile()) {
-    return <Navigate to="/dashboard" replace />;
-  }
   return <Landing />;
 }
 

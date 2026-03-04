@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Mic, Square, Volume2, VolumeX } from 'lucide-react';
+import { ArrowLeft, Mic, Square, Volume2, VolumeX, Send } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { AudioVisualizer } from '@/components/immergo/AudioVisualizer';
 import { LiveTranscript, type TranscriptEntry } from '@/components/immergo/LiveTranscript';
@@ -35,6 +36,7 @@ const ImmergoChat = () => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [isMissionStarted, setIsMissionStarted] = useState(false);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
+  const [textInput, setTextInput] = useState('');
   const [result, setResult] = useState<SessionResult | null>(null);
   const [audioStream, setAudioStream] = useState<MediaStream | undefined>();
   
@@ -371,27 +373,29 @@ const ImmergoChat = () => {
         }
 
         try {
-          // Use browser speech recognition if available, else skip transcription
-          if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            // For now, use a simple approach - just send audio to STT endpoint
-            const formData = new FormData();
-            formData.append('audio', audioBlob, 'recording.webm');
+          // Send audio to STT endpoint for transcription
+          const formData = new FormData();
+          formData.append('audio', audioBlob, 'recording.webm');
 
-            const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-stt`, {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-              },
-              body: formData,
-            });
+          const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-stt`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            },
+            body: formData,
+          });
 
-            if (response.ok) {
-              const result = await response.json();
-              const transcription = result.text || '';
-              if (transcription.trim()) {
-                streamChat(transcription);
-              }
+          if (response.ok) {
+            const result = await response.json();
+            const transcription = result.text || '';
+            if (transcription.trim()) {
+              streamChat(transcription);
+            } else {
+              toast.info('No speech detected. Try speaking louder.');
             }
+          } else {
+            // Fallback: use Web Speech API for recognition
+            toast.error('Transcription service unavailable. Try typing instead.');
           }
         } catch (error) {
           console.error('STT error:', error);
@@ -625,9 +629,39 @@ const ImmergoChat = () => {
           </motion.button>
 
           {isMissionStarted && (
-            <p className="mt-3 text-xs text-muted-foreground">
-              {isStreaming ? 'AI is responding...' : 'Tap to speak'}
-            </p>
+            <>
+              {/* Text input fallback */}
+              <div className="flex gap-2 mt-4 max-w-xs mx-auto">
+                <Input
+                  value={textInput}
+                  onChange={(e) => setTextInput(e.target.value)}
+                  placeholder={isStreaming ? 'AI is responding…' : 'Or type here…'}
+                  disabled={isStreaming || isRecording}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && textInput.trim() && !isStreaming) {
+                      streamChat(textInput.trim());
+                      setTextInput('');
+                    }
+                  }}
+                  className="flex-1"
+                />
+                <Button
+                  size="icon"
+                  disabled={!textInput.trim() || isStreaming}
+                  onClick={() => {
+                    if (textInput.trim()) {
+                      streamChat(textInput.trim());
+                      setTextInput('');
+                    }
+                  }}
+                >
+                  <Send className="w-4 h-4" />
+                </Button>
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {isStreaming ? 'AI is responding...' : 'Tap mic to speak or type below'}
+              </p>
+            </>
           )}
         </div>
       </div>

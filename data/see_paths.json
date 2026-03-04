@@ -1,9 +1,44 @@
-
 [
   {
     "id": "path-social-confidence",
     "label": "Social Confidence Path",
     "psyProfile": ["mild_anxiety"],
-    "sequence": ["see-airport-1", "see-cafe-1", "see-meetup-1"]
+    "sequence": ["see-cafe-1", "see-cafe-2", "see-meetup-1", "see-meetup-2"]
+  },
+  {
+    "id": "path-travel-english",
+    "label": "Travel & Navigation Path",
+    "psyProfile": ["introvert"],
+    "sequence": ["see-airport-1", "see-airport-2", "see-airport-3", "see-airport-4", "see-hotel-1", "see-hotel-2", "see-transport-1"]
+  },
+  {
+    "id": "path-everyday-errands",
+    "label": "Everyday Errands Path",
+    "psyProfile": ["mild_anxiety"],
+    "sequence": ["see-shopping-1", "see-shopping-2", "see-supermarket-1", "see-restaurant-1", "see-restaurant-2"]
+  },
+  {
+    "id": "path-professional-english",
+    "label": "Professional English Path",
+    "psyProfile": ["introvert", "mild_anxiety"],
+    "sequence": ["see-interview-1", "see-interview-2", "see-bank-1", "see-phone-1"]
+  },
+  {
+    "id": "path-health-safety",
+    "label": "Health & Safety Path",
+    "psyProfile": ["mild_anxiety"],
+    "sequence": ["see-doctor-1", "see-doctor-2", "see-emergency-1"]
+  },
+  {
+    "id": "path-assertiveness",
+    "label": "Assertiveness Path",
+    "psyProfile": ["introvert"],
+    "sequence": ["see-restaurant-3", "see-shopping-2", "see-hotel-2", "see-phone-1"]
+  },
+  {
+    "id": "path-academic",
+    "label": "Academic English Path",
+    "psyProfile": ["introvert"],
+    "sequence": ["see-classroom-1", "see-flatshare-1", "see-meetup-2"]
   }
 ]

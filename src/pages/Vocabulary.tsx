@@ -1,10 +1,11 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, Search, ArrowLeft, Brain, Clock, 
   Sparkles, Filter, ChevronDown, RotateCcw, 
-  CheckCircle, AlertCircle, Star, Calendar
+  CheckCircle, AlertCircle, Star, Calendar,
+  Mic, MicOff, Volume2, Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -22,6 +23,7 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
+import VoiceAssessment from '@/components/VoiceAssessment';
 import { formatDistanceToNow, differenceInHours, addHours } from 'date-fns';
 
 interface VocabularyWord {
@@ -311,10 +313,13 @@ const Vocabulary = () => {
                     <h2 className="text-3xl font-bold mb-4">{reviewingWord.word}</h2>
                     
                     {reviewingWord.context && (
-                      <p className="text-muted-foreground mb-6 italic">
+                      <p className="text-muted-foreground mb-4 italic">
                         "{reviewingWord.context}"
                       </p>
                     )}
+
+                    {/* Voice Assessment Section */}
+                    <VoiceAssessment word={reviewingWord.word} />
                     
                     <p className="text-sm text-muted-foreground mb-6">
                       Do you remember this word?
