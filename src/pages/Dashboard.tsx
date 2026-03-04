@@ -263,10 +263,16 @@ const Dashboard = () => {
             {getModes().map((mode, i) => {
               const lessonCount = getLessonsByMode(mode.id).length;
               const iconMap: Record<string, React.ReactNode> = {
-                'message-circle': <MessageCircle className="w-6 h-6" />,
-                'glasses': <Glasses className="w-6 h-6" />,
-                'theater': <Theater className="w-6 h-6" />,
-                'headphones': <Headphones className="w-6 h-6" />,
+                'message-circle': <MessageCircle className="w-7 h-7" />,
+                'glasses': <Glasses className="w-7 h-7" />,
+                'theater': <Theater className="w-7 h-7" />,
+                'headphones': <Headphones className="w-7 h-7" />,
+              };
+              const colorMap: Record<string, string> = {
+                'chat_ai': 'from-primary to-primary-glow',
+                'vr_immersive': 'from-accent to-accent/60',
+                'role_play': 'from-warning to-warning/60',
+                'audio_exercises': 'from-success to-success/60',
               };
               return (
                 <motion.div
@@ -278,16 +284,21 @@ const Dashboard = () => {
                   whileTap={{ scale: 0.97 }}
                 >
                   <Card
-                    variant="cognitive"
-                    className="group cursor-pointer h-full border-border hover:border-primary hover:shadow-lg hover:shadow-primary/20 transition-all duration-200"
+                    className="group cursor-pointer h-full border-2 border-border hover:border-primary bg-card hover:bg-primary/5 shadow-sm hover:shadow-lg hover:shadow-primary/20 transition-all duration-200 overflow-hidden relative"
                     onClick={() => navigate(`/mode/${mode.id}`)}
                   >
+                    {/* Active gradient bar at top */}
+                    <div className={`h-1.5 w-full bg-gradient-to-r ${colorMap[mode.id] || 'from-primary to-primary-glow'}`} />
                     <CardContent className="p-5 text-center">
-                      <div className="mx-auto mb-3 p-3 rounded-xl bg-primary/10 text-primary w-fit group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-200">
-                        {iconMap[mode.icon] || <BookOpen className="w-6 h-6" />}
+                      <div className={`mx-auto mb-3 p-3.5 rounded-xl bg-gradient-to-br ${colorMap[mode.id] || 'from-primary to-primary-glow'} text-white w-fit shadow-md`}>
+                        {iconMap[mode.icon] || <BookOpen className="w-7 h-7" />}
                       </div>
-                      <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{mode.label}</h3>
-                      <p className="text-xs text-muted-foreground">{lessonCount} lesson{lessonCount !== 1 ? 's' : ''}</p>
+                      <h3 className="font-bold text-sm mb-1 group-hover:text-primary transition-colors">{mode.label}</h3>
+                      <p className="text-xs text-muted-foreground mb-3">{lessonCount} lesson{lessonCount !== 1 ? 's' : ''}</p>
+                      <div className="flex items-center justify-center gap-1 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Play className="w-3.5 h-3.5" />
+                        Start Now
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
