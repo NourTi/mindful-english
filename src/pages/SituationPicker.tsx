@@ -130,22 +130,22 @@ export default function SituationPicker() {
                     <CardContent>
                       {/* Modules preview */}
                       <div className="space-y-2 mb-4">
-                        {lesson.modules.slice(0, 2).map(mod => (
+                        {(lesson.modules || []).slice(0, 2).map(mod => (
                           <div key={mod.id} className="text-sm text-muted-foreground">
                             <span className="font-medium text-foreground">{mod.title}:</span>{" "}
-                            {mod.content.slice(0, 60)}...
+                            {(mod.content || mod.instructions || '').slice(0, 60)}...
                           </div>
                         ))}
                       </div>
 
                       {/* Tags */}
                       <div className="flex flex-wrap gap-1.5">
-                        {lesson.tags.map(tag => (
+                        {(lesson.tags || []).map(tag => (
                           <Badge key={tag} variant="secondary" className="text-xs">
                             {tag}
                           </Badge>
                         ))}
-                        {lesson.psyProfileTarget.map(psy => (
+                        {(lesson.psyProfileTarget || lesson.psyTargets || []).map(psy => (
                           <Badge key={psy} variant="outline" className="text-xs bg-accent/30">
                             {psy}
                           </Badge>
