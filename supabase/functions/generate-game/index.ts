@@ -69,8 +69,10 @@ Pick the most appropriate game type for the topic and make it engaging!`;
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${OPENROUTER_API_KEY}`,
+        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
+        "HTTP-Referer": "https://psycholingo-path.lovable.app",
+        "X-Title": "SEE Language Learning",
       },
       body: JSON.stringify({
         model: "qwen/qwen3-coder",
