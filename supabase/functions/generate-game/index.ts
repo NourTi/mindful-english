@@ -17,7 +17,7 @@ serve(async (req) => {
       throw new Error("OPENROUTER_API_KEY is not configured");
     }
     
-    
+    console.log("Key check:", OPENROUTER_API_KEY.length, OPENROUTER_API_KEY.substring(0, 10));
 
     const { lessonTitle, lessonTopic, difficulty, existingCode, userRequest } = await req.json();
 
