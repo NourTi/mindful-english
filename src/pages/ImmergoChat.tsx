@@ -256,19 +256,96 @@ const ImmergoChat = () => {
     }
   }, [session, messages, getLangName, speakText]);
 
-  // Start recording
+  // ── Transcribe audio blob via ElevenLabs, returns text or null ──
+  const transcribeWithElevenLabs = useCallback(async (audioBlob: Blob): Promise<string | null> => {
+    try {
+      const formData = new FormData();
+      formData.append('audio', audioBlob, 'recording.webm');
+
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-stt`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        console.warn('[STT] ElevenLabs returned', response.status);
+        return null;
+      }
+
+      const data = await response.json();
+      return data.text?.trim() || null;
+    } catch (err) {
+      console.warn('[STT] ElevenLabs call failed:', err);
+      return null;
+    }
+  }, []);
+
+  // ── Browser-native SpeechRecognition as a reliable fallback ──
+  const speechRecRef = useRef<any>(null);
+
+  const startBrowserSTT = useCallback((): Promise<string | null> => {
+    return new Promise((resolve) => {
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        resolve(null);
+        return;
+      }
+
+      const recognition = new SpeechRecognition();
+      speechRecRef.current = recognition;
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      recognition.continuous = false;
+
+      let resolved = false;
+      const finish = (text: string | null) => {
+        if (!resolved) { resolved = true; resolve(text); }
+      };
+
+      recognition.onresult = (event: any) => {
+        const transcript = event.results?.[0]?.[0]?.transcript || '';
+        finish(transcript.trim() || null);
+      };
+      recognition.onerror = (event: any) => {
+        console.warn('[STT] Browser SpeechRecognition error:', event.error);
+        finish(null);
+      };
+      recognition.onend = () => finish(null);
+
+      recognition.start();
+    });
+  }, []);
+
+  const stopBrowserSTT = useCallback(() => {
+    if (speechRecRef.current) {
+      try { speechRecRef.current.stop(); } catch { /* already stopped */ }
+      speechRecRef.current = null;
+    }
+  }, []);
+
+  // ── Dual-track recording: MediaRecorder + Browser STT in parallel ──
+  const browserSttPromiseRef = useRef<Promise<string | null> | null>(null);
+
   const startRecording = useCallback(async () => {
     try {
+      // CRITICAL: getUserMedia called directly in click handler
       const stream = await navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation: true, noiseSuppression: true }
+        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
       });
-      
+
       setAudioStream(stream);
-      
-      const mediaRecorder = new MediaRecorder(stream, {
-        mimeType: MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4'
-      });
-      
+
+      const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+        ? 'audio/webm;codecs=opus'
+        : MediaRecorder.isTypeSupported('audio/webm')
+          ? 'audio/webm'
+          : 'audio/mp4';
+
+      const mediaRecorder = new MediaRecorder(stream, { mimeType });
       mediaRecorderRef.current = mediaRecorder;
       audioChunksRef.current = [];
 
@@ -276,71 +353,76 @@ const ImmergoChat = () => {
         if (e.data.size > 0) audioChunksRef.current.push(e.data);
       };
 
-      mediaRecorder.start(100);
+      mediaRecorder.start(250);
       setIsRecording(true);
-    } catch (error) {
-      console.error('Microphone error:', error);
-      toast.error('Microphone access denied');
-    }
-  }, []);
 
-  // Stop recording and transcribe
+      // Start browser STT in parallel as a backup
+      browserSttPromiseRef.current = startBrowserSTT();
+
+      console.log('[Recording] Started with mimeType:', mimeType);
+    } catch (error) {
+      console.error('[Recording] Microphone error:', error);
+      if (error instanceof Error && error.name === 'NotAllowedError') {
+        toast.error('Microphone access denied. Please allow mic access in your browser settings.');
+      } else {
+        toast.error('Failed to start recording. Please try again.');
+      }
+    }
+  }, [startBrowserSTT]);
+
+  // Stop recording and transcribe (ElevenLabs first, browser STT fallback)
   const stopRecording = useCallback(async () => {
     if (!mediaRecorderRef.current || mediaRecorderRef.current.state === 'inactive') {
       setIsRecording(false);
+      stopBrowserSTT();
       return;
     }
 
     return new Promise<void>((resolve) => {
       const mediaRecorder = mediaRecorderRef.current!;
-      
+
       mediaRecorder.onstop = async () => {
         mediaRecorder.stream.getTracks().forEach(track => track.stop());
         setAudioStream(undefined);
-        
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
-        
-        if (audioBlob.size < 1000) {
+
+        const audioBlob = new Blob(audioChunksRef.current, { type: mediaRecorder.mimeType });
+        console.log('[Recording] Stopped, blob size:', audioBlob.size);
+
+        if (audioBlob.size < 500) {
+          toast.info('Recording too short. Hold the mic button longer.');
           setIsRecording(false);
           resolve();
           return;
         }
 
-        try {
-          const formData = new FormData();
-          formData.append('audio', audioBlob, 'recording.webm');
+        // Strategy: try ElevenLabs first, fall back to browser STT result
+        let transcription: string | null = null;
 
-          const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-stt`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-            },
-            body: formData,
-          });
+        // 1. Try ElevenLabs cloud STT
+        transcription = await transcribeWithElevenLabs(audioBlob);
 
-          if (response.ok) {
-            const result = await response.json();
-            const transcription = result.text || '';
-            if (transcription.trim()) {
-              streamChat(transcription);
-            } else {
-              toast.info('No speech detected. Try speaking louder.');
-            }
-          } else {
-            toast.error('Transcription service unavailable. Try typing instead.');
-          }
-        } catch (error) {
-          console.error('STT error:', error);
-          toast.error('Voice transcription failed');
+        // 2. If that failed, use browser STT result (was running in parallel)
+        if (!transcription && browserSttPromiseRef.current) {
+          console.log('[STT] ElevenLabs unavailable, using browser fallback');
+          transcription = await browserSttPromiseRef.current;
         }
-        
+        browserSttPromiseRef.current = null;
+
+        if (transcription) {
+          console.log('[STT] Transcribed:', transcription.substring(0, 60));
+          streamChat(transcription);
+        } else {
+          toast.info('No speech detected. Try speaking louder or use the text input.');
+        }
+
         setIsRecording(false);
         resolve();
       };
 
+      stopBrowserSTT();
       mediaRecorder.stop();
     });
-  }, [streamChat]);
+  }, [streamChat, transcribeWithElevenLabs, stopBrowserSTT]);
 
   // Start mission
   const handleStartMission = useCallback(async () => {
