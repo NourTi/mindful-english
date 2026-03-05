@@ -17,6 +17,7 @@ import ReadingContent from './ReadingContent';
 import KinestheticContent from './KinestheticContent';
 import BreathingExercise from './BreathingExercise';
 import QuizQuestion from './QuizQuestion';
+import GameActivity from './GameActivity';
 
 const LessonPlayer = () => {
   const navigate = useNavigate();
@@ -109,6 +110,20 @@ const LessonPlayer = () => {
             </span>
           </div>
         </motion.div>
+      );
+    }
+
+    if (currentChunk.type === 'game') {
+      // Derive a topic string from the lesson
+      const topic = currentLesson.semanticAnchors
+        .map(a => a.newWord)
+        .join(', ') || currentLesson.title;
+      return (
+        <GameActivity
+          lessonTitle={currentLesson.title}
+          lessonTopic={topic}
+          difficulty={currentLesson.difficulty}
+        />
       );
     }
 

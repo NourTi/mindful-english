@@ -13,7 +13,7 @@ import {
 export interface LessonChunk {
   id: string;
   content: string;
-  type: 'introduction' | 'content' | 'practice' | 'review';
+  type: 'introduction' | 'content' | 'practice' | 'game' | 'review';
   estimatedSeconds: number;
   completed: boolean;
 }
@@ -130,6 +130,15 @@ const generateChunks = (lesson: LessonContent, profile: CognitiveProfile): Lesso
     content: 'practice',
     type: 'practice',
     estimatedSeconds: chunkDuration,
+    completed: false,
+  });
+  
+  // Game chunk - add for all lessons
+  chunks.push({
+    id: `${lesson.id}-game`,
+    content: 'game',
+    type: 'game',
+    estimatedSeconds: chunkDuration * 2,
     completed: false,
   });
   
