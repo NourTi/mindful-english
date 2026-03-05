@@ -17,6 +17,7 @@ import ReadingContent from './ReadingContent';
 import KinestheticContent from './KinestheticContent';
 import BreathingExercise from './BreathingExercise';
 import QuizQuestion from './QuizQuestion';
+import GameActivity from './GameActivity';
 
 const LessonPlayer = () => {
   const navigate = useNavigate();
