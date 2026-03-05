@@ -113,6 +113,20 @@ const LessonPlayer = () => {
       );
     }
 
+    if (currentChunk.type === 'game') {
+      // Derive a topic string from the lesson
+      const topic = currentLesson.semanticAnchors
+        .map(a => a.newWord)
+        .join(', ') || currentLesson.title;
+      return (
+        <GameActivity
+          lessonTitle={currentLesson.title}
+          lessonTopic={topic}
+          difficulty={currentLesson.difficulty}
+        />
+      );
+    }
+
     if (currentChunk.type === 'review') {
       return (
         <motion.div

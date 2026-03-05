@@ -133,6 +133,15 @@ const generateChunks = (lesson: LessonContent, profile: CognitiveProfile): Lesso
     completed: false,
   });
   
+  // Game chunk - add for all lessons
+  chunks.push({
+    id: `${lesson.id}-game`,
+    content: 'game',
+    type: 'game',
+    estimatedSeconds: chunkDuration * 2,
+    completed: false,
+  });
+  
   // Review chunk
   chunks.push({
     id: `${lesson.id}-review`,
