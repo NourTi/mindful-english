@@ -13,7 +13,7 @@ import {
 export interface LessonChunk {
   id: string;
   content: string;
-  type: 'introduction' | 'content' | 'practice' | 'review';
+  type: 'introduction' | 'content' | 'practice' | 'game' | 'review';
   estimatedSeconds: number;
   completed: boolean;
 }
