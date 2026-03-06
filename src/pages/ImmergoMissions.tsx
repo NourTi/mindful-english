@@ -16,35 +16,12 @@ import immergoDemoVideo from '@/assets/immergo-demo.mp4';
 const ImmergoMissions = () => {
   const navigate = useNavigate();
   
-  // Restore preferences from localStorage
-  const [nativeLang, setNativeLang] = useState(() => 
-    localStorage.getItem('immergo_native_lang') || 'en'
-  );
-  const [targetLang, setTargetLang] = useState(() => 
-    localStorage.getItem('immergo_target_lang') || 'fr'
-  );
-  const [mode, setMode] = useState<LearningMode>(() => 
-    (localStorage.getItem('immergo_mode') as LearningMode) || 'teacher'
-  );
-
-  // Persist preferences
-  const handleNativeLangChange = (code: string) => {
-    setNativeLang(code);
-    localStorage.setItem('immergo_native_lang', code);
-  };
-
-  const handleTargetLangChange = (code: string) => {
-    setTargetLang(code);
-    localStorage.setItem('immergo_target_lang', code);
-  };
-
-  const handleModeChange = (newMode: LearningMode) => {
-    setMode(newMode);
-    localStorage.setItem('immergo_mode', newMode);
-  };
+  // Use defaults — no localStorage persistence
+  const [nativeLang, setNativeLang] = useState('en');
+  const [targetLang, setTargetLang] = useState('fr');
+  const [mode, setMode] = useState<LearningMode>('teacher');
 
   const startMission = (mission: ImmergoMission) => {
-    // Store mission data in sessionStorage for the chat page
     sessionStorage.setItem('immergo_session', JSON.stringify({
       mission,
       nativeLang,
@@ -83,7 +60,7 @@ const ImmergoMissions = () => {
             Dashboard
           </Button>
           <h1 className="font-display font-bold text-lg">Immergo</h1>
-          <div className="w-20" /> {/* Spacer */}
+          <div className="w-20" />
         </div>
       </header>
 
@@ -91,7 +68,6 @@ const ImmergoMissions = () => {
         {/* Language & Mode Selection HUD */}
         <Card className="p-6 bg-card/50 backdrop-blur-sm border-border/50">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Native Language */}
             <div className="space-y-2">
               <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 I speak
@@ -99,7 +75,7 @@ const ImmergoMissions = () => {
               <div className="relative">
                 <select
                   value={nativeLang}
-                  onChange={(e) => handleNativeLangChange(e.target.value)}
+                  onChange={(e) => setNativeLang(e.target.value)}
                   className="w-full p-3 pr-10 rounded-lg border border-border bg-background/50 font-medium appearance-none cursor-pointer hover:bg-background transition-colors"
                 >
                   {supportedLanguages.map((lang) => (
@@ -112,7 +88,6 @@ const ImmergoMissions = () => {
               </div>
             </div>
 
-            {/* Target Language */}
             <div className="space-y-2">
               <label className="text-xs font-semibold uppercase tracking-wider text-primary">
                 I want to learn
@@ -120,7 +95,7 @@ const ImmergoMissions = () => {
               <div className="relative">
                 <select
                   value={targetLang}
-                  onChange={(e) => handleTargetLangChange(e.target.value)}
+                  onChange={(e) => setTargetLang(e.target.value)}
                   className="w-full p-3 pr-10 rounded-lg border border-primary/50 bg-background/50 font-medium appearance-none cursor-pointer hover:bg-background transition-colors"
                 >
                   {supportedLanguages.map((lang) => (
@@ -134,14 +109,13 @@ const ImmergoMissions = () => {
             </div>
           </div>
 
-          {/* Mode Selection */}
           <div className="mt-6 pt-6 border-t border-border/50">
             <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
               Experience Mode
             </label>
             <div className="grid grid-cols-2 gap-4">
               <button
-                onClick={() => handleModeChange('teacher')}
+                onClick={() => setMode('teacher')}
                 className={cn(
                   "flex items-center gap-3 p-4 rounded-lg border transition-all text-left",
                   mode === 'teacher' 
@@ -161,7 +135,7 @@ const ImmergoMissions = () => {
               </button>
 
               <button
-                onClick={() => handleModeChange('immersive')}
+                onClick={() => setMode('immersive')}
                 className={cn(
                   "flex items-center gap-3 p-4 rounded-lg border transition-all text-left",
                   mode === 'immersive' 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Download, X, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,41 +12,26 @@ interface BeforeInstallPromptEvent extends Event {
 const PWAInstallPrompt = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [isDismissed, setIsDismissed] = useState(false);
+  const dismissed = useRef(false);
 
   useEffect(() => {
-    // Check if already dismissed
-    try {
-      const dismissed = localStorage.getItem('see-pwa-dismissed');
-      if (dismissed) {
-        setIsDismissed(true);
-        return;
-      }
-    } catch {
-      // localStorage not available
-    }
-
     const handleBeforeInstall = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
-      // Show prompt after a delay to not interrupt user
-      setTimeout(() => setIsVisible(true), 3000);
+      if (!dismissed.current) {
+        setTimeout(() => setIsVisible(true), 3000);
+      }
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstall);
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
-    };
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
   }, []);
 
   const handleInstall = async () => {
     if (!deferredPrompt) return;
-
     try {
       await deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      
       if (outcome === 'accepted') {
         setIsVisible(false);
       }
@@ -58,16 +43,11 @@ const PWAInstallPrompt = () => {
   };
 
   const handleDismiss = () => {
-    try {
-      localStorage.setItem('see-pwa-dismissed', 'true');
-    } catch {
-      // localStorage not available
-    }
+    dismissed.current = true;
     setIsVisible(false);
-    setIsDismissed(true);
   };
 
-  if (isDismissed || !isVisible || !deferredPrompt) return null;
+  if (!isVisible || !deferredPrompt) return null;
 
   return (
     <AnimatePresence>
@@ -83,31 +63,21 @@ const PWAInstallPrompt = () => {
               <div className="p-2 rounded-lg bg-primary/10 shrink-0">
                 <Smartphone className="w-5 h-5 text-primary" />
               </div>
-              
               <div className="flex-1 min-w-0">
                 <h3 className="font-semibold text-foreground mb-1">Install SEE App</h3>
                 <p className="text-sm text-muted-foreground mb-3">
                   Add to your home screen for quick access and offline learning.
                 </p>
-                
                 <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleDismiss}
-                  >
+                  <Button variant="outline" size="sm" onClick={handleDismiss}>
                     Not now
                   </Button>
-                  <Button
-                    size="sm"
-                    onClick={handleInstall}
-                  >
+                  <Button size="sm" onClick={handleInstall}>
                     <Download className="w-4 h-4 mr-2" />
                     Install
                   </Button>
                 </div>
               </div>
-
               <button
                 onClick={handleDismiss}
                 className="p-1 rounded-full hover:bg-muted transition-colors"

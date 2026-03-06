@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import { LessonContent, LearningStyle, CognitiveProfile, EmotionalFeedback } from '@/types/learning';
 import { determineEmotionalFeedback } from '@/lib/psycholinguistics';
 import { 
@@ -155,8 +154,7 @@ const generateChunks = (lesson: LessonContent, profile: CognitiveProfile): Lesso
 };
 
 export const useLessonStore = create<LessonState>()(
-  persist(
-    (set, get) => ({
+  (set, get) => ({
       currentLesson: null,
       chunks: [],
       progress: null,
@@ -349,9 +347,5 @@ export const useLessonStore = create<LessonState>()(
         set({ lastAdaptivityResult: result });
         return result;
       },
-    }),
-    {
-      name: 'see-lessons',
-    }
-  )
+  })
 );
