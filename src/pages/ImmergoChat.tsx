@@ -17,6 +17,8 @@ import {
 } from '@/data/immergoMissions';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { getVideoForMissionContext } from '@/lib/environmentVideos';
+import VideoBackground from '@/components/VideoBackground';
 import { suggestVoiceForMission, preloadModel } from '@/lib/tts';
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/immergo-chat`;
