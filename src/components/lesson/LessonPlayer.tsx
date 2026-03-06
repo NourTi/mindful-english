@@ -18,6 +18,8 @@ import KinestheticContent from './KinestheticContent';
 import BreathingExercise from './BreathingExercise';
 import QuizQuestion from './QuizQuestion';
 import GameActivity from './GameActivity';
+import VideoBackground from '@/components/VideoBackground';
+import { getEnvironmentVideo, getVideoForMissionContext } from '@/lib/environmentVideos';
 
 const LessonPlayer = () => {
   const navigate = useNavigate();
