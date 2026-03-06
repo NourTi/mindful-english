@@ -101,12 +101,22 @@ const DemoVideoModal = ({
                       }}
                     />
                   </div>
-                ) : videoUrl ? (
+                ) : (
                   <video
+                    ref={videoRef}
                     src={videoUrl}
                     poster={posterImage}
                     className="w-full h-full object-contain"
                     controls={false}
+                    muted={isMuted}
+                    loop
+                    onTimeUpdate={() => {
+                      if (videoRef.current) {
+                        setProgress((videoRef.current.currentTime / videoRef.current.duration) * 100);
+                      }
+                    }}
+                    onEnded={() => setIsPlaying(false)}
+                    onClick={handlePlayDemo}
                   />
                 ) : (
                   <div className="relative w-full h-full flex items-center justify-center">
