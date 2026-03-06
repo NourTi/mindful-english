@@ -43,6 +43,14 @@ const environmentVideos: Record<string, string> = {
   chemist: envPharmacy,
   drugstore: envPharmacy,
   'medicine-shop': envPharmacy,
+  transport: envTransport,
+  'bus-station': envTransport,
+  'train-station': envTransport,
+  bus: envTransport,
+  train: envTransport,
+  metro: envTransport,
+  subway: envTransport,
+  tram: envTransport,
 
   // Mission-based aliases (Immergo missions)
   'airport-checkin': envAirport,
