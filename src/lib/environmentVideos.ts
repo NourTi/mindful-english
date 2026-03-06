@@ -94,5 +94,6 @@ export function getVideoForMissionContext(context: string): string | null {
   if (lower.includes('flat') || lower.includes('apartment') || lower.includes('roommate') || lower.includes('share') || lower.includes('rent')) return envFlatshare;
   if (lower.includes('market') || lower.includes('shop') || lower.includes('buy') || lower.includes('bargain') || lower.includes('grocery') || lower.includes('souvenir') || lower.includes('stall') || lower.includes('vendor') || lower.includes('supermarket')) return envMarketplace;
   if (lower.includes('bank') || lower.includes('financ') || lower.includes('account') || lower.includes('loan') || lower.includes('mortgage') || lower.includes('teller')) return envBank;
+  if (lower.includes('bus') || lower.includes('train') || lower.includes('metro') || lower.includes('subway') || lower.includes('tram') || lower.includes('transport') || lower.includes('station') || lower.includes('ticket') || lower.includes('platform') || lower.includes('commut')) return envTransport;
   return null;
 }

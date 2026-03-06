@@ -9,7 +9,7 @@
     "id": "path-travel-english",
     "label": "Travel & Navigation Path",
     "psyProfile": ["introvert"],
-    "sequence": ["see-airport-1", "see-airport-2", "see-airport-3", "see-airport-4", "see-hotel-1", "see-hotel-2", "see-transport-1"]
+    "sequence": ["see-airport-1", "see-airport-2", "see-airport-3", "see-airport-4", "see-hotel-1", "see-hotel-2", "see-transport-1", "see-transport-2", "see-transport-3", "see-transport-4"]
   },
   {
     "id": "path-everyday-errands",
