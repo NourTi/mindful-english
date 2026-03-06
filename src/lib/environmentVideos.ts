@@ -38,6 +38,10 @@ const environmentVideos: Record<string, string> = {
   'bank-branch': envBank,
   financial: envBank,
   finance: envBank,
+  pharmacy: envPharmacy,
+  chemist: envPharmacy,
+  drugstore: envPharmacy,
+  'medicine-shop': envPharmacy,
 
   // Mission-based aliases (Immergo missions)
   'airport-checkin': envAirport,
