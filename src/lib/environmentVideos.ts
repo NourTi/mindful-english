@@ -51,6 +51,8 @@ const environmentVideos: Record<string, string> = {
   'market-bargaining': envMarketplace,
   'grocery-shopping': envMarketplace,
   'souvenir-shopping': envMarketplace,
+  'bank-account': envBank,
+  'bank-services': envBank,
 };
 
 /**
