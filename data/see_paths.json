@@ -27,7 +27,7 @@
     "id": "path-health-safety",
     "label": "Health & Safety Path",
     "psyProfile": ["mild_anxiety"],
-    "sequence": ["see-doctor-1", "see-doctor-2", "see-emergency-1"]
+    "sequence": ["see-doctor-1", "see-doctor-2", "see-pharmacy-1", "see-pharmacy-2", "see-pharmacy-3", "see-emergency-1"]
   },
   {
     "id": "path-assertiveness",

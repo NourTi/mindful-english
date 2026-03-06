@@ -11,6 +11,7 @@ import envJobInterview from '@/assets/env-job-interview.mp4';
 import envFlatshare from '@/assets/env-flatshare.mp4';
 import envMarketplace from '@/assets/env-marketplace.mp4';
 import envBank from '@/assets/env-bank.mp4';
+import envPharmacy from '@/assets/env-pharmacy.mp4';
 
 const environmentVideos: Record<string, string> = {
   // Core environments
@@ -37,6 +38,10 @@ const environmentVideos: Record<string, string> = {
   'bank-branch': envBank,
   financial: envBank,
   finance: envBank,
+  pharmacy: envPharmacy,
+  chemist: envPharmacy,
+  drugstore: envPharmacy,
+  'medicine-shop': envPharmacy,
 
   // Mission-based aliases (Immergo missions)
   'airport-checkin': envAirport,
@@ -47,7 +52,8 @@ const environmentVideos: Record<string, string> = {
   'restaurant-booking': envCafe,
   'doctor-appointment': envHospital,
   'emergency': envHospital,
-  'pharmacy': envHospital,
+  
+  'pharmacy-visit': envPharmacy,
   'market-bargaining': envMarketplace,
   'grocery-shopping': envMarketplace,
   'souvenir-shopping': envMarketplace,
@@ -72,7 +78,8 @@ export function getVideoForMissionContext(context: string): string | null {
   const lower = context.toLowerCase();
   if (lower.includes('airport') || lower.includes('flight') || lower.includes('check-in') || lower.includes('boarding')) return envAirport;
   if (lower.includes('café') || lower.includes('cafe') || lower.includes('coffee') || lower.includes('restaurant') || lower.includes('food')) return envCafe;
-  if (lower.includes('hospital') || lower.includes('doctor') || lower.includes('medical') || lower.includes('clinic') || lower.includes('pharmacy') || lower.includes('emergency')) return envHospital;
+  if (lower.includes('hospital') || lower.includes('doctor') || lower.includes('medical') || lower.includes('clinic') || lower.includes('emergency')) return envHospital;
+  if (lower.includes('pharmacy') || lower.includes('chemist') || lower.includes('medicine') || lower.includes('prescription') || lower.includes('drugstore')) return envPharmacy;
   if (lower.includes('hotel') || lower.includes('reservation') || lower.includes('check in') || lower.includes('lobby')) return envHotel;
   if (lower.includes('interview') || lower.includes('job') || lower.includes('office') || lower.includes('company')) return envJobInterview;
   if (lower.includes('flat') || lower.includes('apartment') || lower.includes('roommate') || lower.includes('share') || lower.includes('rent')) return envFlatshare;
