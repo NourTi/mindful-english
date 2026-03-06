@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import { LessonContent, LearningStyle, CognitiveProfile, EmotionalFeedback } from '@/types/learning';
 import { determineEmotionalFeedback } from '@/lib/psycholinguistics';
 import { 
