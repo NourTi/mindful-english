@@ -1241,4 +1241,198 @@ These add EXTRA information. The sentence is complete without them.
       { id: 'rc3', question: 'Can you use "that" in a non-defining relative clause?', options: ['Yes, always', 'No, never', 'Only with people', 'Only in formal writing'], correctAnswer: 1, explanation: '"That" is NEVER used in non-defining (comma) clauses. Use "who" or "which."', growthMindsetFeedback: { correct: 'Important rule — well remembered!', incorrect: 'Key rule: Non-defining clauses → who/which only. Never "that."' } },
     ],
   },
+  // ── MARKETPLACE / SHOPPING ─────────────────────
+  {
+    id: 'marketplace-shopping',
+    title: 'At the Marketplace',
+    description: 'Master the vocabulary and phrases for shopping, bargaining, and navigating markets.',
+    difficulty: 'beginner',
+    estimatedMinutes: 8,
+    contentVariants: {
+      visual: {
+        type: 'visual',
+        images: [],
+        infographics: [
+          '"How much is this?" → Asking for price',
+          '"Could you give me a discount?" → Polite haggling',
+          'Stall → Vendor → Customer → Bargain → Receipt',
+          '"I\'ll take two kilos, please" → Buying by weight',
+          '"Do you accept card?" → Payment methods',
+        ],
+        videoUrl: undefined,
+        vrScenarioId: undefined,
+      },
+      auditory: {
+        type: 'auditory',
+        audioUrl: '/audio/marketplace-dialogue.mp3',
+        transcriptHighlights: [
+          '"Excuse me, how much are the tomatoes?"',
+          '"That\'s a bit expensive. Could you do it for less?"',
+          '"I\'ll take a bag of oranges and some herbs, please."',
+          '"Do you have change for a twenty?"',
+        ],
+        pronunciationGuide: [
+          'bargain /ˈbɑːɡɪn/',
+          'receipt /rɪˈsiːt/',
+          'vendor /ˈvendər/',
+          'organic /ɔːrˈɡænɪk/',
+          'seasonal /ˈsiːzənəl/',
+        ],
+      },
+      reading: {
+        type: 'reading',
+        mainText: `Welcome to marketplace English! Whether you're at a local farmers' market, a bustling bazaar, or a supermarket, these phrases will help you shop with confidence.
+
+**Key Vocabulary:**
+- **Stall / Stand** – An individual seller's area at a market
+- **Vendor** – A person who sells goods
+- **Bargain** – A good deal; also to negotiate price
+- **Organic** – Grown without artificial chemicals
+- **Seasonal** – Available only at certain times of year
+- **Receipt** – Proof of purchase
+
+**Essential Phrases:**
+Asking prices: "How much is this?" / "What's the price for a kilo?"
+Haggling: "Could you do a better price?" / "That's a bit steep..."
+Buying: "I'll take three of those, please."
+Quality: "Are these fresh?" / "Is this locally grown?"
+Payment: "Do you take card?" / "Could I have a receipt?"
+
+**Cultural Tip:**
+In English-speaking countries, haggling is common at street markets and antique shops but NOT at supermarkets or high street shops. Always be friendly when negotiating!`,
+        grammarRules: [
+          'Use "How much" for uncountable nouns: "How much is the cheese?"',
+          'Use "How many" for countable nouns: "How many apples are left?"',
+          'Comparatives for bargaining: "Could you make it cheaper?"',
+        ],
+        exercises: [
+          'Fill in: "How _____ are the tomatoes per kilo?"',
+          'Choose: "Could you do it for (less / fewer)?"',
+          'Reorder: please / of / I / two / take / kilos / will',
+        ],
+      },
+      kinesthetic: {
+        type: 'kinesthetic',
+        interactiveScenarioId: 'marketplace-roleplay',
+        rolePlayPrompts: [
+          'You arrive at a busy outdoor market. Approach a fruit stall and ask what\'s fresh today.',
+          'The vendor quotes a price. You think it\'s too high — try to negotiate politely.',
+          'You want to buy spices but don\'t know the English names. Describe what you need.',
+          'Pay for your shopping and ask for a bag and a receipt.',
+        ],
+        physicalActivities: [
+          'Sort shopping items into "countable" and "uncountable" categories',
+          'Role-play: take turns being the vendor and the customer',
+          'Price comparison activity: compare prices using "cheaper", "more expensive"',
+        ],
+      },
+    },
+    semanticAnchors: [
+      { newWord: 'bargain', definition: 'To negotiate the price of something; also means a good deal', relatedConcepts: ['negotiate', 'haggle', 'discount'], personalizedExample: '"I got a real bargain — 50% off!"' },
+      { newWord: 'vendor', definition: 'A person or company that sells goods', relatedConcepts: ['seller', 'stallholder', 'merchant'], personalizedExample: '"The flower vendor had beautiful roses."' },
+      { newWord: 'organic', definition: 'Produced without artificial chemicals or pesticides', relatedConcepts: ['natural', 'sustainable', 'free-range'], personalizedExample: '"These organic strawberries taste amazing."' },
+      { newWord: 'receipt', definition: 'A written acknowledgment that something has been paid for', relatedConcepts: ['proof of purchase', 'invoice', 'till receipt'], personalizedExample: '"Could I have a receipt, please? I might need to return this."' },
+    ],
+    assessmentQuestions: [
+      { id: 'mkt1', question: 'Which phrase is most appropriate for asking the price at a market?', options: ['"Tell me the cost."', '"How much is this, please?"', '"What is the money?"', '"Give me the price."'], correctAnswer: 1, explanation: '"How much is this?" is the standard polite way to ask a price.', growthMindsetFeedback: { correct: 'Perfect — natural and polite!', incorrect: '"How much is this?" is the go-to phrase. Keep practising!' } },
+      { id: 'mkt2', question: 'Complete: "Could you give me a _____ if I buy three?"', options: ['cheap', 'discount', 'less', 'bargain'], correctAnswer: 1, explanation: '"Give a discount" is the correct collocation for reducing a price.', growthMindsetFeedback: { correct: 'Great collocation awareness!', incorrect: 'We say "give a discount" — try to remember this pairing.' } },
+      { id: 'mkt3', question: 'Which is correct: "How much _____ the apples?"', options: ['is', 'are', 'does', 'do'], correctAnswer: 1, explanation: '"Apples" is plural, so we use "are": "How much are the apples?"', growthMindsetFeedback: { correct: 'You nailed the subject-verb agreement!', incorrect: 'Plural nouns need "are": "How much are the apples?"' } },
+    ],
+  },
+  // ── MARKETPLACE GRAMMAR FOCUS ──────────────────
+  {
+    id: 'marketplace-grammar',
+    title: 'Shopping Grammar: Comparatives & Countables',
+    description: 'Master comparatives, superlatives, and countable vs uncountable nouns in a shopping context.',
+    difficulty: 'intermediate',
+    estimatedMinutes: 10,
+    contentVariants: {
+      visual: {
+        type: 'visual',
+        images: [],
+        infographics: [
+          'Cheap → Cheaper → Cheapest',
+          'Expensive → More expensive → Most expensive',
+          'Countable: apples, tomatoes, bags | Uncountable: rice, flour, cheese',
+          '"much" + uncountable | "many" + countable',
+          '"a few oranges" vs "a little sugar"',
+        ],
+        videoUrl: undefined,
+        vrScenarioId: undefined,
+      },
+      auditory: {
+        type: 'auditory',
+        audioUrl: '/audio/marketplace-grammar.mp3',
+        transcriptHighlights: [
+          '"This market is cheaper than the supermarket."',
+          '"How many eggs do you need?"',
+          '"We don\'t have much bread left."',
+          '"The freshest vegetables are at the morning market."',
+        ],
+        pronunciationGuide: [
+          'cheaper /ˈtʃiːpər/',
+          'expensive /ɪkˈspensɪv/',
+          'vegetables /ˈvedʒtəbəlz/',
+          'quantity /ˈkwɒntɪti/',
+        ],
+      },
+      reading: {
+        type: 'reading',
+        mainText: `In this lesson, we combine shopping vocabulary with two important grammar areas: **comparatives/superlatives** and **countable vs uncountable nouns**.
+
+**Comparatives & Superlatives at the Market:**
+- Short adjectives: cheap → cheaper → cheapest, fresh → fresher → freshest
+- Long adjectives: expensive → more expensive → most expensive
+- Irregular: good → better → best, bad → worse → worst
+
+**Countable vs Uncountable:**
+- Countable (use "many", "a few"): apples, eggs, bags, coins
+- Uncountable (use "much", "a little"): rice, flour, bread, cheese, money
+
+**Shopping Contexts:**
+"This stall has **better** prices **than** that one."
+"How **many** tomatoes do you want?"
+"I don't need **much** sugar — just **a little**."
+"Which is the **cheapest** option?"`,
+        grammarRules: [
+          'Comparative + than: "This is fresher than that one."',
+          'Superlative with "the": "This is the cheapest stall in the market."',
+          '"Much/a little" for uncountable: "How much cheese do you want?"',
+          '"Many/a few" for countable: "How many oranges shall I get?"',
+        ],
+        exercises: [
+          'Fill in: "These tomatoes are _____ (fresh) than yesterday\'s."',
+          'Choose: "How (much / many) flour do we need?"',
+          'Correct: "This is the most cheap option."',
+          'Fill in: "I only want a _____ (few / little) rice."',
+        ],
+      },
+      kinesthetic: {
+        type: 'kinesthetic',
+        interactiveScenarioId: 'marketplace-grammar-roleplay',
+        rolePlayPrompts: [
+          'Compare two stalls: tell your friend which one has better prices.',
+          'You need ingredients for a recipe — ask the vendor using "how much" and "how many" correctly.',
+          'Describe the best and worst purchases you\'ve made using superlatives.',
+          'Help a tourist choose between products using comparatives.',
+        ],
+        physicalActivities: [
+          'Sort word cards into "countable" and "uncountable" piles',
+          'Price comparison race: form comparative sentences about real prices',
+          'Market role-play using ONLY comparative and superlative structures',
+        ],
+      },
+    },
+    semanticAnchors: [
+      { newWord: 'comparative', definition: 'A form of adjective/adverb used to compare two things', relatedConcepts: ['than', '-er', 'more'], personalizedExample: '"This market is cheaper than the one downtown."' },
+      { newWord: 'superlative', definition: 'A form used to show the highest degree among three or more things', relatedConcepts: ['the', '-est', 'most'], personalizedExample: '"This is the freshest fish in the whole market."' },
+      { newWord: 'countable noun', definition: 'A noun that can be counted individually (1 apple, 2 apples)', relatedConcepts: ['plural', 'many', 'a few'], personalizedExample: '"How many bags do you need?"' },
+      { newWord: 'uncountable noun', definition: 'A noun that cannot be counted individually (rice, water, bread)', relatedConcepts: ['much', 'a little', 'some'], personalizedExample: '"How much rice would you like?"' },
+    ],
+    assessmentQuestions: [
+      { id: 'mg1', question: 'Which is correct?', options: ['"This is more cheap than that."', '"This is cheaper than that."', '"This is cheapest than that."', '"This is cheap than that."'], correctAnswer: 1, explanation: 'Short adjective → add "-er" + "than": "cheaper than"', growthMindsetFeedback: { correct: 'Perfect comparative form!', incorrect: 'Short adjectives (1 syllable): add -er. "Cheap → cheaper than"' } },
+      { id: 'mg2', question: '"How _____ sugar do we need?"', options: ['many', 'much', 'few', 'lot'], correctAnswer: 1, explanation: '"Sugar" is uncountable, so we use "much".', growthMindsetFeedback: { correct: 'You know your countable from uncountable!', incorrect: 'Sugar is uncountable → "much". For countable nouns → "many".' } },
+      { id: 'mg3', question: 'Choose the correct superlative: "This is the _____ market in town."', options: ['most busiest', 'more busy', 'busiest', 'busy'], correctAnswer: 2, explanation: '"Busy" becomes "busiest" (y → iest). Never combine "most" with "-est".', growthMindsetFeedback: { correct: 'Excellent superlative form!', incorrect: 'Rule: change y to iest. Never use "most" + "-est" together.' } },
+    ],
+  },
 ];

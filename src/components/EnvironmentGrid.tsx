@@ -14,6 +14,7 @@ const environmentConfig: Record<Environment, { label: string; icon: string; colo
   classroom: { label: 'Classroom', icon: '📚', color: 'from-green-500/20 to-emerald-500/20' },
   office: { label: 'Office', icon: '💼', color: 'from-slate-500/20 to-gray-500/20' },
   street: { label: 'Street', icon: '🚶', color: 'from-rose-500/20 to-red-500/20' },
+  marketplace: { label: 'Marketplace', icon: '🛒', color: 'from-yellow-500/20 to-lime-500/20' },
 };
 
 export function EnvironmentGrid() {

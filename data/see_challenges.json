@@ -427,5 +427,69 @@
       { "kind": "dialogue", "text": "Ask for clarification: 'Sorry, could you explain that last point again? I didn't quite follow.'" },
       { "kind": "reflection", "text": "How did it feel to speak in front of the class? What academic phrases did you use?" }
     ]
+  },
+  {
+    "id": "see-market-1",
+    "label": "Market Greetings",
+    "type": "challenge",
+    "environment": "marketplace",
+    "difficulty": "easy",
+    "psyProfile": ["mild_anxiety", "introvert"],
+    "skills": ["speaking", "vocabulary", "confidence"],
+    "xpReward": 10,
+    "steps": [
+      { "kind": "psyground", "text": "Markets can be overwhelming. Take a breath. You only need a few key phrases to get started." },
+      { "kind": "dialogue", "text": "Approach a fruit stall and say: 'Good morning! How much are the strawberries, please?'" },
+      { "kind": "reflection", "text": "How did that feel? Rate: 'easy', 'fine', or 'uncomfortable'." }
+    ]
+  },
+  {
+    "id": "see-market-2",
+    "label": "Bargaining Basics",
+    "type": "challenge",
+    "environment": "marketplace",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety", "perfectionist"],
+    "skills": ["speaking", "negotiation", "confidence"],
+    "xpReward": 20,
+    "steps": [
+      { "kind": "psyground", "text": "Negotiating prices is normal at markets. The vendor expects it. You're not being rude — you're playing the game." },
+      { "kind": "dialogue", "text": "The vendor says '£5 each'. Reply: 'That's a bit much. Could you do three for £10?'" },
+      { "kind": "dialogue", "text": "The vendor counters with '£12 for three'. Say: 'How about £11? I'm buying a lot today.'" },
+      { "kind": "reflection", "text": "Did you feel comfortable negotiating? What phrase worked best?" }
+    ]
+  },
+  {
+    "id": "see-market-3",
+    "label": "Describing What You Need",
+    "type": "challenge",
+    "environment": "marketplace",
+    "difficulty": "medium",
+    "psyProfile": ["introvert", "perfectionist"],
+    "skills": ["speaking", "vocabulary", "problem-solving"],
+    "xpReward": 25,
+    "steps": [
+      { "kind": "psyground", "text": "Sometimes you won't know the English word for something. That's OK! Describing is a powerful skill." },
+      { "kind": "dialogue", "text": "You need coriander but don't know the word. Say: 'Do you have a green herb? It looks like flat parsley but smells different.'" },
+      { "kind": "dialogue", "text": "Now ask: 'Is it fresh? When was it picked?' and 'How long will it last?'" },
+      { "kind": "reflection", "text": "How creative were you with descriptions? This is a real-world survival skill." }
+    ]
+  },
+  {
+    "id": "see-market-4",
+    "label": "Handling a Market Mistake",
+    "type": "challenge",
+    "environment": "marketplace",
+    "difficulty": "hard",
+    "psyProfile": ["mild_anxiety", "introvert", "perfectionist"],
+    "skills": ["speaking", "confidence", "conflict-resolution"],
+    "xpReward": 30,
+    "steps": [
+      { "kind": "psyground", "text": "Mistakes happen when shopping. The vendor gave you the wrong item. Practice handling this calmly." },
+      { "kind": "dialogue", "text": "Say: 'Excuse me, I asked for red peppers but these are green. Could you swap them, please?'" },
+      { "kind": "dialogue", "text": "The vendor argues it's what you pointed at. Reply: 'I understand the confusion, but I'd really like the red ones if possible.'" },
+      { "kind": "dialogue", "text": "Ask about a refund: 'If you don't have red ones, could I get my money back?'" },
+      { "kind": "reflection", "text": "Correcting someone in another language takes courage. How confident did you feel?" }
+    ]
   }
 ]

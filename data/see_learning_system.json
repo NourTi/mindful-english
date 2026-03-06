@@ -517,6 +517,52 @@
       ]
     },
     {
+      "id": "see-marketplace-shopping",
+      "title": "Marketplace Shopping",
+      "mode": "chat_ai",
+      "environment": "marketplace",
+      "psyTargets": ["mild_social_anxiety", "low_confidence"],
+      "learningGoals": ["Navigate a marketplace confidently", "Use price-related vocabulary naturally", "Practise bargaining and polite negotiation"],
+      "modules": [
+        { "id": "mod-market-prep", "type": "psy_prep", "title": "Market Mindset", "instructions": "Markets are noisy and fast-paced. That's OK. You don't need perfect sentences — vendors just need to understand what you want. Relax and enjoy the experience." },
+        { "id": "mod-market-dialogue", "type": "dialogue", "title": "Stall Browsing", "instructions": "You walk through a busy outdoor market. A vendor calls out: 'Fresh strawberries, three for a pound!' Practice: asking prices, quantities, and freshness." },
+        { "id": "mod-market-bargain", "type": "confidence_task", "title": "Haggling Challenge", "instructions": "The vendor wants £8 for a bag. You think it's too much. Try: 'Could you do it for £5?', 'What if I buy two bags?', 'That's a bit steep for me.'" },
+        { "id": "mod-market-collocation", "type": "collocation_drill", "title": "Shopping Collocations", "instructions": "Match natural pairings: 'ripe bananas' (not 'mature bananas'), 'loose change', 'carrier bag', 'best before date'." },
+        { "id": "mod-market-reflect", "type": "reflection", "title": "Shopping Confidence", "instructions": "Did you feel comfortable interacting with the vendor? What phrases felt most natural? What would you try next time?" }
+      ],
+      "conversationPrompts": [
+        "You approach a colourful fruit stall. The vendor smiles: 'Morning! What can I get you? Everything's fresh in today!'",
+        "You pick up some avocados. The vendor says: 'Those are £1.50 each, or four for £5. Lovely and ripe, ready to eat today.'",
+        "You want to buy some spices but aren't sure of the English names. The vendor asks: 'Looking for anything specific, love?'"
+      ],
+      "emotionChecks": [
+        { "question": "How comfortable do you feel shopping at markets in English?", "type": "anxiety", "options": ["Very relaxed", "A little nervous", "Quite anxious", "I'd avoid it"] },
+        { "question": "Could you negotiate a price in English?", "type": "confidence", "options": ["Yes, easily", "I'd try", "I'd struggle", "No way"] }
+      ]
+    },
+    {
+      "id": "see-marketplace-audio",
+      "title": "Market Sounds & Phrases",
+      "mode": "audio_exercises",
+      "environment": "marketplace",
+      "psyTargets": ["low_confidence", "perfectionism"],
+      "learningGoals": ["Recognise marketplace vocabulary in spoken form", "Practise pronunciation of shopping phrases", "Build listening confidence in noisy environments"],
+      "modules": [
+        { "id": "mod-market-audio-prep", "type": "psy_prep", "title": "Listening in Noise", "instructions": "Real markets are loud. You won't catch every word — and that's fine. Focus on prices, quantities, and key nouns." },
+        { "id": "mod-market-audio-listen", "type": "dialogue", "title": "Market Conversations", "instructions": "Read these market dialogues aloud. Customer: 'How much for a kilo of apples?' Vendor: 'Two fifty a kilo, love. Want me to bag them up?'" },
+        { "id": "mod-market-audio-pron", "type": "collocation_drill", "title": "Pronunciation Practice", "instructions": "Practise these tricky market words: 'receipt' /rɪˈsiːt/, 'vegetable' /ˈvedʒtəbəl/, 'courgette' /kɔːˈʒet/, 'aubergine' /ˈəʊbəʒiːn/." },
+        { "id": "mod-market-audio-reflect", "type": "reflection", "title": "Listening Progress", "instructions": "Which words were hardest to pronounce? Which felt natural? Celebrate small wins." }
+      ],
+      "conversationPrompts": [
+        "Listen: 'Two pounds of tomatoes, a bunch of coriander, and have you got any fresh basil?' — What items are being requested?",
+        "Now practise saying: 'I'd like half a kilo of cherries and a punnet of blueberries, please.'"
+      ],
+      "emotionChecks": [
+        { "question": "How confident do you feel about your pronunciation of food items?", "type": "anxiety", "options": ["Very confident", "Fairly confident", "Not very confident", "Not at all"] },
+        { "question": "Can you understand prices spoken quickly?", "type": "confidence", "options": ["Yes", "Usually", "Sometimes", "Rarely"] }
+      ]
+    },
+    {
       "id": "see-neighbours-dispute",
       "title": "Talking to Neighbours",
       "mode": "role_play",
