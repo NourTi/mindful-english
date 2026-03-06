@@ -21,7 +21,7 @@
     "id": "path-professional-english",
     "label": "Professional English Path",
     "psyProfile": ["introvert", "mild_anxiety"],
-    "sequence": ["see-interview-1", "see-interview-2", "see-bank-1", "see-phone-1"]
+    "sequence": ["see-interview-1", "see-interview-2", "see-bank-1", "see-bank-2", "see-phone-1"]
   },
   {
     "id": "path-health-safety",
