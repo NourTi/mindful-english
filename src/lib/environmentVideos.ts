@@ -78,7 +78,8 @@ export function getVideoForMissionContext(context: string): string | null {
   const lower = context.toLowerCase();
   if (lower.includes('airport') || lower.includes('flight') || lower.includes('check-in') || lower.includes('boarding')) return envAirport;
   if (lower.includes('café') || lower.includes('cafe') || lower.includes('coffee') || lower.includes('restaurant') || lower.includes('food')) return envCafe;
-  if (lower.includes('hospital') || lower.includes('doctor') || lower.includes('medical') || lower.includes('clinic') || lower.includes('pharmacy') || lower.includes('emergency')) return envHospital;
+  if (lower.includes('hospital') || lower.includes('doctor') || lower.includes('medical') || lower.includes('clinic') || lower.includes('emergency')) return envHospital;
+  if (lower.includes('pharmacy') || lower.includes('chemist') || lower.includes('medicine') || lower.includes('prescription') || lower.includes('drugstore')) return envPharmacy;
   if (lower.includes('hotel') || lower.includes('reservation') || lower.includes('check in') || lower.includes('lobby')) return envHotel;
   if (lower.includes('interview') || lower.includes('job') || lower.includes('office') || lower.includes('company')) return envJobInterview;
   if (lower.includes('flat') || lower.includes('apartment') || lower.includes('roommate') || lower.includes('share') || lower.includes('rent')) return envFlatshare;

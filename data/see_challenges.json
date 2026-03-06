@@ -542,5 +542,55 @@
       { "kind": "dialogue", "text": "Request time: 'Thank you for explaining. I'd like to take this information home and think about it before I decide.'" },
       { "kind": "reflection", "text": "Asking for time to think is a sign of strength, not weakness. How comfortable were you with the financial vocabulary?" }
     ]
+  },
+  {
+    "id": "see-pharmacy-1",
+    "label": "Buying Over-the-Counter Medicine",
+    "type": "challenge",
+    "environment": "pharmacy",
+    "difficulty": "easy",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "listening", "confidence"],
+    "xpReward": 15,
+    "steps": [
+      { "kind": "psyground", "text": "You have a cold and need something from the pharmacy. Remember: pharmacists are there to help — you don't need to know the exact product name." },
+      { "kind": "dialogue", "text": "Approach the counter: 'Excuse me, I've had a sore throat and a blocked nose for two days. Could you recommend something?'" },
+      { "kind": "dialogue", "text": "The pharmacist suggests two options. Ask: 'What's the difference between these two? Are there any side effects I should know about?'" },
+      { "kind": "reflection", "text": "Describing symptoms in English can feel vulnerable. How comfortable did you feel explaining your problem?" }
+    ]
+  },
+  {
+    "id": "see-pharmacy-2",
+    "label": "Collecting a Prescription",
+    "type": "challenge",
+    "environment": "pharmacy",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety", "introvert"],
+    "skills": ["speaking", "listening", "reading"],
+    "xpReward": 20,
+    "steps": [
+      { "kind": "psyground", "text": "You need to collect a prescription the doctor sent. Take a moment — you just need your name and date of birth." },
+      { "kind": "dialogue", "text": "Say: 'Hello, I'm here to collect a prescription. My name is … and my date of birth is …'" },
+      { "kind": "dialogue", "text": "The pharmacist asks you to wait. After a few minutes, they explain the dosage: 'Take two tablets twice a day with food.' Confirm: 'So that's two in the morning and two in the evening, with meals?'" },
+      { "kind": "dialogue", "text": "Ask: 'Is it okay to take this with paracetamol? And should I avoid alcohol while on this medication?'" },
+      { "kind": "reflection", "text": "Understanding medication instructions is critical. Did you feel confident enough to ask follow-up questions?" }
+    ]
+  },
+  {
+    "id": "see-pharmacy-3",
+    "label": "Asking for Health Advice",
+    "type": "challenge",
+    "environment": "pharmacy",
+    "difficulty": "medium",
+    "psyProfile": ["introvert", "perfectionist"],
+    "skills": ["speaking", "confidence"],
+    "xpReward": 25,
+    "steps": [
+      { "kind": "psyground", "text": "You're unsure if you need to see a doctor or if the pharmacist can help. It's okay to ask — that's what they're for." },
+      { "kind": "dialogue", "text": "Describe your situation: 'I've had a rash on my arm for about a week. It's not painful but it's spreading. Do you think I should see a doctor?'" },
+      { "kind": "dialogue", "text": "The pharmacist recommends a cream but suggests seeing a GP if it doesn't improve. Ask: 'How long should I use the cream before booking an appointment?'" },
+      { "kind": "dialogue", "text": "Ask about cost: 'How much is the cream? And do I need a prescription for the stronger version?'" },
+      { "kind": "reflection", "text": "Navigating health advice in a second language takes real courage. Rate how clearly you communicated your symptoms." }
+    ]
   }
 ]

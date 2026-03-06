@@ -16,6 +16,7 @@ const environmentConfig: Record<Environment, { label: string; icon: string; colo
   street: { label: 'Street', icon: '🚶', color: 'from-rose-500/20 to-red-500/20' },
   marketplace: { label: 'Marketplace', icon: '🛒', color: 'from-yellow-500/20 to-lime-500/20' },
   bank: { label: 'Bank', icon: '🏦', color: 'from-emerald-500/20 to-teal-500/20' },
+  pharmacy: { label: 'Pharmacy', icon: '💊', color: 'from-green-500/20 to-cyan-500/20' },
 };
 
 export function EnvironmentGrid() {
