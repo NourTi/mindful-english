@@ -21,7 +21,7 @@
     "id": "path-professional-english",
     "label": "Professional English Path",
     "psyProfile": ["introvert", "mild_anxiety"],
-    "sequence": ["see-interview-1", "see-interview-2", "see-bank-1", "see-phone-1"]
+    "sequence": ["see-interview-1", "see-interview-2", "see-bank-1", "see-bank-2", "see-phone-1"]
   },
   {
     "id": "path-health-safety",
@@ -40,5 +40,11 @@
     "label": "Academic English Path",
     "psyProfile": ["introvert"],
     "sequence": ["see-classroom-1", "see-flatshare-1", "see-meetup-2"]
+  },
+  {
+    "id": "path-financial-literacy",
+    "label": "Financial Literacy Path",
+    "psyProfile": ["mild_anxiety", "perfectionist"],
+    "sequence": ["see-bank-1", "see-bank-2", "see-bank-3"]
   }
 ]

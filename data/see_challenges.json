@@ -489,7 +489,58 @@
       { "kind": "dialogue", "text": "Say: 'Excuse me, I asked for red peppers but these are green. Could you swap them, please?'" },
       { "kind": "dialogue", "text": "The vendor argues it's what you pointed at. Reply: 'I understand the confusion, but I'd really like the red ones if possible.'" },
       { "kind": "dialogue", "text": "Ask about a refund: 'If you don't have red ones, could I get my money back?'" },
-      { "kind": "reflection", "text": "Correcting someone in another language takes courage. How confident did you feel?" }
+     { "kind": "reflection", "text": "Correcting someone in another language takes courage. How confident did you feel?" }
+    ]
+  },
+  {
+    "id": "see-bank-1",
+    "label": "Opening a Bank Account",
+    "type": "challenge",
+    "environment": "bank",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety", "introvert"],
+    "skills": ["speaking", "listening", "confidence"],
+    "xpReward": 25,
+    "steps": [
+      { "kind": "psyground", "text": "You walk into the bank. It's formal and quiet. Take a breath — you belong here and you have the right to ask questions." },
+      { "kind": "dialogue", "text": "Approach the information desk: 'Good morning, I'd like some information about opening a current account, please.'" },
+      { "kind": "dialogue", "text": "The advisor asks about your needs. Reply: 'I need a current account with online banking and a debit card.'" },
+      { "kind": "dialogue", "text": "Ask about fees: 'Could you explain the monthly charges and any overdraft fees?'" },
+      { "kind": "reflection", "text": "Financial conversations can feel intimidating in a second language. How did you find the formal register?" }
+    ]
+  },
+  {
+    "id": "see-bank-2",
+    "label": "Querying a Bank Statement",
+    "type": "challenge",
+    "environment": "bank",
+    "difficulty": "hard",
+    "psyProfile": ["mild_anxiety", "perfectionist"],
+    "skills": ["speaking", "confidence", "reading"],
+    "xpReward": 30,
+    "steps": [
+      { "kind": "psyground", "text": "You noticed an unexpected charge on your statement. Prepare yourself: you have every right to query it calmly." },
+      { "kind": "dialogue", "text": "Call the bank: 'Hello, I'm calling about an unexpected charge on my statement dated the 15th. Could you explain what it is?'" },
+      { "kind": "dialogue", "text": "The advisor says it's a service fee. Reply: 'I wasn't informed about this fee when I opened the account. Could you look into removing it?'" },
+      { "kind": "dialogue", "text": "Ask for confirmation: 'Could you send me an email confirming the refund and the updated balance?'" },
+      { "kind": "reflection", "text": "Asserting yourself in a formal setting is a real achievement. Rate your confidence from 1–5." }
+    ]
+  },
+  {
+    "id": "see-bank-3",
+    "label": "Asking About Loans & Services",
+    "type": "challenge",
+    "environment": "bank",
+    "difficulty": "hard",
+    "psyProfile": ["introvert"],
+    "skills": ["speaking", "listening", "reading"],
+    "xpReward": 30,
+    "steps": [
+      { "kind": "psyground", "text": "You're considering a personal loan. Complex financial products can feel overwhelming — break it into simple questions." },
+      { "kind": "dialogue", "text": "Ask the advisor: 'I'm interested in a personal loan. Could you explain the interest rates and repayment options?'" },
+      { "kind": "dialogue", "text": "Clarify terms: 'What does APR mean exactly? And is there a penalty for early repayment?'" },
+      { "kind": "dialogue", "text": "Request time: 'Thank you for explaining. I'd like to take this information home and think about it before I decide.'" },
+      { "kind": "reflection", "text": "Asking for time to think is a sign of strength, not weakness. How comfortable were you with the financial vocabulary?" }
     ]
   }
 ]
