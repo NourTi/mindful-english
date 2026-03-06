@@ -2,7 +2,7 @@
 
 export type PsyProfile = 'mild_anxiety' | 'introvert' | 'extrovert' | 'perfectionist';
 export type SkillType = 'listening' | 'speaking' | 'confidence' | 'reading' | 'writing';
-export type Environment = 'airport' | 'cafe' | 'meetup' | 'classroom' | 'office' | 'street' | 'marketplace' | 'bank' | 'pharmacy';
+export type Environment = 'airport' | 'cafe' | 'meetup' | 'classroom' | 'office' | 'street' | 'marketplace' | 'bank' | 'pharmacy' | 'transport';
 export type Difficulty = 'easy' | 'medium' | 'hard';
 export type StepKind = 'psyground' | 'dialogue' | 'reflection';
 

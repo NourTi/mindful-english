@@ -592,5 +592,71 @@
       { "kind": "dialogue", "text": "Ask about cost: 'How much is the cream? And do I need a prescription for the stronger version?'" },
       { "kind": "reflection", "text": "Navigating health advice in a second language takes real courage. Rate how clearly you communicated your symptoms." }
     ]
+  },
+  {
+    "id": "see-transport-1",
+    "label": "Buying a Bus Ticket",
+    "type": "challenge",
+    "environment": "transport",
+    "difficulty": "easy",
+    "psyProfile": ["mild_anxiety"],
+    "skills": ["speaking", "listening", "confidence"],
+    "xpReward": 10,
+    "steps": [
+      { "kind": "psyground", "text": "You're at a busy bus station. The noise can be overwhelming — focus on the information board and take a breath." },
+      { "kind": "dialogue", "text": "Go to the ticket window: 'Hello, I'd like a single ticket to the city centre, please. Which bus do I need?'" },
+      { "kind": "dialogue", "text": "The clerk says Platform 3. Ask: 'How long does the journey take? And does it stop near the main square?'" },
+      { "kind": "reflection", "text": "Asking for directions in a busy place takes confidence. How did you feel during the interaction?" }
+    ]
+  },
+  {
+    "id": "see-transport-2",
+    "label": "Understanding Delays & Changes",
+    "type": "challenge",
+    "environment": "transport",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety", "introvert"],
+    "skills": ["listening", "speaking", "reading"],
+    "xpReward": 20,
+    "steps": [
+      { "kind": "psyground", "text": "An announcement says your bus is delayed. Delays are stressful, but you can handle this — listen carefully and ask for help." },
+      { "kind": "dialogue", "text": "Approach the information desk: 'Excuse me, my bus to Oxford was supposed to leave at 10:15 but it's not on the board anymore. Has it been cancelled?'" },
+      { "kind": "dialogue", "text": "They offer an alternative. Ask: 'Can I use the same ticket for the replacement service? And which platform should I go to?'" },
+      { "kind": "dialogue", "text": "Ask about a refund: 'If I decide not to travel today, can I get a refund or use the ticket another day?'" },
+      { "kind": "reflection", "text": "Dealing with unexpected changes in another language is challenging. How well did you adapt?" }
+    ]
+  },
+  {
+    "id": "see-transport-3",
+    "label": "Asking for Directions on the Bus",
+    "type": "challenge",
+    "environment": "transport",
+    "difficulty": "easy",
+    "psyProfile": ["introvert"],
+    "skills": ["speaking", "confidence"],
+    "xpReward": 15,
+    "steps": [
+      { "kind": "psyground", "text": "You're on the bus but unsure when to get off. It's perfectly normal to ask — most people are happy to help." },
+      { "kind": "dialogue", "text": "Ask a fellow passenger: 'Excuse me, do you know which stop is closest to the hospital? I'm not sure I'll recognise it.'" },
+      { "kind": "dialogue", "text": "They suggest you watch for a big park. Reply: 'Thank you! Could you let me know when we're getting close?'" },
+      { "kind": "reflection", "text": "Talking to strangers on public transport can feel awkward. Did you find it easier than expected?" }
+    ]
+  },
+  {
+    "id": "see-transport-4",
+    "label": "Buying a Travel Pass",
+    "type": "challenge",
+    "environment": "transport",
+    "difficulty": "medium",
+    "psyProfile": ["mild_anxiety", "perfectionist"],
+    "skills": ["speaking", "listening", "reading"],
+    "xpReward": 20,
+    "steps": [
+      { "kind": "psyground", "text": "You want a weekly travel pass. There may be several options — don't worry about choosing perfectly, just gather information." },
+      { "kind": "dialogue", "text": "At the ticket office: 'I'd like to buy a weekly travel pass. What are my options for buses and trains within the city?'" },
+      { "kind": "dialogue", "text": "Ask about zones: 'Does the pass cover all zones, or do I need to choose specific areas? I mainly travel between the centre and the university.'" },
+      { "kind": "dialogue", "text": "Confirm the details: 'So for £25 I get unlimited bus and tram travel in zones 1 and 2 for seven days — is that correct?'" },
+      { "kind": "reflection", "text": "Understanding pricing and travel zones takes careful listening. How confident are you about the information you gathered?" }
+    ]
   }
 ]

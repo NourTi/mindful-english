@@ -12,6 +12,7 @@ import envFlatshare from '@/assets/env-flatshare.mp4';
 import envMarketplace from '@/assets/env-marketplace.mp4';
 import envBank from '@/assets/env-bank.mp4';
 import envPharmacy from '@/assets/env-pharmacy.mp4';
+import envTransport from '@/assets/env-transport.mp4';
 
 const environmentVideos: Record<string, string> = {
   // Core environments
@@ -42,6 +43,14 @@ const environmentVideos: Record<string, string> = {
   chemist: envPharmacy,
   drugstore: envPharmacy,
   'medicine-shop': envPharmacy,
+  transport: envTransport,
+  'bus-station': envTransport,
+  'train-station': envTransport,
+  bus: envTransport,
+  train: envTransport,
+  metro: envTransport,
+  subway: envTransport,
+  tram: envTransport,
 
   // Mission-based aliases (Immergo missions)
   'airport-checkin': envAirport,
@@ -85,5 +94,6 @@ export function getVideoForMissionContext(context: string): string | null {
   if (lower.includes('flat') || lower.includes('apartment') || lower.includes('roommate') || lower.includes('share') || lower.includes('rent')) return envFlatshare;
   if (lower.includes('market') || lower.includes('shop') || lower.includes('buy') || lower.includes('bargain') || lower.includes('grocery') || lower.includes('souvenir') || lower.includes('stall') || lower.includes('vendor') || lower.includes('supermarket')) return envMarketplace;
   if (lower.includes('bank') || lower.includes('financ') || lower.includes('account') || lower.includes('loan') || lower.includes('mortgage') || lower.includes('teller')) return envBank;
+  if (lower.includes('bus') || lower.includes('train') || lower.includes('metro') || lower.includes('subway') || lower.includes('tram') || lower.includes('transport') || lower.includes('station') || lower.includes('ticket') || lower.includes('platform') || lower.includes('commut')) return envTransport;
   return null;
 }
