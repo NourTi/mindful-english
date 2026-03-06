@@ -347,9 +347,5 @@ export const useLessonStore = create<LessonState>()(
         set({ lastAdaptivityResult: result });
         return result;
       },
-    }),
-    {
-      name: 'see-lessons',
-    }
-  )
+  })
 );

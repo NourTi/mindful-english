@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import { CognitiveProfile, LearningStyle, AnxietyLevel, ConfidenceLevel } from '@/types/learning';
 
 type SemanticContext = 'workplace' | 'travel' | 'daily_life' | 'academic';
