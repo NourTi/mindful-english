@@ -251,7 +251,7 @@ const LessonPlayer = () => {
 
       {/* Environment video background for immersive lessons */}
       {(() => {
-        const envSlug = currentLesson.environment || '';
+        const envSlug = (currentLesson as any).environment || '';
         const bgVideo = getEnvironmentVideo(envSlug) || getVideoForMissionContext(currentLesson.title + ' ' + currentLesson.description);
         return bgVideo ? <VideoBackground src={bgVideo} overlayOpacity={0.75} /> : null;
       })()}
