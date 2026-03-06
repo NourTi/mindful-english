@@ -12,6 +12,7 @@ import envFlatshare from '@/assets/env-flatshare.mp4';
 import envMarketplace from '@/assets/env-marketplace.mp4';
 import envBank from '@/assets/env-bank.mp4';
 import envPharmacy from '@/assets/env-pharmacy.mp4';
+import envTransport from '@/assets/env-transport.mp4';
 
 const environmentVideos: Record<string, string> = {
   // Core environments
