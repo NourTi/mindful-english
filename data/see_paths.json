@@ -40,5 +40,11 @@
     "label": "Academic English Path",
     "psyProfile": ["introvert"],
     "sequence": ["see-classroom-1", "see-flatshare-1", "see-meetup-2"]
+  },
+  {
+    "id": "path-financial-literacy",
+    "label": "Financial Literacy Path",
+    "psyProfile": ["mild_anxiety", "perfectionist"],
+    "sequence": ["see-bank-1", "see-bank-2", "see-bank-3"]
   }
 ]

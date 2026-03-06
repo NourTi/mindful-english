@@ -42,7 +42,7 @@ export function EnvironmentGrid() {
   }, [environmentCounts]);
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-8 gap-4">
       {environments.map((env, index) => (
         <motion.div
           key={env.id}
