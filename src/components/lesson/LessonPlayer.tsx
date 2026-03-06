@@ -18,6 +18,8 @@ import KinestheticContent from './KinestheticContent';
 import BreathingExercise from './BreathingExercise';
 import QuizQuestion from './QuizQuestion';
 import GameActivity from './GameActivity';
+import VideoBackground from '@/components/VideoBackground';
+import { getEnvironmentVideo, getVideoForMissionContext } from '@/lib/environmentVideos';
 
 const LessonPlayer = () => {
   const navigate = useNavigate();
@@ -247,7 +249,14 @@ const LessonPlayer = () => {
         )}
       </AnimatePresence>
 
-      <div className="min-h-screen bg-background flex flex-col">
+      {/* Environment video background for immersive lessons */}
+      {(() => {
+        const envSlug = (currentLesson as any).environment || '';
+        const bgVideo = getEnvironmentVideo(envSlug) || getVideoForMissionContext(currentLesson.title + ' ' + currentLesson.description);
+        return bgVideo ? <VideoBackground src={bgVideo} overlayOpacity={0.75} /> : null;
+      })()}
+
+      <div className="min-h-screen flex flex-col relative">
         {/* Header */}
         <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-lg border-b border-border">
           <div className="max-w-4xl mx-auto px-4 py-3">

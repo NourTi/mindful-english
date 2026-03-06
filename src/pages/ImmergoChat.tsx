@@ -17,6 +17,8 @@ import {
 } from '@/data/immergoMissions';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { getVideoForMissionContext } from '@/lib/environmentVideos';
+import VideoBackground from '@/components/VideoBackground';
 import { suggestVoiceForMission, preloadModel } from '@/lib/tts';
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/immergo-chat`;
@@ -537,8 +539,13 @@ const ImmergoChat = () => {
     );
   }
 
+  const bgVideo = getVideoForMissionContext(
+    `${session.mission.title} ${session.mission.desc} ${session.mission.target_role}`
+  );
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-background/80 flex flex-col">
+    <div className="min-h-screen flex flex-col relative">
+      {bgVideo && <VideoBackground src={bgVideo} overlayOpacity={0.7} />}
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
