@@ -12,12 +12,17 @@ serve(async (req) => {
   }
 
   try {
-    const OPENROUTER_API_KEY = Deno.env.get("OPENROUTER_API_KEY");
-    if (!OPENROUTER_API_KEY) {
-      throw new Error("OPENROUTER_API_KEY is not configured");
+    // Debug: list all env var names containing relevant keys
+    const envNames = ["GAME_API_KEY", "OPENROUTER_API_KEY", "OPENROUTER_KEY", "KOKORO_TTS_URL"];
+    for (const name of envNames) {
+      const val = Deno.env.get(name);
+      console.log(`ENV ${name}: ${val ? `len=${val.length} prefix=${val.substring(0, 12)}` : "NOT SET"}`);
     }
     
-    console.log("Key check:", OPENROUTER_API_KEY.length, OPENROUTER_API_KEY.substring(0, 10));
+    const OPENROUTER_API_KEY = Deno.env.get("GAME_API_KEY");
+    if (!OPENROUTER_API_KEY) {
+      throw new Error("GAME_API_KEY is not configured");
+    }
 
     const { lessonTitle, lessonTopic, difficulty, existingCode, userRequest } = await req.json();
 
