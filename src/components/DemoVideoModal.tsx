@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Play, Pause, Volume2, VolumeX, Maximize2, Settings, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import P5DemoAnimation from '@/components/P5DemoAnimation';
+import seeIntroVideo from '@/assets/see-intro.mp4';
 
 interface DemoVideoModalProps {
   isOpen: boolean;
