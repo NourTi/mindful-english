@@ -12,9 +12,9 @@ serve(async (req) => {
   }
 
   try {
-    const OPENROUTER_API_KEY = Deno.env.get("OPENROUTER_API_KEY");
+    const OPENROUTER_API_KEY = Deno.env.get("GAME_API_KEY");
     if (!OPENROUTER_API_KEY) {
-      throw new Error("OPENROUTER_API_KEY is not configured");
+      throw new Error("GAME_API_KEY is not configured");
     }
     
     console.log("Key check:", OPENROUTER_API_KEY.length, OPENROUTER_API_KEY.substring(0, 10));
