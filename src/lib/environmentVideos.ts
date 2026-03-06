@@ -52,7 +52,7 @@ const environmentVideos: Record<string, string> = {
   'restaurant-booking': envCafe,
   'doctor-appointment': envHospital,
   'emergency': envHospital,
-  'pharmacy': envPharmacy,
+  
   'pharmacy-visit': envPharmacy,
   'market-bargaining': envMarketplace,
   'grocery-shopping': envMarketplace,
