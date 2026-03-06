@@ -365,7 +365,48 @@ export const immergoMissions: ImmergoMission[] = [
     desc: "Consult a lawyer about a tenant rights dispute. Explain the issue, ask about your options, and discuss fees.",
     target_role: "Family Lawyer",
     icon: "⚖️"
-  }
+  },
+  // --- Marketplace / Shopping Missions ---
+  {
+    id: 44,
+    title: "Grocery Shopping",
+    difficulty: "Easy",
+    desc: "Buy fruit, vegetables, and bread at the local market. Ask about prices and freshness.",
+    target_role: "Friendly Market Stallholder",
+    icon: "🛒"
+  },
+  {
+    id: 45,
+    title: "Souvenir Haggling",
+    difficulty: "Medium",
+    desc: "You're at a bazaar and want a handmade rug. Negotiate the price down while staying polite.",
+    target_role: "Experienced Rug Merchant",
+    icon: "🏪"
+  },
+  {
+    id: 46,
+    title: "Weekly Food Shop",
+    difficulty: "Medium",
+    desc: "Navigate a supermarket: find specific items, ask a staff member for help, and handle the self-checkout.",
+    target_role: "Supermarket Staff Member",
+    icon: "🥦"
+  },
+  {
+    id: 47,
+    title: "Farmers' Market Chat",
+    difficulty: "Hard",
+    desc: "Talk to artisan vendors about organic produce, local recipes, and seasonal availability. Discuss dietary needs.",
+    target_role: "Passionate Organic Farmer",
+    icon: "🌽"
+  },
+  {
+    id: 48,
+    title: "Electronics Store",
+    difficulty: "Hard",
+    desc: "Compare phones and laptops, ask about warranties, specs, and payment plans. Negotiate a bundle discount.",
+    target_role: "Pushy Electronics Salesperson",
+    icon: "📱"
+  },
 ];
 
 export const supportedLanguages = [
