@@ -16,7 +16,7 @@ interface DemoVideoModalProps {
 const DemoVideoModal = ({ 
   isOpen, 
   onClose, 
-  videoUrl,
+  videoUrl = seeIntroVideo,
   posterImage = '/placeholder.svg',
   showAnimation = true
 }: DemoVideoModalProps) => {
@@ -25,31 +25,25 @@ const DemoVideoModal = ({
   const [progress, setProgress] = useState(0);
   const [showAnimationView, setShowAnimationView] = useState(showAnimation);
   const [animationKey, setAnimationKey] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   // Demo timeline items to show product features
   const demoFeatures = [
     { time: '0:00', title: 'Welcome & Overview', description: 'Introduction to SEE platform' },
-    { time: '0:30', title: 'Neural Assessment', description: 'AI-powered learning style detection' },
-    { time: '1:15', title: 'VR Environment', description: 'Immersive language scenarios' },
-    { time: '2:00', title: 'Adaptive Learning', description: 'Real-time difficulty adjustment' },
-    { time: '2:45', title: 'Progress Tracking', description: 'Analytics and achievements' },
+    { time: '0:02', title: 'Immersive Environments', description: 'Airport, café, hospital & more' },
+    { time: '0:04', title: 'AI-Powered Learning', description: 'Real-time adaptive scenarios' },
+    { time: '0:06', title: 'Cultural Immersion', description: 'Authentic real-world contexts' },
+    { time: '0:08', title: 'Your Journey Begins', description: 'Start learning with SEE' },
   ];
 
   const handlePlayDemo = () => {
-    setIsPlaying(!isPlaying);
-    // Simulate progress for demo
-    if (!isPlaying) {
-      const interval = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setIsPlaying(false);
-            return 0;
-          }
-          return prev + 0.5;
-        });
-      }, 100);
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
     }
+    setIsPlaying(!isPlaying);
   };
 
   return (
