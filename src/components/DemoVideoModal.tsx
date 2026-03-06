@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Play, Pause, Volume2, VolumeX, Maximize2, Settings, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import P5DemoAnimation from '@/components/P5DemoAnimation';
+import seeIntroVideo from '@/assets/see-intro.mp4';
 
 interface DemoVideoModalProps {
   isOpen: boolean;
@@ -15,7 +16,7 @@ interface DemoVideoModalProps {
 const DemoVideoModal = ({ 
   isOpen, 
   onClose, 
-  videoUrl,
+  videoUrl = seeIntroVideo,
   posterImage = '/placeholder.svg',
   showAnimation = true
 }: DemoVideoModalProps) => {
@@ -24,31 +25,25 @@ const DemoVideoModal = ({
   const [progress, setProgress] = useState(0);
   const [showAnimationView, setShowAnimationView] = useState(showAnimation);
   const [animationKey, setAnimationKey] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   // Demo timeline items to show product features
   const demoFeatures = [
     { time: '0:00', title: 'Welcome & Overview', description: 'Introduction to SEE platform' },
-    { time: '0:30', title: 'Neural Assessment', description: 'AI-powered learning style detection' },
-    { time: '1:15', title: 'VR Environment', description: 'Immersive language scenarios' },
-    { time: '2:00', title: 'Adaptive Learning', description: 'Real-time difficulty adjustment' },
-    { time: '2:45', title: 'Progress Tracking', description: 'Analytics and achievements' },
+    { time: '0:02', title: 'Immersive Environments', description: 'Airport, café, hospital & more' },
+    { time: '0:04', title: 'AI-Powered Learning', description: 'Real-time adaptive scenarios' },
+    { time: '0:06', title: 'Cultural Immersion', description: 'Authentic real-world contexts' },
+    { time: '0:08', title: 'Your Journey Begins', description: 'Start learning with SEE' },
   ];
 
   const handlePlayDemo = () => {
-    setIsPlaying(!isPlaying);
-    // Simulate progress for demo
-    if (!isPlaying) {
-      const interval = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setIsPlaying(false);
-            return 0;
-          }
-          return prev + 0.5;
-        });
-      }, 100);
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
     }
+    setIsPlaying(!isPlaying);
   };
 
   return (
@@ -106,125 +101,23 @@ const DemoVideoModal = ({
                       }}
                     />
                   </div>
-                ) : videoUrl ? (
+                ) : (
                   <video
+                    ref={videoRef}
                     src={videoUrl}
                     poster={posterImage}
                     className="w-full h-full object-contain"
                     controls={false}
+                    muted={isMuted}
+                    loop
+                    onTimeUpdate={() => {
+                      if (videoRef.current) {
+                        setProgress((videoRef.current.currentTime / videoRef.current.duration) * 100);
+                      }
+                    }}
+                    onEnded={() => setIsPlaying(false)}
+                    onClick={handlePlayDemo}
                   />
-                ) : (
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    {/* Animated placeholder */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20" />
-                    
-                    {/* Neural network animation background */}
-                    <div className="absolute inset-0 overflow-hidden">
-                      <svg className="w-full h-full opacity-20" viewBox="0 0 800 600">
-                        <title>Neural Network Background</title>
-                        {/* Animated nodes */}
-                        {[...Array(15)].map((_, i) => (
-                          <motion.circle
-                            key={i}
-                            cx={100 + (i % 5) * 150}
-                            cy={100 + Math.floor(i / 5) * 150}
-                            r="8"
-                            fill="currentColor"
-                            className="text-primary"
-                            animate={{
-                              scale: [1, 1.5, 1],
-                              opacity: [0.5, 1, 0.5],
-                            }}
-                            transition={{
-                              duration: 2,
-                              repeat: Infinity,
-                              delay: i * 0.2,
-                            }}
-                          />
-                        ))}
-                        {/* Connecting lines */}
-                        {[...Array(10)].map((_, i) => (
-                          <motion.line
-                            key={`line-${i}`}
-                            x1={100 + (i % 5) * 150}
-                            y1={100 + Math.floor(i / 5) * 150}
-                            x2={100 + ((i + 1) % 5) * 150}
-                            y2={100 + Math.floor((i + 1) / 5) * 150}
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            className="text-primary/30"
-                            animate={{
-                              opacity: [0.2, 0.6, 0.2],
-                            }}
-                            transition={{
-                              duration: 1.5,
-                              repeat: Infinity,
-                              delay: i * 0.1,
-                            }}
-                          />
-                        ))}
-                      </svg>
-                    </div>
-
-                    {/* Center content */}
-                    <div className="relative z-10 text-center px-8">
-                      <motion.div
-                        animate={{ scale: [1, 1.05, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="w-24 h-24 mx-auto mb-6 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center cursor-pointer hover:bg-primary/30 transition-colors"
-                        onClick={handlePlayDemo}
-                      >
-                        {isPlaying ? (
-                          <Pause className="w-10 h-10 text-primary" />
-                        ) : (
-                          <Play className="w-10 h-10 text-primary ml-1" />
-                        )}
-                      </motion.div>
-                      
-                      <h4 className="text-2xl font-bold text-foreground mb-2">
-                        {isPlaying ? 'Demo Playing...' : 'Watch Product Demo'}
-                      </h4>
-                      <p className="text-muted-foreground max-w-md mx-auto">
-                        {isPlaying 
-                          ? 'Experience the future of language learning'
-                          : 'Click play to see how SEE transforms language learning with AI and VR technology'
-                        }
-                      </p>
-
-                      {/* Simulated progress during "playback" */}
-                      {isPlaying && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="mt-8 space-y-4"
-                        >
-                          {demoFeatures.map((feature, i) => {
-                            const featureProgress = (i / demoFeatures.length) * 100;
-                            const isActive = progress >= featureProgress && progress < featureProgress + 20;
-                            const isPast = progress > featureProgress + 20;
-                            
-                            return (
-                              <motion.div
-                                key={feature.time}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ 
-                                  opacity: isActive || isPast ? 1 : 0.3,
-                                  x: 0,
-                                  scale: isActive ? 1.05 : 1
-                                }}
-                                transition={{ delay: i * 0.1 }}
-                                className={`flex items-center gap-3 text-left ${isActive ? 'text-primary' : ''}`}
-                              >
-                                <div className={`w-2 h-2 rounded-full ${isActive ? 'bg-primary' : isPast ? 'bg-success' : 'bg-muted'}`} />
-                                <span className="font-mono text-xs text-muted-foreground">{feature.time}</span>
-                                <span className="text-sm font-medium">{feature.title}</span>
-                              </motion.div>
-                            );
-                          })}
-                        </motion.div>
-                      )}
-                    </div>
-                  </div>
                 )}
 
                 {/* Video/Animation controls overlay */}
