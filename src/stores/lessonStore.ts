@@ -154,8 +154,7 @@ const generateChunks = (lesson: LessonContent, profile: CognitiveProfile): Lesso
 };
 
 export const useLessonStore = create<LessonState>()(
-  persist(
-    (set, get) => ({
+  (set, get) => ({
       currentLesson: null,
       chunks: [],
       progress: null,
